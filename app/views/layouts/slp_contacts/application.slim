@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title SlpContacts
+    = stylesheet_link_tag 'slp_contacts/application', media: 'all'
+    = javascript_include_tag 'slp_contacts/application'
+    = csrf_meta_tags
+
+  body
+    = yield
+
