@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213061048) do
+ActiveRecord::Schema.define(version: 20150213061334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,17 @@ ActiveRecord::Schema.define(version: 20150213061048) do
   end
 
   add_index "organizations", ["parent_id"], name: "index_organizations_on_parent_id", using: :btree
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
@@ -49,6 +60,9 @@ ActiveRecord::Schema.define(version: 20150213061048) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "taggings", "organizations", column: "taggable_id"
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "taggings", "users", column: "taggable_id"
   add_foreign_key "user_organizations", "organizations"
   add_foreign_key "user_organizations", "users"
 end
