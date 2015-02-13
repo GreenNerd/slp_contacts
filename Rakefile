@@ -8,3 +8,5 @@ load 'rails/tasks/statistics.rake'
 
 Bundler::GemHelper.install_tasks
 
+require 'rails/dummy/tasks'
+
