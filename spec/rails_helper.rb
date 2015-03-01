@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../dummy/config/environment", __FILE__)
 require 'rspec/rails'
+require 'shoulda/matchers'
+require 'rspec/collection_matchers'
 
 Fabrication.configure do |config|
   config.fabricator_path = '../fabricators'
@@ -28,6 +30,7 @@ end
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
+ActiveRecord::Migrator.migrations_paths = ['../dummy/db/migrations/']
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
