@@ -1,0 +1,26 @@
+#contacts-list.list {
+  .item {
+    padding: .6rem 1.1rem;
+  }
+
+  .header {
+    font-size: 1.2rem;
+  }
+
+  .description {
+    font-size: .9rem;
+    color: lighten(black, 54%);
+    font-style: italic;
+    margin-top: .3rem;
+  }
+
+  .button {
+    margin-top: .7rem;
+  }
+
+  img.avatar {
+    border: 2px solid darken(white, 6%);
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+}
