@@ -8,6 +8,32 @@ $sticky-height: 40px;
   left: 0;
   z-index: 10;
   box-shadow: 0 0 4px 0 #E0E0E0;
+  text-align: center;
+
+  &> * {
+    line-height: $sticky-height;
+  }
+
+  .left-side {
+    float: left;
+    margin-left: 1em;
+  }
+
+  .right-side {
+    float: right;
+    margin-right: 1em;
+  }
+
+  .title {
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  i.fa {
+    color: #95885D;
+    cursor: pointer;
+  }
 }
 
 .sticky-header + .main-content {
