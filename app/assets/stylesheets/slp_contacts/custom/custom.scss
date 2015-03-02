@@ -1,4 +1,4 @@
-#contacts-list.list {
+#contacts_list.list {
   .item {
     padding: .6rem 1.1rem;
   }
@@ -22,5 +22,22 @@
     border: 2px solid darken(white, 6%);
     width: 3.6rem;
     height: 3.6rem;
+  }
+}
+
+#contacts_thumbnail_list {
+  &>.column {
+    text-align: center;
+  }
+
+  img.circular {
+    width: 4rem;
+    height: 4rem;
+    max-height: 4rem;
+    border: 2px solid darken(white, 6%);
+  }
+
+  .label {
+    color: black;
   }
 }
