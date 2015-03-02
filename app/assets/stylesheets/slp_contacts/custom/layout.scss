@@ -7,4 +7,17 @@ body {
   min-height: 100%;
   position: relative;
   z-index: 1;
+
+  &.with-sticky-footer {
+    $sticky-footer-height: 36px;
+
+    margin-bottom: -$sticky-footer-height;
+
+    &::after {
+      content: '...';
+      display: block;
+      height: $sticky-footer-height;
+      visibility: hidden;
+    }
+  }
 }

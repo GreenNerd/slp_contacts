@@ -1,0 +1,8 @@
+$sticky-footer-height: 36px;
+
+.sticky-footer {
+  height: $sticky-footer-height;
+  text-align: center;
+  line-height: $sticky-footer-height;
+  display: block;
+}
