@@ -1,4 +1,4 @@
-#contacts_list.list {
+#contacts_list {
   .item {
     padding: .6rem 1.1rem;
   }
@@ -39,5 +39,26 @@
 
   .label {
     color: black;
+  }
+}
+
+
+#contact_detail {
+  .cover-image {
+    position: relative;
+  }
+
+  .bg-img {
+    height: 15rem;
+    background-image: url('http://placehold.it/800x600');
+    background-position: center center;
+  }
+
+  .user-name {
+    position: absolute;
+    font-size: 1.6rem;
+    left: 1em;
+    bottom: 1em;
+    color: white;
   }
 }
