@@ -1,0 +1,15 @@
+$sticky-height: 40px;
+
+.sticky-header {
+  position: absolute;
+  background-color: white;
+  height: $sticky-height;
+  width: 100%;
+  left: 0;
+  z-index: 10;
+  box-shadow: 0 0 4px 0 #E0E0E0;
+}
+
+.sticky-header + .main-content {
+  padding-top: $sticky-height;
+}
