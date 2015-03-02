@@ -60,11 +60,7 @@ module SessionsHelper
     unless signed_in?
       store_location
 
-      if is_wechat_browser_request?
-        redirect_to wechat_auto_login_url
-      else
-        redirect_to bind_namespace_user_path(current_namespace), notice: '请先绑定帐号'
-      end
+      redirect_to login_path
     end
   end
 
@@ -78,12 +74,6 @@ module SessionsHelper
       session[:return_to] = url
     else
       session[:return_to] = request.url if request.get?
-    end
-  end
-
-  def no_signed_in_required
-    if signed_in?
-      redirect_to namespace_user_path(current_namespace)
     end
   end
 end

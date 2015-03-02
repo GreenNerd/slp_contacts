@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301040127) do
+ActiveRecord::Schema.define(version: 20150302035752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,12 +62,13 @@ ActiveRecord::Schema.define(version: 20150301040127) do
   add_index "user_organizations", ["organization_id"], name: "index_user_organizations_on_organization_id", using: :btree
   add_index "user_organizations", ["user_id"], name: "index_user_organizations_on_user_id", using: :btree
 
-  create_table "users", force: :cascade do |t|
+  create_table "jsers", force: :cascade do |t|
     t.string   "name"
     t.string   "phone"
     t.string   "identifier"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "remember_token"
   end
 
   add_foreign_key "slp_contacts_favorites", "users"
