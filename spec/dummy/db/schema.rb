@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213061334) do
+ActiveRecord::Schema.define(version: 20150302035752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 20150213061334) do
   end
 
   add_index "organizations", ["parent_id"], name: "index_organizations_on_parent_id", using: :btree
+
+  create_table "slp_contacts_favorites", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "contact_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "slp_contacts_favorites", ["contact_id"], name: "index_slp_contacts_favorites_on_contact_id", using: :btree
+  add_index "slp_contacts_favorites", ["user_id"], name: "index_slp_contacts_favorites_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -52,14 +62,17 @@ ActiveRecord::Schema.define(version: 20150213061334) do
   add_index "user_organizations", ["organization_id"], name: "index_user_organizations_on_organization_id", using: :btree
   add_index "user_organizations", ["user_id"], name: "index_user_organizations_on_user_id", using: :btree
 
-  create_table "users", force: :cascade do |t|
+  create_table "jsers", force: :cascade do |t|
     t.string   "name"
     t.string   "phone"
     t.string   "identifier"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "remember_token"
   end
 
+  add_foreign_key "slp_contacts_favorites", "users"
+  add_foreign_key "slp_contacts_favorites", "users", column: "contact_id"
   add_foreign_key "taggings", "organizations", column: "taggable_id"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users", column: "taggable_id"
