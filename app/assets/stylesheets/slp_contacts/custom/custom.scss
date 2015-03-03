@@ -78,6 +78,24 @@
     }
   }
 
+  .extra-links {
+    padding: 2rem 0;
+
+    &.ui.grid>.column:not(.row) {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .value {
+      color: rgba(60, 62, 73, .87);
+      font-size: 1.6rem;
+    }
+
+    .label {
+      color: rgba(60, 62, 73, .54);
+    }
+  }
+
   .more-detail {
     padding: 0 1.6em;
 

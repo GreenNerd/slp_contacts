@@ -10,5 +10,8 @@ module SlpContacts
 
     def index_thumbnail
     end
+
+    def profile
+    end
   end
 end
