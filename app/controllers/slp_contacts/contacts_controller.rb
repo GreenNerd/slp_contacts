@@ -4,5 +4,7 @@ module SlpContacts
   class ContactsController < ApplicationController
     def index
     end
+    def detail
+    end
   end
 end
