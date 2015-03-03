@@ -9,3 +9,8 @@ gem 'slim-rails', '~> 3.0'
 
 gem 'slp_contacts', path: '../../'
 
+gem 'faker'
+
+gem 'pry'
+gem 'pry-byebug'
+
