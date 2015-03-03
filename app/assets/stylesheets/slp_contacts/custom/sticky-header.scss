@@ -1,7 +1,7 @@
 $sticky-height: 2.7rem;
 
 .sticky-header {
-  position: absolute;
+  position: fixed;
   background-color: white;
   height: $sticky-height;
   width: 100%;
