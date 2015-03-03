@@ -129,3 +129,57 @@
     }
   }
 }
+
+#organization_list {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+
+  p.header {
+    font-size: .8rem;
+    margin: 0;
+    padding: 1em;
+    color: #95885D;
+    text-align: center;
+  }
+
+  .grid>.column {
+    padding: .4rem;
+  }
+
+  .content-box {
+    outline: 1px solid #3C3E49;
+    text-align: center;
+    font-size: 0;
+    height: 2.7rem;
+    font-size: 0;
+    color: #3C3E49;
+    padding: .25rem;
+
+    .centered-box {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+
+    &::before {
+      display: inline-block;
+      vertical-align: middle;
+      content: '';
+      height: 100%;
+    }
+  }
+
+  .content {
+    max-height: 2em;
+    vertical-align: middle;
+    line-height: 1em;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    text-overflow: -o-ellipsis-lastline;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}

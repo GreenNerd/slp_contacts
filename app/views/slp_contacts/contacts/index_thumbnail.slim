@@ -2,11 +2,35 @@
   .left-side
     i.fa.fa-long-arrow-left
   .right-side
-    i.fa.fa-chevron-down &nbsp;&nbsp;
+    i.fa.fa-chevron-down#toggle_sidebar
+    | &nbsp;&nbsp;
     i.fa.fa-th
   .center-box
     .title Sales
-.main-content.with-sticky-footer
+#organization_list.ui.top.sidebar
+  p.ui.header 下级组织
+  .ui.four.column.padded.page.grid
+    .column
+      .content-box
+        .centered-box
+          .content 西北大区
+    .column
+      .content-box
+        .centered-box
+          .content 计算机科学与技术
+    .column
+      .content-box
+        .centered-box
+          .content 华中大区
+    .column
+      .content-box
+        .centered-box
+          .content 机械设计制造及其自动化(机电一体化)
+    .column
+      .content-box
+        .centered-box
+          .content 东南大区
+.main-content.with-sticky-footer.pusher
   #contacts_thumbnail_list.ui.ui.center.aligned.three.column.padded.grid
     .column
       .ui.statistic
