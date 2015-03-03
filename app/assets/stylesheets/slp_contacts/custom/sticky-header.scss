@@ -18,12 +18,16 @@ $sticky-height: 2.7rem;
 
   .left-side {
     position: absolute;
+    top: 0;
+    left: 0;
     padding-left: 1em;
     padding-right: .5rem;
   }
 
   .right-side {
     position: absolute;
+    top: 0;
+    right: 0;
     padding-right: 1em;
     padding-left: .5rem;
   }
@@ -35,6 +39,10 @@ $sticky-height: 2.7rem;
 
   .query-container {
     display: none;
+
+    .query-input {
+      padding: .4rem 1rem;
+    }
   }
 
   i.fa {
@@ -63,9 +71,23 @@ $sticky-height: 2.7rem;
       display: table-cell;
       width: 100%;
     }
+  }
 
-    .query-input {
-      padding: .4rem 1rem;
+  &.query-user {
+    .right-side, .center-box {
+      display: none;
+    }
+
+    .query-container {
+      display: block;
+    }
+
+    .ui.search {
+      padding: 0 1em;
+    }
+
+    .ui.icon.input {
+      display: block;
     }
   }
 }
