@@ -1,1 +1,1 @@
-#= require ./sidebar
+#= require ./contacts

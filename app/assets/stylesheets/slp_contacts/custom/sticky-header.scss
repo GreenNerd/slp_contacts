@@ -18,12 +18,14 @@ $sticky-height: 2.7rem;
 
   .left-side {
     position: absolute;
-    left: 1em;
+    padding-left: 1em;
+    padding-right: .5rem;
   }
 
   .right-side {
     position: absolute;
-    right: 1em;
+    padding-right: 1em;
+    padding-left: .5rem;
   }
 
   .title {
@@ -31,9 +33,40 @@ $sticky-height: 2.7rem;
     letter-spacing: 1px;
   }
 
+  .query-container {
+    display: none;
+  }
+
   i.fa {
     color: #95885D;
     cursor: pointer;
+  }
+
+  &.query-view {
+    display: table;
+
+    &>* {
+      display: table-cell;
+    }
+
+    .center-box {
+      display: none;
+    }
+
+    .left-side, .right-side {
+      position: relative;
+      width: 1%;
+      white-space: nowrap;
+    }
+
+    .query-container {
+      display: table-cell;
+      width: 100%;
+    }
+
+    .query-input {
+      padding: .4rem 1rem;
+    }
   }
 }
 
