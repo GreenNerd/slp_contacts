@@ -36,6 +36,12 @@ $sticky-height: 2.7rem;
   }
 }
 
-.sticky-header + .main-content {
+.sticky-header ~ .main-content {
   padding-top: $sticky-height;
+}
+
+#organization_list.ui.top.sidebar {
+  padding-top: $sticky-height;
+  z-index: 9;
+  background-color: white;
 }

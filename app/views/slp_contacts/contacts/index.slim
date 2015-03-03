@@ -2,11 +2,23 @@
   .left-side
     i.fa.fa-long-arrow-left
   .right-side
-    i.fa.fa-chevron-down &nbsp;&nbsp;
+    i.fa.fa-chevron-down#toggle_sidebar &nbsp;&nbsp;
     i.fa.fa-th
   .center-box
     .title Sales
-.main-content.with-sticky-footer
+#organization_list.ui.top.sidebar
+  .ui.center.aligned.padded.page.grid
+    .one.column.row
+      .sixteen.wide.column
+        h5.ui.header 下级组织
+  .ui.middle.aligned.four.column.grid
+    .equal.height.row
+      .column 西北大区
+      .column 西北大区
+      .column 西北大区
+      .column 西北大区
+      .column 西北大区
+.main-content.with-sticky-footer.pusher
   .ui.celled.very.relaxed.list#contacts_list
     .item
       .right.floated.compact.ui.secondary.button 收藏

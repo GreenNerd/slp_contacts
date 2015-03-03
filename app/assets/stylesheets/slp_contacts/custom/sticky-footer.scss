@@ -5,4 +5,10 @@ $sticky-footer-height: 36px;
   text-align: center;
   line-height: $sticky-footer-height;
   display: block;
+  position: relative;
+  z-index: 2;
+}
+
+.pusher.dimmed ~ .sticky-footer {
+  visibility: hidden;
 }

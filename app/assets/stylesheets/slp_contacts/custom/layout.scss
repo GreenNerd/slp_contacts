@@ -4,17 +4,14 @@ html, body {
 }
 
 .main-content {
-  min-height: 100%;
-  position: relative;
-  z-index: 1;
-
   &.with-sticky-footer {
     $sticky-footer-height: 36px;
 
     margin-bottom: -$sticky-footer-height;
 
-    &::after {
+    &:not(.dimmed)::after {
       content: '...';
+      position: relative;
       display: block;
       height: $sticky-footer-height;
       visibility: hidden;
