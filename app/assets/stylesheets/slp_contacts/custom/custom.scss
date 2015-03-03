@@ -28,10 +28,6 @@
 }
 
 #contacts_thumbnail_list {
-  &>.column {
-    text-align: center;
-  }
-
   img.circular {
     width: 4rem;
     height: 4rem;
@@ -62,5 +58,56 @@
     left: 1em;
     bottom: 1em;
     color: white;
+  }
+
+  .contact-opreate {
+    padding: 1rem 0;
+
+    .value, .label {
+      color: hsla(0, 0, 0, .54);
+    }
+
+    .value {
+      font-size: 1.6rem;
+    }
+
+    .active {
+      .value, .label {
+        color: #3C3E49;
+      }
+    }
+  }
+
+  .more-detail {
+    padding: 0 1.6em;
+
+    td {
+      border-color: hsla(0, 0, 0, .12);
+    }
+
+    td.label {
+      color: black;
+      font-weight: bold;
+      vertical-align: top;
+
+      &+td {
+        color: hsla(0, 0, 0, .54);
+        font-size: .8rem;
+        padding-right: 0;
+      }
+    }
+
+    a.label {
+      background-color: hsla(0, 0, 0, .54);
+      color: white;
+      padding: .2rem .4rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 15em;
+      margin: .1em 0 .1em .5em;
+      text-align: center;
+    }
   }
 }
