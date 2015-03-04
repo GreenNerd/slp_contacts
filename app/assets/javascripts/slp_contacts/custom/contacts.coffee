@@ -4,12 +4,13 @@ $ ->
       @enableOrganizationSidebar()
       @setApiSettings()
       @enableQueryUser() if $('#query_user').length
+      @enableQueryOrganization() if $('#query_organization').length
 
     setApiSettings: ->
       apiSettings =
         api:
           'query user': 'users/{id}?name={query}'
-          'query organization': '/organizations/{id}?name={query}'
+          'query organization': 'organizations/{id}?name={query}'
       $.extend $.fn.api.settings, apiSettings
 
     enableOrganizationSidebar: ->
@@ -41,6 +42,24 @@ $ ->
             console.log err_msg
         onSelect: (result, response)->
           $sticker.removeClass('query-user')
+        searchFullText: false
+
+    enableQueryOrganization: ->
+      organization_id = 1
+      $sticker = $('#query_organization')
+      $query_trigger = $sticker.find('.ui.search')
+
+      $sticker.on 'click', '.title', ->
+        $sticker.addClass('query-view')
+      $query_trigger.search
+        apiSettings:
+          action: 'query organization'
+          urlData:
+            id: organization_id
+          onError: (err_msg, element)->
+            console.log err_msg
+        onSelect: (result, response)->
+          $sticker.removeClass('query-view')
         searchFullText: false
 
   ContactCtrl.init()
