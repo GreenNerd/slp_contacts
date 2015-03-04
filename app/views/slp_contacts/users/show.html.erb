@@ -3,8 +3,9 @@
   <%= image_tag @user.headimgurl %>
   <%= @user.name %>
 
-  <%= @user.organizations.count %>所在组织
-
+  <%= link_to organizations_path do %>
+    <%= @user.organizations.count %>所在组织
+  <% end %>
   <p>识别码</p><%= @user.identifier %>
   <p>手机号</p><%= @user.phone %>
   <p>所在组织</p>
