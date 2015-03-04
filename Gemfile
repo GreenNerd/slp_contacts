@@ -18,6 +18,7 @@ gem 'slim-rails', '~> 3.0'
 
 gem 'font-awesome-rails'
 gem 'jquery-rails'
+gem 'rails-backbone', github: 'codebrew/backbone-rails'
 
 
 gemspec
