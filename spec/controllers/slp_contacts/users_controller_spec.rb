@@ -2,14 +2,14 @@ require 'rails_helper'
 
 module SlpContacts
   RSpec.describe UsersController, type: :controller do
-    before :each do 
-      @user = Fabricate(:user)
-      sign_in @user
-    end
+
+    let(:user) { Fabricate(:user) }
+    let(:valid_session) { { current_user_id: user.id } }
+
     describe "GET #show" do
       it "assigns the requested user to @user" do
-        get :show, id: @user
-        expect(assigns(:user)).to eq @user
+        get :show, { id: user.id }, valid_session
+        expect(assigns(:user)).to eq user
       end
     end
 
