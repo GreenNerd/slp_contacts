@@ -1,10 +1,38 @@
 $ ->
+  testdata =
+    contacts: [
+      {
+        name: '郑晶晶'
+        phone: 15882890324
+        favorited: false
+      }
+      {
+        name: '张光'
+        phone: 15278687812
+        favorited: true
+      }
+      {
+        name: '鲁臻'
+        phone: 15872384724
+      }
+    ]
+
   ContactCtrl =
     init: ->
       @enableOrganizationSidebar()
       @setApiSettings()
+      @initContactsView() if $('#contacts_list').length and $('#contacts_thumbnail_list').length
       @enableQueryUser() if $('#query_user').length
       @enableQueryOrganization() if $('#query_organization').length
+
+    initContactsView: ->
+      @contactsCollection = new SLPContacts.Collections.UserCollection testdata.contacts
+      @createContactsShowView()
+      @createContactsEditView()
+
+      $('#query_organization').on 'click', '.view-toggler', (event)=>
+        $(event.target).closest('.view-toggler').toggleClass('fa-th').toggleClass('fa-th-list')
+        @toggleEditView()
 
     setApiSettings: ->
       apiSettings =
@@ -61,5 +89,19 @@ $ ->
         onSelect: (result, response)->
           $sticker.removeClass('query-view')
         searchFullText: false
+
+    createContactsShowView: ->
+      @contactsShowView = new SLPContacts.Views.UsersShowView
+        collection: @contactsCollection
+        el: '#contacts_thumbnail_list'
+
+    createContactsEditView: ->
+      @contactsEditView = new SLPContacts.Views.UsersEditView
+        collection: @contactsCollection
+        el: '#contacts_list'
+
+    toggleEditView: ->
+      @contactsShowView.$el.toggle()
+      @contactsEditView.$el.toggle()
 
   ContactCtrl.init()
