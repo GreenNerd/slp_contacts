@@ -5,7 +5,7 @@ html, body {
 
 .main-content {
   &.with-sticky-footer {
-    $sticky-footer-height: 36px;
+    $sticky-footer-height: 2.5rem;
 
     margin-bottom: -$sticky-footer-height;
 

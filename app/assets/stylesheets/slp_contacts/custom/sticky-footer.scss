@@ -1,4 +1,4 @@
-$sticky-footer-height: 36px;
+$sticky-footer-height: 2.5rem;
 
 .sticky-footer {
   height: $sticky-footer-height;
@@ -7,6 +7,12 @@ $sticky-footer-height: 36px;
   display: block;
   position: relative;
   z-index: 2;
+  background-color: #3C3E49;
+  color: white;
+
+  a {
+    color: white;
+  }
 }
 
 .pusher.dimmed ~ .sticky-footer {
