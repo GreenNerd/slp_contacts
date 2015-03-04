@@ -11,6 +11,7 @@ Fabrication.configure do |config|
   config.sequence_start = 10000
 end
 
+include SessionsHelper
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
