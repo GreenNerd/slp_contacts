@@ -1,0 +1,12 @@
+<h2><%= @organization.name %></h2>
+<h4>下级组织</h4>
+<ol>
+  <% @organization.children.each do |child| %>
+    <li><%= link_to child.name, organization_path(child) %></li>
+  <% end %>
+</ol>
+<ul id="members">
+  <%= render partial: "member", collection: @members %>
+</ul>
+
+<%= link_to_next_page @members, "加载更多", remote: true, id: "addmore" %>
