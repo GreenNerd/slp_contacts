@@ -12,7 +12,7 @@ class SLPContacts.Collections.UserCollection extends Backbone.Collection
   model: SLPContacts.Models.UserModel
   url: '/users'
 
-SLPContacts.Templates.UserShowTemplate = """
+SLPContacts.Templates.UserGridTemplate = """
   <div class="ui statistic">
     <div class="value">
       <img src="<%= headimg %>" alt="user_pic" class="ui circular centered image">
@@ -21,7 +21,7 @@ SLPContacts.Templates.UserShowTemplate = """
   </div>
 """
 
-SLPContacts.Templates.UserEditTemplate = """
+SLPContacts.Templates.UserListTemplate = """
   <div class="right floated compact ui <%= favorited ? 'basic' : 'secondary' %> button"><%= favorited ? '取消' : '收藏' %></div>
   <img src="<%= headimg %>" alt="user_pic" class="ui avatar image">
   <div class="content">
@@ -33,13 +33,13 @@ SLPContacts.Templates.UserEditTemplate = """
 class SLPContacts.Views.UserView extends Backbone.View
   tagName: 'div'
 
-  renderShow: ->
+  renderGrid: ->
     @$el.addClass('column')
-    @$el.html _.template(SLPContacts.Templates.UserShowTemplate)(@model.toJSON())
+    @$el.html _.template(SLPContacts.Templates.UserGridTemplate)(@model.toJSON())
 
-  renderEdit: ->
+  renderList: ->
     @$el.addClass('item')
-    @$el.html _.template(SLPContacts.Templates.UserEditTemplate)(@model.toJSON())
+    @$el.html _.template(SLPContacts.Templates.UserListTemplate)(@model.toJSON())
 
 
 class SLPContacts.Views.UsersView extends Backbone.View
@@ -57,20 +57,20 @@ class SLPContacts.Views.UsersView extends Backbone.View
       CollectionView: @
     @$el.append user_view.$el
 
-class SLPContacts.Views.UsersShowView extends SLPContacts.Views.UsersView
+class SLPContacts.Views.UsersGridView extends SLPContacts.Views.UsersView
   renderItem: (user)->
     user_view = new SLPContacts.Views.UserView
       model: user
       CollectionView: @
-    user_view.renderShow()
+    user_view.renderGrid()
     @$el.append user_view.$el
 
-class SLPContacts.Views.UsersEditView extends SLPContacts.Views.UsersView
+class SLPContacts.Views.UsersListView extends SLPContacts.Views.UsersView
   renderItem: (user)->
     user_view = new SLPContacts.Views.UserView
       model: user
       CollectionView: @
-    user_view.renderEdit()
+    user_view.renderList()
     @$el.append user_view.$el
 
 

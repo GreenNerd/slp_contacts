@@ -27,12 +27,12 @@ $ ->
 
     initContactsView: ->
       @contactsCollection = new SLPContacts.Collections.UserCollection testdata.contacts
-      @createContactsShowView()
-      @createContactsEditView()
+      @createContactsGridView()
+      @createContactsListView()
 
       $('#query_organization').on 'click', '.view-toggler', (event)=>
         $(event.target).closest('.view-toggler').toggleClass('fa-th').toggleClass('fa-th-list')
-        @toggleEditView()
+        @toggleListView()
 
     setApiSettings: ->
       apiSettings =
@@ -90,18 +90,18 @@ $ ->
           $sticker.removeClass('query-view')
         searchFullText: false
 
-    createContactsShowView: ->
-      @contactsShowView = new SLPContacts.Views.UsersShowView
+    createContactsGridView: ->
+      @contactsGridView = new SLPContacts.Views.UsersGridView
         collection: @contactsCollection
         el: '#contacts_thumbnail_list'
 
-    createContactsEditView: ->
-      @contactsEditView = new SLPContacts.Views.UsersEditView
+    createContactsListView: ->
+      @contactsListView = new SLPContacts.Views.UsersListView
         collection: @contactsCollection
         el: '#contacts_list'
 
-    toggleEditView: ->
-      @contactsShowView.$el.toggle()
-      @contactsEditView.$el.toggle()
+    toggleListView: ->
+      @contactsGridView.$el.toggle()
+      @contactsListView.$el.toggle()
 
   ContactCtrl.init()
