@@ -1,3 +1,6 @@
+require "kaminari"
+require "jquery-rails"
+
 module SlpContacts
   class Engine < ::Rails::Engine
     isolate_namespace SlpContacts
