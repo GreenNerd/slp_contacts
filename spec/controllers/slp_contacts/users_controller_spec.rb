@@ -13,5 +13,14 @@ module SlpContacts
       end
     end
 
+    describe "GET #favorite" do
+      it "slp_contacts_favorite table's count adds 1" do
+        contact = Fabricate(:user, name: "xx")
+        expect{
+          xhr :get, :favorite, { id: contact.id, format: :js }, valid_session
+          }.to change(Favorite, :count).by(1)
+      end
+    end
+
   end
 end
