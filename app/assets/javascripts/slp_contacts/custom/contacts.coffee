@@ -37,6 +37,7 @@ $ ->
       if $('#contacts_list').length and $('#contacts_thumbnail_list').length
         @enableViewTab()
         @initContactsView()
+      @enableQueryUI() if $('#query_sticker').length
       @enableQueryUser() if $('#query_user').length
       @enableQueryOrganization() if $('#query_organization').length
 
@@ -98,36 +99,23 @@ $ ->
         $(document).on 'upScroll', ->
           closeAccordion()
 
-    enableQueryUser: ->
-      user_id = 1
-      $sticker = $('#query_user')
+    enableQueryUI: ->
+      $sticker = $('#query_sticker')
       $query_trigger = $sticker.find('.ui.search')
+      query_data = $sticker.data()
 
-      $sticker.on 'click', '.right-side i', ->
-        $sticker.addClass('query-user')
+      $sticker
+        .on 'click', '.open-query', ->
+          $sticker.addClass('query-view')
+          $sticker.find('.query-input').focus()
+        .on 'click', '.close-query', ->
+          $sticker.removeClass('query-view')
+
       $query_trigger.search
         apiSettings:
-          action: 'query user'
+          action: query_data.queryaction
           urlData:
-            id: user_id
-          onError: (err_msg, element)->
-            console.log err_msg
-        onSelect: (result, response)->
-          $sticker.removeClass('query-user')
-        searchFullText: false
-
-    enableQueryOrganization: ->
-      organization_id = 1
-      $sticker = $('#query_organization')
-      $query_trigger = $sticker.find('.ui.search')
-
-      $sticker.on 'click', '.title', ->
-        $sticker.addClass('query-view')
-      $query_trigger.search
-        apiSettings:
-          action: 'query organization'
-          urlData:
-            id: organization_id
+            id: parseInt query_data.urlid
           onError: (err_msg, element)->
             console.log err_msg
         onSelect: (result, response)->

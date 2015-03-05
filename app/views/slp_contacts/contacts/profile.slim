@@ -1,13 +1,14 @@
-.sticky-header#query_user
+.sticky-header#query_sticker data-queryaction='query user' data-urlid='user_id'
   .right-side
-    i.fa.fa-search
+    i.fa.fa-search.open-query
   .center-box
     .title 通讯录
   .query-container
+    i.fa.fa-times.close-query
+    i.fa.fa-search
     .ui.search
-      .ui.icon.input
+      .ui.input
         input.prompt.query-input type="text" placeholder="请输入..."
-        i.fa.fa-search.icon
       .results
 
 .main-content

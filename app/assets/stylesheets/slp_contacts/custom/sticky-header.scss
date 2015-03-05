@@ -39,10 +39,6 @@ $sticky-height: 2.7rem;
 
   .query-container {
     display: none;
-
-    .query-input {
-      padding: .4rem 1rem;
-    }
   }
 
   i.fa {
@@ -51,43 +47,45 @@ $sticky-height: 2.7rem;
   }
 
   &.query-view {
-    display: table;
+    display: block;
 
     &>* {
-      display: table-cell;
-    }
-
-    .center-box {
       display: none;
     }
 
-    .left-side, .right-side {
-      position: relative;
-      width: 1%;
-      white-space: nowrap;
-    }
-
     .query-container {
-      display: table-cell;
+      display: block;
       width: 100%;
-    }
-  }
-
-  &.query-user {
-    .right-side, .center-box {
-      display: none;
+      background-color: rgba(224, 224, 224, .26);
     }
 
-    .query-container {
+    .fa-times, .fa-search {
+      position: absolute;
+      z-index: 2;
+      top: .6em;
+      cursor: pointer;
+    }
+
+    .fa-times {
+      right: .5em;
+    }
+
+    .fa-search {
+      left: .5em;
+    }
+
+    .ui.input {
       display: block;
     }
 
-    .ui.search {
-      padding: 0 1em;
-    }
+    .query-input {
+      border: none;
+      padding: .4rem 2.4em;
+      background-color: transparent;
 
-    .ui.icon.input {
-      display: block;
+      &:focus {
+        background-color: transparent;
+      }
     }
   }
 }

@@ -1,18 +1,20 @@
-.sticky-header#query_organization
+.sticky-header#query_sticker data-queryaction="query organization" data-urlid="organization_id"
   .left-side
     i.fa.fa-long-arrow-left
-  .query-container
-    .ui.category.search
-      .ui.icon.input
-        input.prompt.query-input type="text" placeholder="请输入..."
-        i.fa.fa-search.icon
-      .results
   .right-side
-    i.fa.fa-search
+    i.fa.fa-search.open-query
     | &nbsp;&nbsp;
     i.fa.fa-ellipsis-h#toggle_sidebar
   .center-box
     .title Sales
+  .query-container
+    i.fa.fa-times.close-query
+    i.fa.fa-search
+    .ui.search
+      .ui.input
+        input.query-input.prompt type="text" placeholder="请输入..."
+      .results
+
 #settings_sidebar.ui.top.sidebar
   .inner-container
     .ui.center.aligned.header 查看方式
