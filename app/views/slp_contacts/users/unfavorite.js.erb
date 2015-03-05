@@ -1,0 +1,1 @@
+$("#contact-<%= @user.id %>").html('<%= escape_javascript(render partial: "favorite", locals: {user: @user}) %>')
