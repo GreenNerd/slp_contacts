@@ -48,8 +48,10 @@
 
   .bg-img {
     height: 15rem;
-    background-image: url('http://placehold.it/800x600');
-    background-position: center center;
+
+    img {
+      max-height: 100%;
+    }
   }
 
   .user-name {
