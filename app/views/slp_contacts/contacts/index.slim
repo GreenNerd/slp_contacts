@@ -8,12 +8,23 @@
         i.fa.fa-search.icon
       .results
   .right-side
-    i.fa.fa-chevron-down#toggle_sidebar
+    i.fa.fa-search
     | &nbsp;&nbsp;
-    i.fa.fa-th-list.view-toggler
+    i.fa.fa-ellipsis-h#toggle_sidebar
   .center-box
     .title Sales
-.main-content.with-sticky-footer.pusher
+#settings_sidebar.ui.top.sidebar
+  .inner-container
+    .ui.center.aligned.header 查看方式
+    .two.fluid.ui.buttons
+      .ui.button tab-target='#contacts_list'
+        i.fa.fa-th-list.icon
+        | 列表
+      .ui.active.button tab-target='#contacts_thumbnail_list'
+        i.fa.fa-th.icon
+        | 网格
+
+#main_content.with-sticky-footer.pusher
   #organization_list.ui.accordion
     .title
     .content

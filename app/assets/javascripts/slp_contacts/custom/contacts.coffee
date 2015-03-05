@@ -32,20 +32,20 @@ $ ->
   ContactCtrl =
     init: ->
       @enableOrganizationAccordion()
+      @enableSettingsSidebar() if $('#settings_sidebar').length
       @setApiSettings()
-      @initContactsView() if $('#contacts_list').length and $('#contacts_thumbnail_list').length
+      if $('#contacts_list').length and $('#contacts_thumbnail_list').length
+        @enableViewTab()
+        @initContactsView()
       @enableQueryUser() if $('#query_user').length
       @enableQueryOrganization() if $('#query_organization').length
 
     initContactsView: ->
+      @$activedView = $('#contacts_thumbnail_list')
       @contactsCollection = new SLPContacts.Collections.UserCollection testdata.contacts
       @createContactsGridView()
       @createContactsListView()
       @enableLoadMore()
-
-      $('#query_organization').on 'click', '.view-toggler', (event)=>
-        $(event.target).closest('.view-toggler').toggleClass('fa-th').toggleClass('fa-th-list')
-        @toggleListView()
 
     setApiSettings: ->
       apiSettings =
@@ -53,6 +53,34 @@ $ ->
           'query user': 'users/{id}?name={query}'
           'query organization': 'organizations/{id}?name={query}'
       $.extend $.fn.api.settings, apiSettings
+
+    enableSettingsSidebar: ->
+      $sidebar = $('#settings_sidebar')
+      $toggler = $('#toggle_sidebar')
+      $sidebar
+        .sidebar 'setting', 'transition', 'overlay'
+        .sidebar 'setting', 'onVisible', ->
+          $toggler.one 'click', ->
+            $sidebar.sidebar('hide')
+        .sidebar 'setting', 'onHidden', ->
+          $toggler.one 'click', ->
+            $sidebar.sidebar('show')
+
+      $toggler.one 'click', (event)->
+        event.stopPropagation()
+        $sidebar.sidebar('show')
+
+    enableViewTab: ->
+      $('#settings_sidebar').on 'click', '.ui.button', (event)=>
+        @$activedView.hide()
+        $this = $(event.target).closest('.ui.button')
+        $target = $ $this.attr('tab-target')
+        unless $this.hasClass('active')
+          $target.show()
+          @$activedView = $target
+          $this.siblings('.active').removeClass('active')
+          $this.addClass('active')
+        $('#settings_sidebar').sidebar('hide')
 
     enableOrganizationAccordion: ->
       $organization_list = $('#organization_list')
@@ -115,10 +143,6 @@ $ ->
       @contactsListView = new SLPContacts.Views.UsersListView
         collection: @contactsCollection
         el: '#contacts_list'
-
-    toggleListView: ->
-      @contactsGridView.$el.toggle()
-      @contactsListView.$el.toggle()
 
     enableLoadMore: ->
       $loadMoreCtrl = $('#load_more')
