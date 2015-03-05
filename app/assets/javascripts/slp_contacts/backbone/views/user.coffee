@@ -2,7 +2,7 @@ class SLPContacts.Views.UserView extends Backbone.View
   tagName: 'div'
 
   renderGrid: ->
-    @$el.addClass('column')
+    @$el.addClass('ui column center aligned')
     @$el.html _.template(SLPContacts.Templates.UserGridTemplate)(@model.toJSON())
 
   renderList: ->
@@ -24,6 +24,10 @@ class SLPContacts.Views.UsersView extends Backbone.View
       model: user
       CollectionView: @
     @$el.append user_view.$el
+
+  append: (models)->
+    _.each models, (model)=>
+      @renderItem(model)
 
 class SLPContacts.Views.UsersGridView extends SLPContacts.Views.UsersView
   renderItem: (user)->

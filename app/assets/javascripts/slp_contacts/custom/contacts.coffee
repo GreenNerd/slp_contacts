@@ -16,6 +16,18 @@ $ ->
         phone: 15872384724
       }
     ]
+    contacts2: [
+      {
+        name: '砍了就跑'
+        phone: 18677274273
+        favorited: true
+      }
+      {
+        name: '呆瓜'
+        phone: 17328983439
+        favorited: true
+      }
+    ]
 
   ContactCtrl =
     init: ->
@@ -29,6 +41,7 @@ $ ->
       @contactsCollection = new SLPContacts.Collections.UserCollection testdata.contacts
       @createContactsGridView()
       @createContactsListView()
+      @enableLoadMore()
 
       $('#query_organization').on 'click', '.view-toggler', (event)=>
         $(event.target).closest('.view-toggler').toggleClass('fa-th').toggleClass('fa-th-list')
@@ -103,5 +116,31 @@ $ ->
     toggleListView: ->
       @contactsGridView.$el.toggle()
       @contactsListView.$el.toggle()
+
+    enableLoadMore: ->
+      $loadMoreCtrl = $('#load_more')
+      SLPContacts.Cache.Contact_page ?= 1
+      SLPContacts.Cache.Contact_maymore = if @contactsCollection.length >= SLPContacts.Settings.per_page then true else false
+      if SLPContacts.Cache.Contact_maymore
+        $loadMoreCtrl.text('加载更多')
+      else
+        $loadMoreCtrl.text('已经加载完啦!')
+      $loadMoreCtrl.on 'click', (event)=>
+        event.stopPropagation()
+        @loadMoreContacts SLPContacts.Cache.Contact_page + 1 if SLPContacts.Cache.Contact_maymore
+
+    loadMoreContacts: (page)->
+      @contactsCollection.fetch
+        page: page
+      , (response)=>
+        SLPContacts.Cache.Contact_page += 1
+        new_data = @contactsCollection.add(response)
+        @contactsListView.append(new_data)
+        @contactsGridView.append(new_data)
+        if response.length < SLPContacts.Settings.per_page
+          SLPContacts.Cache.Contact_maymore = false
+          $('#load_more').text('已经加载完啦!')
+        else
+          SLPContacts.Cache.Contact_maymore = true
 
   ContactCtrl.init()

@@ -9,3 +9,6 @@
   Collections: {}
   Views: {}
   Templates: {}
+  Cache: {}
+  Settings:
+    per_page: 24
