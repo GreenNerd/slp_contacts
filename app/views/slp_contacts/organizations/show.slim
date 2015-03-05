@@ -1,0 +1,47 @@
+.sticky-header#query_sticker data-queryaction="query organization" data-urlid="organization_id"
+  .left-side
+    i.fa.fa-long-arrow-left
+  .right-side
+    i.fa.fa-search.open-query
+    | &nbsp;&nbsp;
+    i.fa.fa-ellipsis-h#toggle_sidebar
+  .center-box
+    .title= @organization.name
+  .query-container
+    i.fa.fa-times.close-query
+    i.fa.fa-search
+    .ui.search
+      .ui.input
+        input.query-input.prompt type="text" placeholder="请输入..."
+      .results
+
+#settings_sidebar.ui.top.sidebar
+  .inner-container
+    .ui.center.aligned.header 查看方式
+    .two.fluid.ui.buttons
+      .ui.button tab-target='#contacts_list'
+        i.fa.fa-th-list.icon
+        | 列表
+      .ui.active.button tab-target='#contacts_thumbnail_list'
+        i.fa.fa-th.icon
+        | 网格
+
+#main_content.with-sticky-footer.pusher
+  #organization_list.ui.accordion
+    .title
+    .content
+      .ui.celled.list
+        - if @organization.children.count == 0
+          .with-empty-item 该组织还没有下级组织。
+        - else
+          - @organization.children.each do |organization|
+            = link_to organization_path(organization), class: 'item' do
+              .right.floated.compact
+                i.fa.fa-chevron-right
+              .content= organization.name
+  p.title.message 向下拉查看下级组织的联系人
+  #contacts_list.ui.celled.very.relaxed.list
+  #contacts_thumbnail_list.ui.three.column.padded.grid
+
+.sticky-footer
+  a#load_more href="##" 加载更多

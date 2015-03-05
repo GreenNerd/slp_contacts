@@ -6,7 +6,7 @@
 
 #main_content
   #organization_index_list.ui.celled.list
-    - if @organizations.length === 0
+    - if @organizations.count == 0
       .with-empty-item 您当前还不属于任何一个组织。
     - else
       - @organizations.each do |organization|
