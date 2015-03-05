@@ -31,7 +31,7 @@ $ ->
 
   ContactCtrl =
     init: ->
-      @enableOrganizationSidebar()
+      @enableOrganizationAccordion()
       @setApiSettings()
       @initContactsView() if $('#contacts_list').length and $('#contacts_thumbnail_list').length
       @enableQueryUser() if $('#query_user').length
@@ -54,18 +54,21 @@ $ ->
           'query organization': 'organizations/{id}?name={query}'
       $.extend $.fn.api.settings, apiSettings
 
-    enableOrganizationSidebar: ->
-      organization_sidebar = $('#organization_list')
-        .sidebar 'setting', 'onVisible', ->
-          $('#toggle_sidebar').removeClass('fa-chevron-down').addClass('fa-chevron-up')
-        .sidebar 'setting', 'onHidden', ->
-          $('#toggle_sidebar').removeClass('fa-chevron-up').addClass('fa-chevron-down')
-      $('#toggle_sidebar').click (event)->
-        event.stopPropagation()
-        if $(this).hasClass('fa-chevron-down')
-          organization_sidebar.sidebar('show')
-        else
-          organization_sidebar.sidebar('hide')
+    enableOrganizationAccordion: ->
+      $organization_list = $('#organization_list')
+      trigger_pull = false
+
+      openAccordion = ->
+        $organization_list.accordion 'open', 0
+      closeAccordion = ->
+        $organization_list.accordion 'close', 0
+
+      $(document).on 'pullTop', ->
+        openAccordion()
+
+      $organization_list.accordion 'setting', 'onOpen', ->
+        $(document).on 'upScroll', ->
+          closeAccordion()
 
     enableQueryUser: ->
       user_id = 1

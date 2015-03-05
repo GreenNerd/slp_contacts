@@ -4,6 +4,9 @@ html, body {
 }
 
 .main-content {
+  position: relative;
+  min-height: 100%;
+
   &.with-sticky-footer {
     $sticky-footer-height: 2.5rem;
 

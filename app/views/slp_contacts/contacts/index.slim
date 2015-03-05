@@ -13,30 +13,32 @@
     i.fa.fa-th-list.view-toggler
   .center-box
     .title Sales
-#organization_list.ui.top.sidebar
-  p.ui.header 下级组织
-  .ui.four.column.padded.page.grid
-    .column
-      .content-box
-        .centered-box
-          .content 西北大区
-    .column
-      .content-box
-        .centered-box
-          .content 计算机科学与技术
-    .column
-      .content-box
-        .centered-box
-          .content 华中大区
-    .column
-      .content-box
-        .centered-box
-          .content 机械设计制造及其自动化(机电一体化)
-    .column
-      .content-box
-        .centered-box
-          .content 东南大区
 .main-content.with-sticky-footer.pusher
+  #organization_list.ui.accordion
+    .title
+    .content
+      .ui.celled.list
+        .item
+          .right.floated.compact
+            i.fa.fa-chevron-right
+          .content 西北大区
+        .item
+          .right.floated.compact
+            i.fa.fa-chevron-right
+          .content 计算机科学与技术
+        .item
+          .right.floated.compact
+            i.fa.fa-chevron-right
+          .content 华中大区
+        .item
+          .right.floated.compact
+            i.fa.fa-chevron-right
+          .content 机械设计制造及其自动化(机电一体化)
+        .item
+          .right.floated.compact
+            i.fa.fa-chevron-right
+          .content 东南大区
+  p.title.message 向下拉查看下级组织的联系人
   .ui.celled.very.relaxed.list#contacts_list
   #contacts_thumbnail_list.ui.three.column.padded.grid
 
