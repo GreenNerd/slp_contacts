@@ -130,7 +130,7 @@
   }
 }
 
-#organization_list {
+#organization_list, #organization_index_list {
   .item {
     padding: 1em 1.2em;
 
@@ -194,4 +194,10 @@ p.message {
       }
     }
   }
+}
+
+.with-empty-item {
+  padding: 1em;
+  text-align: center;
+  font-size: .9rem;
 }

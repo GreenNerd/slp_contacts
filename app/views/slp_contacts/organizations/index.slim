@@ -1,0 +1,16 @@
+.sticky-header
+  .left-side
+    i.fa.fa-long-arrow-left
+  .center-box
+    .title 所在组织
+
+#main_content
+  #organization_index_list.ui.celled.list
+    - if @organizations.length === 0
+      .with-empty-item 您当前还不属于任何一个组织。
+    - else
+      - @organizations.each do |organization|
+        = link_to organization_path(organization), class: 'item' do
+          .right.floated.compact
+            i.fa.fa-chevron-right
+          .content= organization.name
