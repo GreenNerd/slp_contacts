@@ -1,19 +1,10 @@
-.sticky-header#query_sticker data-queryaction="query organization" data-urlid="organization_id"
+.sticky-header
   .left-side
     i.fa.fa-long-arrow-left
   .right-side
-    i.fa.fa-search.open-query
-    | &nbsp;&nbsp;
     i.fa.fa-ellipsis-h#toggle_sidebar
   .center-box
-    .title Sales
-  .query-container
-    i.fa.fa-times.close-query
-    i.fa.fa-search
-    .ui.search
-      .ui.input
-        input.query-input.prompt type="text" placeholder="请输入..."
-      .results
+    .title 我的收藏
 
 #settings_sidebar.ui.top.sidebar
   .inner-container
@@ -27,32 +18,7 @@
         | 网格
 
 #main_content.with-sticky-footer.pusher
-  #organization_list.ui.accordion
-    .title
-    .content
-      .ui.celled.list
-        .item
-          .right.floated.compact
-            i.fa.fa-chevron-right
-          .content 西北大区
-        .item
-          .right.floated.compact
-            i.fa.fa-chevron-right
-          .content 计算机科学与技术
-        .item
-          .right.floated.compact
-            i.fa.fa-chevron-right
-          .content 华中大区
-        .item
-          .right.floated.compact
-            i.fa.fa-chevron-right
-          .content 机械设计制造及其自动化(机电一体化)
-        .item
-          .right.floated.compact
-            i.fa.fa-chevron-right
-          .content 东南大区
-  p.title.message 向下拉查看下级组织的联系人
-  .ui.celled.very.relaxed.list#contacts_list
+  #contacts_list.ui.celled.very.relaxed.list
   #contacts_thumbnail_list.ui.three.column.padded.grid
 
 .sticky-footer
