@@ -3,6 +3,13 @@ class SLPContacts.Views.UserView extends Backbone.View
   events:
     'click .compact': 'toggleFavorite'
 
+  render: (type)->
+    switch type
+      when 'list'
+        @renderList()
+      else
+        @renderGrid()
+
   renderGrid: ->
     @$el.addClass('ui column center aligned')
     @$el.html _.template(SLPContacts.Templates.UserGridTemplate)(@model.toJSON())
@@ -22,36 +29,30 @@ class SLPContacts.Views.UserView extends Backbone.View
 
 class SLPContacts.Views.UsersView extends Backbone.View
   initialize: (options)->
+    @type = options.type
     @render()
 
   render: ->
-    @$el.html ''
+    @$el.removeClass().html ''
+    switch @type
+      when 'list'
+        @$el.addClass 'ui celled very relaxed list'
+      else
+        @$el.addClass 'ui three column padded grid'
     _.each @collection.models, (model)=>
       @renderItem(model)
+
+  reRender: (type)->
+    @type = type
+    @render()
 
   renderItem: (user)->
     user_view = new SLPContacts.Views.UserView
       model: user
       CollectionView: @
+    user_view.render @type
     @$el.append user_view.$el
 
   append: (models)->
     _.each models, (model)=>
       @renderItem(model)
-
-class SLPContacts.Views.UsersGridView extends SLPContacts.Views.UsersView
-  renderItem: (user)->
-    user_view = new SLPContacts.Views.UserView
-      model: user
-      CollectionView: @
-    user_view.renderGrid()
-    @$el.append user_view.$el
-
-class SLPContacts.Views.UsersListView extends SLPContacts.Views.UsersView
-  renderItem: (user)->
-    user_view = new SLPContacts.Views.UserView
-      model: user
-      CollectionView: @
-    user_view.renderList()
-    @$el.append user_view.$el
-

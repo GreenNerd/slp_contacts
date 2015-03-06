@@ -2,10 +2,10 @@
   .inner-container
     .ui.center.aligned.header 查看方式
     .two.fluid.ui.buttons
-      .ui.button tab-target='#contacts_list'
+      .ui.button tab-target='list'
         i.fa.fa-th-list.icon
         | 列表
-      .ui.active.button tab-target='#contacts_thumbnail_list'
+      .ui.button tab-target='grid'
         i.fa.fa-th.icon
         | 网格
 
@@ -40,8 +40,7 @@
                 i.fa.fa-chevron-right
               .content= organization.name
   p.title.message 向下拉查看下级组织的联系人
-  #contacts_list.ui.celled.very.relaxed.list
-  #contacts_thumbnail_list.ui.three.column.padded.grid
+  #contacts_list
 
 .sticky-footer
   a#load_more href="##" 加载更多

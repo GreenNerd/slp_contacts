@@ -1,6 +1,5 @@
 #contacts_list {
   margin: 0;
-  display: none;
 
   .item {
     padding: .6rem 1.1rem;
@@ -26,9 +25,7 @@
     width: 3.6rem;
     height: 3.6rem;
   }
-}
 
-#contacts_thumbnail_list {
   img.circular {
     width: 4rem;
     height: 4rem;

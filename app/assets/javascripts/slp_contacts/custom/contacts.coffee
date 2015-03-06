@@ -34,19 +34,17 @@ $ ->
 
   ContactCtrl =
     init: ->
+      @setApiSettings()
       @enableOrganizationAccordion() if $('#organization_list').length
       @enableSettingsSidebar() if $('#settings_sidebar').length
-      @setApiSettings()
-      if $('#contacts_list').length and $('#contacts_thumbnail_list').length
-        @enableViewTab()
-        @initContactsView()
+      @initContactsView() if $('#contacts_list').length
       @enableQueryUI() if $('#query_sticker').length
 
     initContactsView: ->
-      @$activedView = $('#contacts_thumbnail_list')
+      contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
       @contactsCollection = new SLPContacts.Collections.UserCollection testdata.contacts
-      @createContactsGridView()
-      @createContactsListView()
+      @createContactsView contactViewType
+      @enableViewTab()
       @enableLoadMore()
 
     setApiSettings: ->
@@ -73,15 +71,18 @@ $ ->
         $sidebar.sidebar('show')
 
     enableViewTab: ->
+      contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
+      $('#settings_sidebar').find("[tab-target=#{contactViewType}]").addClass('active')
+
       $('#settings_sidebar').on 'click', '.ui.button', (event)=>
-        @$activedView.hide()
         $this = $(event.target).closest('.ui.button')
-        $target = $ $this.attr('tab-target')
+        target_type = $this.attr('tab-target')
         unless $this.hasClass('active')
-          $target.show()
-          @$activedView = $target
           $this.siblings('.active').removeClass('active')
           $this.addClass('active')
+
+          @contactsView.reRender target_type
+          localStorage.setItem 'SLPContactViewType', target_type
         $('#settings_sidebar').sidebar('hide')
 
     enableOrganizationAccordion: ->
@@ -122,15 +123,11 @@ $ ->
           $sticker.removeClass('query-view')
         searchFullText: false
 
-    createContactsGridView: ->
-      @contactsGridView = new SLPContacts.Views.UsersGridView
-        collection: @contactsCollection
-        el: '#contacts_thumbnail_list'
-
-    createContactsListView: ->
-      @contactsListView = new SLPContacts.Views.UsersListView
+    createContactsView: (type)->
+      @contactsView = new SLPContacts.Views.UsersView
         collection: @contactsCollection
         el: '#contacts_list'
+        type: type
 
     enableLoadMore: ->
       $loadMoreCtrl = $('#load_more')
@@ -150,8 +147,8 @@ $ ->
       , (response)=>
         SLPContacts.Cache.Contact_page += 1
         new_data = @contactsCollection.add(response)
-        @contactsListView.append(new_data)
-        @contactsGridView.append(new_data)
+        @contactsView.append(new_data)
+
         if response.length < SLPContacts.Settings.per_page
           SLPContacts.Cache.Contact_maymore = false
           $('#load_more').text('已经加载完啦!')
