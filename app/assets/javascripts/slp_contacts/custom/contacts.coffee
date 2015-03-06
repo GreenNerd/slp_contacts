@@ -139,7 +139,7 @@ $ ->
       if SLPContacts.Cache.Contact_maymore
         $loadMoreCtrl.text('加载更多')
       else
-        $loadMoreCtrl.text('已经加载完啦!')
+        $loadMoreCtrl.closest('.sticky-footer').remove()
       $loadMoreCtrl.on 'click', (event)=>
         event.stopPropagation()
         @loadMoreContacts SLPContacts.Cache.Contact_page + 1 if SLPContacts.Cache.Contact_maymore
