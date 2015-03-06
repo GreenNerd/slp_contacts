@@ -30,7 +30,7 @@
   #organization_list.ui.accordion
     .title
     .content
-      .ui.celled.list
+      .ui.divided.list
         - if @organization.children.count == 0
           .with-empty-item 该组织还没有下级组织。
         - else

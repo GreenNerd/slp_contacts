@@ -34,15 +34,13 @@ $ ->
 
   ContactCtrl =
     init: ->
-      @enableOrganizationAccordion()
+      @enableOrganizationAccordion() if $('#organization_list').length
       @enableSettingsSidebar() if $('#settings_sidebar').length
       @setApiSettings()
       if $('#contacts_list').length and $('#contacts_thumbnail_list').length
         @enableViewTab()
         @initContactsView()
       @enableQueryUI() if $('#query_sticker').length
-      @enableQueryUser() if $('#query_user').length
-      @enableQueryOrganization() if $('#query_organization').length
 
     initContactsView: ->
       @$activedView = $('#contacts_thumbnail_list')
@@ -88,7 +86,6 @@ $ ->
 
     enableOrganizationAccordion: ->
       $organization_list = $('#organization_list')
-      trigger_pull = false
 
       openAccordion = ->
         $organization_list.accordion 'open', 0
