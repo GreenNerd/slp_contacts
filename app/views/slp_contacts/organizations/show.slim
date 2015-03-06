@@ -1,3 +1,14 @@
+#settings_sidebar.ui.top.sidebar
+  .inner-container
+    .ui.center.aligned.header 查看方式
+    .two.fluid.ui.buttons
+      .ui.button tab-target='#contacts_list'
+        i.fa.fa-th-list.icon
+        | 列表
+      .ui.active.button tab-target='#contacts_thumbnail_list'
+        i.fa.fa-th.icon
+        | 网格
+
 .sticky-header#query_sticker data-queryaction="query organization" data-urlid="organization_id"
   .left-side
     i.fa.fa-long-arrow-left
@@ -14,17 +25,6 @@
       .ui.input
         input.query-input.prompt type="text" placeholder="请输入..."
       .results
-
-#settings_sidebar.ui.top.sidebar
-  .inner-container
-    .ui.center.aligned.header 查看方式
-    .two.fluid.ui.buttons
-      .ui.button tab-target='#contacts_list'
-        i.fa.fa-th-list.icon
-        | 列表
-      .ui.active.button tab-target='#contacts_thumbnail_list'
-        i.fa.fa-th.icon
-        | 网格
 
 #main_content.with-sticky-footer.pusher
   #organization_list.ui.accordion
