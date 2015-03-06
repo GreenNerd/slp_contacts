@@ -21,8 +21,8 @@
 #main_content
   #contact_detail
     .cover-image
-      .bg-img
-        img.ui.fluid.image src="http://placehold.it/960x600" alt="user_pic"
+      .bg-img style="background-image: url('http://placehold.it/800x600');"
+      .mask
       .user-name= @user.name
     - if current_user == @user
       .extra-links.ui.center.aligned.two.column.padded.divided.grid
