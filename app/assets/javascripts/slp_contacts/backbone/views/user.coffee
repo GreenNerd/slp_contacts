@@ -1,5 +1,7 @@
 class SLPContacts.Views.UserView extends Backbone.View
   tagName: 'div'
+  events:
+    'click .compact': 'toggleFavorite'
 
   renderGrid: ->
     @$el.addClass('ui column center aligned')
@@ -8,6 +10,14 @@ class SLPContacts.Views.UserView extends Backbone.View
   renderList: ->
     @$el.addClass('item')
     @$el.html _.template(SLPContacts.Templates.UserListTemplate)(@model.toJSON())
+
+  toggleFavorite: ->
+    $favorite = @$('.compact')
+    @model.toggleFavorite ()=>
+      if @model.favorited
+        $favorite.removeClass('secondary').addClass('basic').text('取消')
+      else
+        $favorite.removeClass('basic').addClass('secondary').text('收藏')
 
 
 class SLPContacts.Views.UsersView extends Backbone.View

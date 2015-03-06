@@ -3,16 +3,19 @@ $ ->
     contacts: [
       {
         name: '郑晶晶'
+        id: 2
         phone: 15882890324
         favorited: false
       }
       {
         name: '张光'
+        id: 3
         phone: 15278687812
         favorited: true
       }
       {
         name: '鲁臻'
+        id: 4
         phone: 15872384724
       }
     ]
