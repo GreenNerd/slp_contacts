@@ -72,11 +72,11 @@ $ ->
 
     enableViewTab: ->
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
-      $('#settings_sidebar').find("[tab-target=#{contactViewType}]").addClass('active')
+      $('#settings_sidebar').find("[tab-target-type=#{contactViewType}]").addClass('active')
 
       $('#settings_sidebar').on 'click', '.ui.button', (event)=>
         $this = $(event.target).closest('.ui.button')
-        target_type = $this.attr('tab-target')
+        target_type = $this.attr('tab-target-type')
         unless $this.hasClass('active')
           $this.siblings('.active').removeClass('active')
           $this.addClass('active')
