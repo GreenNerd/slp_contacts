@@ -2,13 +2,12 @@ require_dependency "slp_contacts/application_controller"
 
 module SlpContacts
   class UsersController < ApplicationController
+    before_action :find_user
+    before_action :check_user, only: [:favorite, :unfavorite]
     def show
-      @user = User.find(params[:id])
     end
 
     def favorite
-      @user = User.find(params[:id])
-      redirect_to user_path(current_user) unless current_user != @user
       Favorite.create(user_id: current_user.id, contact_id: @user.id)
       respond_to do |f|
         f.js { render layout: false }
@@ -16,11 +15,28 @@ module SlpContacts
     end
 
     def unfavorite
-      @user = User.find(params[:id])
-      redirect_to user_path(current_user) unless current_user != @user
-      Favorite.find_by(user_id: current_user.id, contact_id: @user.id).destroy
+      favorite = Favorite.find_by(user_id: current_user.id, contact_id: @user.id)
+      if favorite
+        favorite.destroy
+      else
+        render js: "alert('没有收藏该联系人！');"
+        return
+      end
       respond_to do |f|
         f.js { render layout: false }
+      end
+    end
+
+    private
+
+    def find_user
+      @user = User.find_by(id: params[:id])
+      raise UserNotFound unless @user
+    end
+
+    def check_user
+      if current_user == @user
+        render js: "alert('不能收藏自己！');", status: 403
       end
     end
 
