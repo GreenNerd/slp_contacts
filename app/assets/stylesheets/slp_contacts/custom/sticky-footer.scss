@@ -1,0 +1,20 @@
+$sticky-footer-height: 2.5rem;
+
+.sticky-footer {
+  height: $sticky-footer-height;
+  text-align: center;
+  line-height: $sticky-footer-height;
+  display: block;
+  position: relative;
+  z-index: 2;
+  background-color: #3C3E49;
+  color: white;
+
+  a {
+    color: white;
+  }
+}
+
+.pusher.dimmed ~ .sticky-footer {
+  visibility: hidden;
+}

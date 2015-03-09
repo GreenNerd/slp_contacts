@@ -1,0 +1,24 @@
+html, body {
+  background-color: white;
+  font-size: 16px;
+}
+
+#main_content {
+  position: relative;
+  min-height: 100%;
+  background-color: white;
+
+  &.with-sticky-footer {
+    $sticky-footer-height: 2.5rem;
+
+    margin-bottom: -$sticky-footer-height;
+
+    &:not(.dimmed)::after {
+      content: '...';
+      position: relative;
+      display: block;
+      height: $sticky-footer-height;
+      visibility: hidden;
+    }
+  }
+}

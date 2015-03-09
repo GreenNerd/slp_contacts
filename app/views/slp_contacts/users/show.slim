@@ -1,0 +1,100 @@
+- if current_user == @user
+  .sticky-header#query_sticker data-queryaction='query user' data-urlid='user_id'
+    .right-side
+      i.fa.fa-search.open-query
+    .center-box
+      .title 通讯录
+    .query-container
+      i.fa.fa-times.close-query
+      i.fa.fa-search
+      .ui.search
+        .ui.input
+          input.prompt.query-input type="text" placeholder="请输入..."
+        .results
+- else
+  .sticky-header
+    .left-side
+      i.fa.fa-long-arrow-left
+    .center-box
+      .title 详细信息
+
+#main_content
+  #contact_detail
+    .cover-image
+      .bg-img style="background-image: url('http://placehold.it/800x600');"
+      .mask
+      .user-name= @user.name
+    - if current_user == @user
+      .extra-links.ui.center.aligned.two.column.padded.divided.grid
+        .column
+          .ui.mini.statistic
+            .value 32
+            .label
+              i.fa.fa-star &nbsp;
+              | 收藏
+        .column
+          = link_to organizations_path, class: 'ui mini statistic' do
+            .value= @user.organizations.count
+            .label
+              i.fa.fa-sitemap &nbsp;
+              | 所在组织
+    - else
+      .contact-opreate.ui.center.aligned.three.column.padded.grid
+        .column
+          = link_to '##', class: 'ui mini statistic' do
+            .value
+              i.fa.fa-phone
+            .label 电话
+        .column
+          = link_to '##', class: 'ui mini statistic' do
+            .value
+              i.fa.fa-envelope
+            .label 短信
+        .column
+          - if favorite?(current_user, @user)
+            .ui.mini.statistic.active
+              .value
+                i.fa.fa-star
+              .label 取消
+          - else
+            .ui.mini.statistic
+              .value
+                i.fa.fa-star-o
+              .label 收藏
+
+    .more-detail
+      table.ui.very.basic.table.unstackable
+        colgroup
+          col style="width: 30%;"
+          col style="width: 70%;"
+        tbody
+          tr
+            td.label 识别码
+            td.right.aligned= @user.identifier
+          tr
+            td.label 手机号
+            td.right.aligned= @user.phone
+          tr
+            td.label 所在组织
+            td.right.aligned
+              - if @user.organizations.count == 0
+                span
+                  - if current_user == @user
+                    | 您不属于任何组织
+                  - else
+                    | 他不属于任何组织
+              - else
+                - @user.organizations.each do |organization|
+                  = link_to organization.name, organization_path(organization), class: 'ui mini label'
+          tr
+            td.label 标签
+            td.right.aligned
+              - if @user.tags.count == 0
+                span
+                  - if current_user == @user
+                    | 您还没有任何的标签
+                  - else
+                    | 他还没有任何的标签
+              - else
+                - @user.tags.each do |tag|
+                  .ui.mini.label= tag.name
