@@ -36,7 +36,7 @@ module SlpContacts
 
     def check_user
       if current_user == @user
-        render js: "alert('不能收藏自己！');"
+        render js: "alert('不能收藏自己！');", status: 403
       end
     end
 
