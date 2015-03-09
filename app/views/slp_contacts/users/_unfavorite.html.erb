@@ -1,3 +1,7 @@
-<%= form_tag unfavorite_user_path(user), method: :delete, remote: true do %>
-  <%= submit_tag "取消" %>
+<%= link_to unfavorite_user_path(user), method: :delete, remote: true do %>
+  <div class="ui mini statistic active">
+    <div class="value"> <i class="fa fa-star"></i>
+    </div>
+      <div class="label">取消</div>
+  </div>
 <% end %> 

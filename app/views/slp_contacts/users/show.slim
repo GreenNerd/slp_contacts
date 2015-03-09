@@ -21,14 +21,14 @@
 #main_content
   #contact_detail
     .cover-image
-      .bg-img style="background-image: url('http://placehold.it/800x600');"
+      .bg-img style="background-image: url('= @user.headimgurl');"
       .mask
       .user-name= @user.name
     - if current_user == @user
       .extra-links.ui.center.aligned.two.column.padded.divided.grid
         .column
           .ui.mini.statistic
-            .value 32
+            .value = favorite_count(@user)
             .label
               i.fa.fa-star &nbsp;
               | 收藏
@@ -51,16 +51,11 @@
               i.fa.fa-envelope
             .label 短信
         .column
-          - if favorite?(current_user, @user)
-            .ui.mini.statistic.active
-              .value
-                i.fa.fa-star
-              .label 取消
-          - else
-            .ui.mini.statistic
-              .value
-                i.fa.fa-star-o
-              .label 收藏
+          div id="contact-#{@user.id}"
+            - if favorite?(current_user, @user)
+              = render partial: "unfavorite", locals: {user: @user}
+            - else
+              = render partial: "favorite", locals: {user: @user}
 
     .more-detail
       table.ui.very.basic.table.unstackable

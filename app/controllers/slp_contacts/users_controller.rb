@@ -30,8 +30,12 @@ module SlpContacts
     private
 
     def find_user
-      @user = User.find_by(id: params[:id])
-      raise UserNotFound unless @user
+      if params[:id]
+        @user = User.find_by(id: params[:id])
+        raise UserNotFound unless @user
+      else
+        @user = current_user
+      end
     end
 
     def check_user
