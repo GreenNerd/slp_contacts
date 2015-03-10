@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   get :login, to: 'sessions#new'
 
-  mount SlpContacts::Engine => '/'
+  mount SlpContacts::Engine => '/contacts'
 end

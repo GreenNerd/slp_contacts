@@ -1,5 +1,6 @@
 require "kaminari"
 require "jquery-rails"
+require "jbuilder"
 
 module SlpContacts
   class Engine < ::Rails::Engine
