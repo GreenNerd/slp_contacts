@@ -3,7 +3,8 @@ module SlpContacts
     extend ActiveSupport::Concern
 
     included do
-      has_many :favorites, class_name: 'SlpContacts::Favorite', dependent: :destroy
+      has_many :favorites, class_name: 'SlpContacts::Favorite', foreign_key: :user_id, dependent: :destroy
+      has_many :favoriteds, class_name: 'SlpContacts::Favorite', foreign_key: :contact_id, dependent: :destroy
       has_many :favorited_contacts, through: :favorites, source: :contact
     end
 
