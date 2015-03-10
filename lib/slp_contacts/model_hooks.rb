@@ -28,6 +28,10 @@ module SlpContacts
           false
         end
       end
+
+      def favorited?(contact)
+        favorited_contacts.include? contact
+      end
     end
 
     def self.included(receiver)

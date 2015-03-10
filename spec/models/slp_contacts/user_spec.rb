@@ -13,6 +13,7 @@ module SlpContacts
     describe 'Respond to' do
       it { should respond_to(:favorite) }
       it { should respond_to(:unfavorite) }
+      it { should respond_to(:favorited?) }
     end
 
     describe '#favorite' do
@@ -63,6 +64,18 @@ module SlpContacts
 
       it 'retuns the contact after unfavorited' do
         expect(user.unfavorite(favorited_contact)).to eq favorited_contact
+      end
+    end
+
+    describe '#favorited?' do
+      let(:contact) { Fabricate :user }
+
+      it 'returns truthy when favorited' do
+        user.favorite contact
+        expect(user.favorited?(contact)).to be_truthy
+      end
+      it 'returns falsey when favorited' do
+        expect(user.favorited?(contact)).to be_falsey
       end
     end
   end
