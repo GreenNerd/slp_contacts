@@ -19,5 +19,9 @@ module SlpContacts
         request_specs: false
       g.fixture_replacement :fabrication
     end
+
+    initializer 'slp_contacts.model' do |app|
+      SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
+    end
   end
 end
