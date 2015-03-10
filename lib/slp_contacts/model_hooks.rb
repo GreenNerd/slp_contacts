@@ -13,21 +13,17 @@ module SlpContacts
 
     module InstanceMethods
       def favorite(contact)
-        if (self == contact) || (favorited_contacts.include? contact)
+        if self == contact
           false
         else
-          favorited_contacts << contact
+          favorited_contacts << contact unless favorited_contacts.include?(contact)
           contact
         end
       end
 
       def unfavorite(contact)
-        if favorited_contacts.include? contact
-          favorited_contacts.delete contact
-          contact
-        else
-          false
-        end
+        favorited_contacts.delete contact
+        contact
       end
 
       def favorited?(contact)

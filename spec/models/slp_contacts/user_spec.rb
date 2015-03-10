@@ -33,10 +33,10 @@ module SlpContacts
         expect(user.favorite(user)).to be_falsey
       end
 
-      it 'returns falsey when the contact is already favorited' do
+      it 'returns the contact when the contact is already favorited' do
         user.favorite unfavorited_contact
 
-        expect(user.favorite(unfavorited_contact)).to be_falsey
+        expect(user.favorite(unfavorited_contact)).to eq unfavorited_contact
       end
     end
 
