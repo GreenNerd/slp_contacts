@@ -1,6 +1,8 @@
 SlpContacts::Engine.routes.draw do
-  match '/', to: 'users#show', via: :get
-  match '/favorite', to: 'contacts#index', via: :get  
+  get '/', to: 'users#show'
+  get '/favorites', to: 'contacts#index'  
+  get '/favorites/query', to: 'contacts#query'
+  get '/query', to: 'users#query'
   resources :users, only: [:show] do
     member do
       post :favorite
@@ -8,5 +10,10 @@ SlpContacts::Engine.routes.draw do
     end
   end
   resources :contacts, only: [:index]
-  resources :organizations, only: [:index, :show]
+  resources :organizations, only: [:index, :show] do
+    member do
+      get :query
+    end
+  end
+  
 end
