@@ -21,17 +21,18 @@
 #main_content
   #contact_detail
     .cover-image
-      .bg-img style="background-image: url('= @user.headimgurl');"
+      .bg-img style="background-image: url(#{ @user.headimgurl});"
       .mask
       .user-name= @user.name
     - if current_user == @user
       .extra-links.ui.center.aligned.two.column.padded.divided.grid
         .column
-          .ui.mini.statistic
-            .value = favorite_count(@user)
-            .label
-              i.fa.fa-star &nbsp;
-              | 收藏
+          = link_to '/contacts/favorite' do
+            .ui.mini.statistic
+              .value = favorite_count(@user)
+              .label
+                i.fa.fa-star &nbsp;
+                | 收藏
         .column
           = link_to organizations_path, class: 'ui mini statistic' do
             .value= @user.organizations.count

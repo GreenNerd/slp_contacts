@@ -9,7 +9,7 @@ class SLPContacts.Models.UserModel extends Backbone.Model
     headimg: 'http://placehold.it/80x80'
 
   initialize: ->
-    @url = @collection.url + "/#{@get('id')}"
+    @baseurl = "/contacts/users/#{@id}"
 
   toggleFavorite: (success)->
     if @get('favorited')
@@ -18,9 +18,25 @@ class SLPContacts.Models.UserModel extends Backbone.Model
       @favorite(success)
 
   unFavorite: (success)->
-    @sync('delete', @).success(success).error ->
-      console.log 'fail to unfavorite!'
+    @url = @baseurl + "/unfavorite"
+    _success = ()=>
+      @set 'favorited', not @get('favorited')
+      success()
+    $.ajax
+      url: @url
+      type: 'delete'
+      success: _success
+      error: ->
+        console.log 'fail to unfavorite!'
 
   favorite: (success)->
-    @sync('patch', @).success(success).error ->
-      console.log 'fail to favorite'
+    @url = @baseurl + "/favorite"
+    _success = ()=>
+      @set 'favorited', not @get('favorited')
+      success()
+    $.ajax
+      url: @url
+      type: 'post'
+      success: _success
+      error: ->
+        console.log 'fail to favorite!'

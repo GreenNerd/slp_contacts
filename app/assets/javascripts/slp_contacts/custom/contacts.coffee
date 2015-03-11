@@ -1,37 +1,4 @@
 $ ->
-  testdata =
-    contacts: [
-      {
-        name: '郑晶晶'
-        id: 2
-        phone: 15882890324
-        favorited: false
-      }
-      {
-        name: '张光'
-        id: 3
-        phone: 15278687812
-        favorited: true
-      }
-      {
-        name: '鲁臻'
-        id: 4
-        phone: 15872384724
-      }
-    ]
-    contacts2: [
-      {
-        name: '砍了就跑'
-        phone: 18677274273
-        favorited: true
-      }
-      {
-        name: '呆瓜'
-        phone: 17328983439
-        favorited: true
-      }
-    ]
-
   ContactCtrl =
     init: ->
       @setApiSettings()
