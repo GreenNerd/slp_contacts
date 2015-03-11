@@ -8,17 +8,19 @@ $ ->
       @enableQueryUI() if $('#query_sticker').length
 
     initContactsView: ->
+      @contactsCollection = new SLPContacts.Collections.UserCollection []
+      @contactsCollection.url = '/contacts/favorite.json'
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
-      @contactsCollection = new SLPContacts.Collections.UserCollection testdata.contacts
       @createContactsView contactViewType
       @enableViewTab()
-      @enableLoadMore()
+      @contactsCollection.listenToOnce @contactsCollection, 'reset', =>
+        @enableLoadMore()
 
     setApiSettings: ->
       apiSettings =
         api:
-          'query user': 'users/{id}?name={query}'
-          'query organization': 'organizations/{id}?name={query}'
+          'query user': '/contacts/query?name={query}'
+          'query organization': '/contacts/organizations/{id}/query?name={query}'
       $.extend $.fn.api.settings, apiSettings
 
     enableSettingsSidebar: ->
@@ -91,10 +93,13 @@ $ ->
         searchFullText: false
 
     createContactsView: (type)->
-      @contactsView = new SLPContacts.Views.UsersView
-        collection: @contactsCollection
-        el: '#contacts_list'
-        type: type
+      @contactsCollection.fetch 
+        success: (collection, response)=>
+          @contactsCollection.reset response.contacts
+          @contactsView = new SLPContacts.Views.UsersView
+            collection: @contactsCollection
+            el: '#contacts_list'
+            type: type
 
     enableLoadMore: ->
       $loadMoreCtrl = $('#load_more')
@@ -110,16 +115,16 @@ $ ->
 
     loadMoreContacts: (page)->
       @contactsCollection.fetch
-        page: page
-      , (response)=>
-        SLPContacts.Cache.Contact_page += 1
-        new_data = @contactsCollection.add(response)
-        @contactsView.append(new_data)
-
-        if response.length < SLPContacts.Settings.per_page
-          SLPContacts.Cache.Contact_maymore = false
-          $('#load_more').text('已经加载完啦!')
-        else
-          SLPContacts.Cache.Contact_maymore = true
+        data:
+          page: page
+        success: (collection, response)=>
+          SLPContacts.Cache.Contact_page += 1
+          new_data = @contactsCollection.add(response.contacts)
+          @contactsView.append(new_data)
+          if response.contacts.length < SLPContacts.Settings.per_page
+            SLPContacts.Cache.Contact_maymore = false
+            $('#load_more').text('已经加载完啦!')
+          else
+            SLPContacts.Cache.Contact_maymore = true
 
   ContactCtrl.init()

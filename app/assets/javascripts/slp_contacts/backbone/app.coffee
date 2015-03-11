@@ -11,4 +11,4 @@
   Templates: {}
   Cache: {}
   Settings:
-    per_page: 24
+    per_page: 8

@@ -1,9 +1,10 @@
 class SLPContacts.Views.UserView extends Backbone.View
-  tagName: 'div'
+  tagName: 'a'
   events:
     'click .compact': 'toggleFavorite'
 
   render: (type)->
+    @$el.attr 'href', @model.baseurl
     switch type
       when 'list'
         @renderList()
