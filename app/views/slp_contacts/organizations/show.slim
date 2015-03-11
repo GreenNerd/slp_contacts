@@ -2,14 +2,14 @@
   .inner-container
     .ui.center.aligned.header 查看方式
     .two.fluid.ui.buttons
-      .ui.button tab-target='list'
+      .ui.button tab-target-type='list'
         i.fa.fa-th-list.icon
         | 列表
-      .ui.button tab-target='grid'
+      .ui.button tab-target-type='grid'
         i.fa.fa-th.icon
         | 网格
 
-.sticky-header#query_sticker data-queryaction="query organization" data-urlid="organization_id"
+.sticky-header#query_sticker data-queryaction="query organization" data-urlid="#{@organization.id}"
   .left-side
     i.fa.fa-long-arrow-left
   .right-side
