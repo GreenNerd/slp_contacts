@@ -2,7 +2,7 @@ require_dependency "slp_contacts/application_controller"
 
 module SlpContacts
   class UsersController < ApplicationController
-    before_action :find_user
+    before_action :find_user, except: [:query]
     before_action :check_user, only: [:favorite, :unfavorite]
     def show
     end
@@ -24,6 +24,13 @@ module SlpContacts
       end
       respond_to do |f|
         f.js { render layout: false }
+      end
+    end
+
+    def query
+      @result = User.where(name: params[:name])
+      respond_to do |f|
+        f.json { render layout: false}
       end
     end
 
