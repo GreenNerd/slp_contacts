@@ -142,7 +142,7 @@ $ ->
           @contactsView.append(new_data)
           if response.contacts.length < SLPContacts.Settings.per_page
             SLPContacts.Cache.Contact_maymore = false
-            $('#load_more').text('已经加载完啦!')
+            $('#load_more').closest('.sticky-footer').remove()
           else
             SLPContacts.Cache.Contact_maymore = true
 
