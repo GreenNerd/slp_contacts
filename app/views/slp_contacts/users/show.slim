@@ -29,7 +29,7 @@
         .column
           = link_to '/contacts/favorite' do
             .ui.mini.statistic
-              .value = favorite_count(@user)
+              .value = current_user.favorited_contacts.count
               .label
                 i.fa.fa-star &nbsp;
                 | 收藏
@@ -53,7 +53,7 @@
             .label 短信
         .column
           div id="contact-#{@user.id}"
-            - if favorite?(current_user, @user)
+            - if current_user.favorite?(@user)
               = render partial: "unfavorite", locals: {user: @user}
             - else
               = render partial: "favorite", locals: {user: @user}
