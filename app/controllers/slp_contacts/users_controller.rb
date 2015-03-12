@@ -28,7 +28,7 @@ module SlpContacts
     end
 
     def query
-      @result = User.where(name: params[:name])
+      @result = SlpContacts.contact_class.where(name: params[:name])
       respond_to do |f|
         f.json { render layout: false}
       end
@@ -38,7 +38,7 @@ module SlpContacts
 
     def find_user
       if params[:id]
-        @user = User.find_by(id: params[:id])
+        @user = SlpContacts.contact_class.find_by(id: params[:id])
         raise UserNotFound unless @user
       else
         @user = current_user

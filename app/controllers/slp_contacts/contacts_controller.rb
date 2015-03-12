@@ -4,9 +4,9 @@ module SlpContacts
   class ContactsController < ApplicationController
     def index
       if params[:page]
-        @contacts = User.find(Favorite.where(user: current_user).page(params[:page]).pluck(:contact_id))
+        @contacts = current_user.favorited_contacts.page(params[:page])
       else
-        @contacts = User.find(Favorite.where(user: current_user).page(1).pluck(:contact_id))        
+        @contacts = current_user.favorited_contacts.page(1)
       end
       respond_to do |f|
         f.html
@@ -15,8 +15,7 @@ module SlpContacts
     end
 
     def query
-      @contacts = User.find(Favorite.where(user: current_user).pluck(:contact_id))      
-      @result = @contacts.select { |contact| contact.name == params[:name] }
+      @result = current_user.favorited_contacts.where(name: params[:name])      
       respond_to do |f|
         f.json { render layout: false}
       end
