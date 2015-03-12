@@ -23,6 +23,15 @@ module SlpContacts
         get :show, { id: organization }, valid_session
         expect(assigns(:organization)).to eq organization
       end
+
+      it "returns a json when format is json" do
+        organization = Fabricate(:organization)
+        contact1 = Fabricate(:user, name: 'xx1')
+        UserOrganization.create(user_id: contact1.id, organization_id: organization.id)
+        get :show, { id: organization, format: :json }, valid_session
+        json = JSON.parse(response.body)
+        expect(json['contacts'][0]['name']).to eq contact1.name
+      end
     end
 
     describe "GET #query" do

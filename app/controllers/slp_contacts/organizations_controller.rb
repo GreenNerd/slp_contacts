@@ -8,10 +8,14 @@ module SlpContacts
     end
 
     def show
-      @members = @organization.members.where.not(id: current_user.id).page(params[:page]).per(8)
+      if params[:page]
+        @members = @organization.members.where.not(id: current_user.id).page(params[:page])
+      else
+        @members = @organization.members.where.not(id: current_user.id).page(1)
+      end
       respond_to do |f|
         f.html
-        f.js { render layout: false }
+        f.json { render layout: false }
       end
     end
 
