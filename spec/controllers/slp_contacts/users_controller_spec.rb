@@ -42,7 +42,6 @@ module SlpContacts
     end
 
     describe "GET #query" do
-      render_views
       it "returns a json when user exists " do
         contact1 = Fabricate(:user, name: 'xx1')
         xhr :get, :query, { name: "xx1", format: :json }, valid_session

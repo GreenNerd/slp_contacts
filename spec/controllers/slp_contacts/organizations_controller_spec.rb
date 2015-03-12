@@ -26,7 +26,6 @@ module SlpContacts
     end
 
     describe "GET #query" do
-      render_views
       it "returns a json when user exists " do
         contact1 = Fabricate(:user, name: 'xx1')
         orga1 = Fabricate(:organization)

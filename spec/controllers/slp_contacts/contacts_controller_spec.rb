@@ -7,7 +7,6 @@ module SlpContacts
     let(:valid_session) { { current_user_id: user.id } }
 
     describe "GET #index" do
-      render_views
       it "returns a json when format is json" do
         contact1 = Fabricate(:user, name: 'xx1')
         contact2 = Fabricate(:user, name: 'xx2')
@@ -20,7 +19,6 @@ module SlpContacts
     end
 
     describe "GET #query" do
-      render_views
       it "returns a json when contact exists " do
         contact1 = Fabricate(:user, name: 'xx1')
         Favorite.create(user: user, contact: contact1)
