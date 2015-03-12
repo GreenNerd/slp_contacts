@@ -22,8 +22,9 @@ $ ->
     setApiSettings: ->
       apiSettings =
         api:
-          'query user': '/query?name={query}'
-          'query organization': '/apps/contacts/organizations/{id}/query?name={query}'
+          'query user': '/apps/contacts/query?name={query}'
+          'query favorited user': '/apps/contacts/favorites/query?name={query}'
+          'query organization member': '/apps/contacts/organizations/{id}/query?name={query}'
       $.extend $.fn.api.settings, apiSettings
 
     enableSettingsSidebar: ->
@@ -94,7 +95,9 @@ $ ->
         onSelect: (result, response)->
           $sticker.removeClass('query-view')
         searchFullText: false
+        searchFields: ['name', 'title']
         type: 'user'
+        searchDelay: 600
         templates:
           user: (user)->
             user.headimg ?= 'http://placehold.it/80x80'
