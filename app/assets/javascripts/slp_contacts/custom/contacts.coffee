@@ -9,7 +9,7 @@ $ ->
 
     initContactsView: ->
       @contactsCollection = new SLPContacts.Collections.UserCollection []
-      @contactsCollection.url = '/contacts/favorites.json'
+      @contactsCollection.url = '/apps/contacts/favorites.json'
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
       @createContactsView contactViewType
       @enableViewTab()
@@ -20,7 +20,7 @@ $ ->
       apiSettings =
         api:
           'query user': '/query?name={query}'
-          'query organization': '/contacts/organizations/{id}/query?name={query}'
+          'query organization': '/apps/contacts/organizations/{id}/query?name={query}'
       $.extend $.fn.api.settings, apiSettings
 
     enableSettingsSidebar: ->
