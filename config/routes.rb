@@ -3,6 +3,7 @@ SlpContacts::Engine.routes.draw do
   get '/favorites', to: 'contacts#index'  
   get '/favorites/query', to: 'contacts#query'
   get '/query', to: 'users#query'
+  get '/organizations/:id/members', to: 'organizations#show'
   resources :users, only: [:show] do
     member do
       post :favorite
@@ -10,7 +11,7 @@ SlpContacts::Engine.routes.draw do
     end
   end
   resources :contacts, only: [:index]
-  resources :organizations, only: [:index, :show] do
+  resources :organizations, only: [:index] do
     member do
       get :query
     end
