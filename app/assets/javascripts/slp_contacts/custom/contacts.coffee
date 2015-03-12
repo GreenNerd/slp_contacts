@@ -9,7 +9,10 @@ $ ->
 
     initContactsView: ->
       @contactsCollection = new SLPContacts.Collections.UserCollection []
-      @contactsCollection.url = '/apps/contacts/favorites.json'
+      if ///organizations///.test location.pathname
+        @contactsCollection.url = "#{location.pathname}.json"
+      else
+        @contactsCollection.url = '/apps/contacts/favorites.json'
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
       @createContactsView contactViewType
       @enableViewTab()

@@ -27,7 +27,7 @@
     - if current_user == @user
       .extra-links.ui.center.aligned.two.column.padded.divided.grid
         .column
-          = link_to '/contacts/favorite' do
+          = link_to favorites_path do
             .ui.mini.statistic
               .value = current_user.favorited_contacts.count
               .label
