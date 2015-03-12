@@ -9,7 +9,10 @@ $ ->
 
     initContactsView: ->
       @contactsCollection = new SLPContacts.Collections.UserCollection []
-      @contactsCollection.url = '/contacts/favorites.json'
+      if ///organizations///.test location.pathname
+        @contactsCollection.url = "#{location.pathname}/members.json"
+      else
+        @contactsCollection.url = '/apps/contacts/favorites.json'
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
       @createContactsView contactViewType
       @enableViewTab()
@@ -19,8 +22,9 @@ $ ->
     setApiSettings: ->
       apiSettings =
         api:
-          'query user': '/query?name={query}'
-          'query organization': '/contacts/organizations/{id}/query?name={query}'
+          'query user': '/apps/contacts/query?name={query}'
+          'query favorited user': '/apps/contacts/favorites/query?name={query}'
+          'query organization member': '/apps/contacts/organizations/{id}/query?name={query}'
       $.extend $.fn.api.settings, apiSettings
 
     enableSettingsSidebar: ->
@@ -91,9 +95,24 @@ $ ->
         onSelect: (result, response)->
           $sticker.removeClass('query-view')
         searchFullText: false
+        searchFields: ['name', 'title']
+        type: 'user'
+        searchDelay: 600
+        templates:
+          user: (user)->
+            user.headimg ?= 'http://placehold.it/80x80'
+            return """
+              <a class="item" href="/apps/contacts/users/#{user.id}">
+                <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
+                <div class="content">
+                  <a href="##" class="header">#{user.name}</a>
+                  <div class="description">#{user.phone}</div>
+                </div>
+              </a>
+            """
 
     createContactsView: (type)->
-      @contactsCollection.fetch 
+      @contactsCollection.fetch
         success: (collection, response)=>
           @contactsCollection.reset response.contacts
           @contactsView = new SLPContacts.Views.UsersView
@@ -123,7 +142,7 @@ $ ->
           @contactsView.append(new_data)
           if response.contacts.length < SLPContacts.Settings.per_page
             SLPContacts.Cache.Contact_maymore = false
-            $('#load_more').text('已经加载完啦!')
+            $('#load_more').closest('.sticky-footer').remove()
           else
             SLPContacts.Cache.Contact_maymore = true
 

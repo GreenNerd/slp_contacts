@@ -87,6 +87,16 @@ $sticky-height: 2.7rem;
         background-color: transparent;
       }
     }
+
+    .results {
+      margin-top: 0;
+      margin-left: .5em;
+
+      .item {
+        text-align: left;
+        padding: .3rem 1rem;
+      }
+    }
   }
 }
 

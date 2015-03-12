@@ -9,7 +9,7 @@
         i.fa.fa-th.icon
         | 网格
 
-.sticky-header#query_sticker data-queryaction="query organization" data-urlid="#{@organization.id}"
+.sticky-header#query_sticker data-queryaction="query organization member" data-urlid="#{@organization.id}"
   .left-side
     i.fa.fa-long-arrow-left
   .right-side
@@ -24,7 +24,7 @@
     .ui.search
       .ui.input
         input.query-input.prompt type="text" placeholder="请输入..."
-      .results
+      .results.ui.divided.list
 
 #main_content.with-sticky-footer.pusher
   #organization_list.ui.accordion
