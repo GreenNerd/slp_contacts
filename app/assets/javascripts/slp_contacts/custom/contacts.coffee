@@ -93,7 +93,7 @@ $ ->
         searchFullText: false
 
     createContactsView: (type)->
-      @contactsCollection.fetch 
+      @contactsCollection.fetch
         success: (collection, response)=>
           @contactsCollection.reset response.contacts
           @contactsView = new SLPContacts.Views.UsersView
