@@ -13,5 +13,14 @@ module SlpContacts
         f.json { render layout: false }
       end
     end
+
+    def query
+      @contacts = User.find(Favorite.where(user: current_user).pluck(:contact_id))      
+      @result = @contacts.select { |contact| contact.name == params[:name] }
+      respond_to do |f|
+        f.json { render layout: false}
+      end
+    end
+
   end
 end
