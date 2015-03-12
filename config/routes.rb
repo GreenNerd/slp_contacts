@@ -1,6 +1,6 @@
 SlpContacts::Engine.routes.draw do
   get '/', to: 'users#show'
-  get '/favorites', to: 'contacts#index'  
+  get '/favorites', to: 'contacts#index'
   get '/favorites/query', to: 'contacts#query'
   get '/query', to: 'users#query'
   get '/organizations/:id/members', to: 'organizations#show'
@@ -16,5 +16,5 @@ SlpContacts::Engine.routes.draw do
       get :query
     end
   end
-  
+
 end

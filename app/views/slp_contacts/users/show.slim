@@ -1,5 +1,5 @@
 - if current_user == @user
-  .sticky-header#query_sticker data-queryaction='query user' data-urlid='user_id'
+  .sticky-header#query_sticker data-queryaction='query favorited user'
     .right-side
       i.fa.fa-search.open-query
     .center-box
@@ -10,7 +10,7 @@
       .ui.search
         .ui.input
           input.prompt.query-input type="text" placeholder="请输入..."
-        .results
+        .results.ui.divided.list
 - else
   .sticky-header
     .left-side
@@ -27,7 +27,7 @@
     - if current_user == @user
       .extra-links.ui.center.aligned.two.column.padded.divided.grid
         .column
-          = link_to '/contacts/favorite' do
+          = link_to favorites_path do
             .ui.mini.statistic
               .value = current_user.favorited_contacts.count
               .label
