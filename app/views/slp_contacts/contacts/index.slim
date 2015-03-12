@@ -1,2 +1,25 @@
-h1 Contacts#index
-p Find me in app/views/slp_contacts/contacts/index.slim
+.sticky-header
+  .left-side
+    i.fa.fa-long-arrow-left
+  .right-side
+    i.fa.fa-ellipsis-h#toggle_sidebar
+  .center-box
+    .title 我的收藏
+
+#settings_sidebar.ui.top.sidebar
+  .inner-container
+    .ui.center.aligned.header 查看方式
+    .two.fluid.ui.buttons
+      .ui.button tab-target-type='list'
+        i.fa.fa-th-list.icon
+        | 列表
+      .ui.button tab-target-type='grid'
+        i.fa.fa-th.icon
+        | 网格
+
+#main_content.with-sticky-footer.pusher
+  #contacts_list.ui.celled.very.relaxed.list
+  #contacts_thumbnail_list.ui.three.column.padded.grid
+
+.sticky-footer
+  a#load_more href="##" 加载更多

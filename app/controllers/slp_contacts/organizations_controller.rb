@@ -2,7 +2,7 @@ require_dependency "slp_contacts/application_controller"
 
 module SlpContacts
   class OrganizationsController < ApplicationController
-    before_action :find_organization, only: [:show]
+    before_action :find_organization, only: [:show, :query]
     def index
       @organizations = current_user.organizations
     end
@@ -12,6 +12,13 @@ module SlpContacts
       respond_to do |f|
         f.html
         f.js { render layout: false }
+      end
+    end
+
+    def query
+      @result = @organization.members.where(name: params[:name])
+      respond_to do |f|
+        f.json { render layout: false }
       end
     end
 

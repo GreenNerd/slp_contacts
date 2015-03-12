@@ -22,8 +22,11 @@ module SlpContacts
       end
 
       def unfavorite(contact)
-        favorited_contacts.delete contact
-        contact
+        if favorited_contacts.delete contact
+          contact
+        else
+          false
+        end
       end
 
       def favorited?(contact)

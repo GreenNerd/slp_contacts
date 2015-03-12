@@ -2,23 +2,20 @@ require_dependency "slp_contacts/application_controller"
 
 module SlpContacts
   class UsersController < ApplicationController
-    before_action :find_user
+    before_action :find_user, except: [:query]
     before_action :check_user, only: [:favorite, :unfavorite]
     def show
     end
 
     def favorite
-      Favorite.create(user_id: current_user.id, contact_id: @user.id)
+      current_user.favorite(@user)
       respond_to do |f|
         f.js { render layout: false }
       end
     end
 
     def unfavorite
-      favorite = Favorite.find_by(user_id: current_user.id, contact_id: @user.id)
-      if favorite
-        favorite.destroy
-      else
+      unless current_user.unfavorite(@user)
         render js: "alert('没有收藏该联系人！');"
         return
       end
@@ -27,11 +24,22 @@ module SlpContacts
       end
     end
 
+    def query
+      @result = SlpContacts.contact_class.where(name: params[:name])
+      respond_to do |f|
+        f.json { render layout: false}
+      end
+    end
+
     private
 
     def find_user
-      @user = SlpContacts.contact_class.find_by(id: params[:id])
-      raise UserNotFound unless @user
+      if params[:id]
+        @user = SlpContacts.contact_class.find_by(id: params[:id])
+        raise UserNotFound unless @user
+      else
+        @user = current_user
+      end
     end
 
     def check_user
