@@ -91,6 +91,19 @@ $ ->
         onSelect: (result, response)->
           $sticker.removeClass('query-view')
         searchFullText: false
+        type: 'user'
+        templates:
+          user: (user)->
+            user.headimg ?= 'http://placehold.it/80x80'
+            return """
+              <a class="item" href="/apps/contacts/users/#{user.id}">
+                <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
+                <div class="content">
+                  <a href="##" class="header">#{user.name}</a>
+                  <div class="description">#{user.phone}</div>
+                </div>
+              </a>
+            """
 
     createContactsView: (type)->
       @contactsCollection.fetch
