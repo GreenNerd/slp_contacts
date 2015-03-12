@@ -1,9 +1,10 @@
 class SLPContacts.Views.UserView extends Backbone.View
-  tagName: 'div'
+  tagName: 'a'
   events:
     'click .compact': 'toggleFavorite'
 
   render: (type)->
+    @$el.attr 'href', @model.baseurl
     switch type
       when 'list'
         @renderList()
@@ -18,10 +19,11 @@ class SLPContacts.Views.UserView extends Backbone.View
     @$el.addClass('item')
     @$el.html _.template(SLPContacts.Templates.UserListTemplate)(@model.toJSON())
 
-  toggleFavorite: ->
+  toggleFavorite: (event)->
+    event.preventDefault()
     $favorite = @$('.compact')
     @model.toggleFavorite ()=>
-      if @model.favorited
+      if @model.get 'favorited'
         $favorite.removeClass('secondary').addClass('basic').text('取消')
       else
         $favorite.removeClass('basic').addClass('secondary').text('收藏')

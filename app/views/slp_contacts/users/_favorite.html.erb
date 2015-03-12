@@ -1,3 +1,7 @@
-<%= form_tag favorite_user_path(user), remote: true do %>
-  <%= submit_tag "收藏" %>
-<% end %> 
+<%= link_to favorite_user_path(user, from: 'users'), method: :post, remote: true do %>
+  <div class="ui mini statistic">
+    <div class="value"> <i class="fa fa-star-o"></i>
+    </div>
+      <div class="label">收藏</div>
+  </div>
+<% end %>

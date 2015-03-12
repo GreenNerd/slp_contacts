@@ -1,4 +1,4 @@
 class SLPContacts.Collections.UserCollection extends Backbone.Collection
   model: SLPContacts.Models.UserModel
-  url: '/apps/users'
+  # url: '/contacts/users'
 

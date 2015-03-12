@@ -1,5 +1,6 @@
 require "kaminari"
 require "jquery-rails"
+require "jbuilder"
 
 module SlpContacts
   class Engine < ::Rails::Engine
@@ -18,6 +19,10 @@ module SlpContacts
         controller_specs: true,
         request_specs: false
       g.fixture_replacement :fabrication
+    end
+
+    initializer 'slp_contacts.model' do |app|
+      SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
     end
   end
 end

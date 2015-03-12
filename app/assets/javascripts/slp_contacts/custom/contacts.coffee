@@ -1,37 +1,4 @@
 $ ->
-  testdata =
-    contacts: [
-      {
-        name: '郑晶晶'
-        id: 2
-        phone: 15882890324
-        favorited: false
-      }
-      {
-        name: '张光'
-        id: 3
-        phone: 15278687812
-        favorited: true
-      }
-      {
-        name: '鲁臻'
-        id: 4
-        phone: 15872384724
-      }
-    ]
-    contacts2: [
-      {
-        name: '砍了就跑'
-        phone: 18677274273
-        favorited: true
-      }
-      {
-        name: '呆瓜'
-        phone: 17328983439
-        favorited: true
-      }
-    ]
-
   ContactCtrl =
     init: ->
       @setApiSettings()
@@ -41,17 +8,19 @@ $ ->
       @enableQueryUI() if $('#query_sticker').length
 
     initContactsView: ->
+      @contactsCollection = new SLPContacts.Collections.UserCollection []
+      @contactsCollection.url = '/contacts/favorites.json'
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
-      @contactsCollection = new SLPContacts.Collections.UserCollection testdata.contacts
       @createContactsView contactViewType
       @enableViewTab()
-      @enableLoadMore()
+      @contactsCollection.listenToOnce @contactsCollection, 'reset', =>
+        @enableLoadMore()
 
     setApiSettings: ->
       apiSettings =
         api:
-          'query user': 'users/{id}?name={query}'
-          'query organization': 'organizations/{id}?name={query}'
+          'query user': '/query?name={query}'
+          'query organization': '/contacts/organizations/{id}/query?name={query}'
       $.extend $.fn.api.settings, apiSettings
 
     enableSettingsSidebar: ->
@@ -72,11 +41,11 @@ $ ->
 
     enableViewTab: ->
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
-      $('#settings_sidebar').find("[tab-target=#{contactViewType}]").addClass('active')
+      $('#settings_sidebar').find("[tab-target-type=#{contactViewType}]").addClass('active')
 
       $('#settings_sidebar').on 'click', '.ui.button', (event)=>
         $this = $(event.target).closest('.ui.button')
-        target_type = $this.attr('tab-target')
+        target_type = $this.attr('tab-target-type')
         unless $this.hasClass('active')
           $this.siblings('.active').removeClass('active')
           $this.addClass('active')
@@ -124,10 +93,13 @@ $ ->
         searchFullText: false
 
     createContactsView: (type)->
-      @contactsView = new SLPContacts.Views.UsersView
-        collection: @contactsCollection
-        el: '#contacts_list'
-        type: type
+      @contactsCollection.fetch 
+        success: (collection, response)=>
+          @contactsCollection.reset response.contacts
+          @contactsView = new SLPContacts.Views.UsersView
+            collection: @contactsCollection
+            el: '#contacts_list'
+            type: type
 
     enableLoadMore: ->
       $loadMoreCtrl = $('#load_more')
@@ -143,16 +115,16 @@ $ ->
 
     loadMoreContacts: (page)->
       @contactsCollection.fetch
-        page: page
-      , (response)=>
-        SLPContacts.Cache.Contact_page += 1
-        new_data = @contactsCollection.add(response)
-        @contactsView.append(new_data)
-
-        if response.length < SLPContacts.Settings.per_page
-          SLPContacts.Cache.Contact_maymore = false
-          $('#load_more').text('已经加载完啦!')
-        else
-          SLPContacts.Cache.Contact_maymore = true
+        data:
+          page: page
+        success: (collection, response)=>
+          SLPContacts.Cache.Contact_page += 1
+          new_data = @contactsCollection.add(response.contacts)
+          @contactsView.append(new_data)
+          if response.contacts.length < SLPContacts.Settings.per_page
+            SLPContacts.Cache.Contact_maymore = false
+            $('#load_more').text('已经加载完啦!')
+          else
+            SLPContacts.Cache.Contact_maymore = true
 
   ContactCtrl.init()
