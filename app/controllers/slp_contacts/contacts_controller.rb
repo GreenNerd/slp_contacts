@@ -15,7 +15,7 @@ module SlpContacts
     end
 
     def query
-      @result = current_user.favorited_contacts.where(name: params[:name])      
+      @result = current_user.favorited_contacts.where("name LIKE ?", "%#{params[:name]}%")
       respond_to do |f|
         f.json { render layout: false}
       end

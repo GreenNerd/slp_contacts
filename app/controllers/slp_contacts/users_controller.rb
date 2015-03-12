@@ -25,7 +25,7 @@ module SlpContacts
     end
 
     def query
-      @result = SlpContacts.contact_class.where(name: params[:name])
+      @result = SlpContacts.contact_class.where("name LIKE ?", "%#{params[:name]}%")
       respond_to do |f|
         f.json { render layout: false}
       end

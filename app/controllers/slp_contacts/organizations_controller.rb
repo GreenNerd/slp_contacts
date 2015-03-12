@@ -20,7 +20,7 @@ module SlpContacts
     end
 
     def query
-      @result = @organization.members.where(name: params[:name])
+      @result = @organization.members.where("name LIKE ?", "%#{params[:name]}%")
       respond_to do |f|
         f.json { render layout: false }
       end
