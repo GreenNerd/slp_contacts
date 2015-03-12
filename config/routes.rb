@@ -11,7 +11,7 @@ SlpContacts::Engine.routes.draw do
     end
   end
   resources :contacts, only: [:index]
-  resources :organizations, only: [:index] do
+  resources :organizations, only: [:index, :show] do
     member do
       get :query
     end
