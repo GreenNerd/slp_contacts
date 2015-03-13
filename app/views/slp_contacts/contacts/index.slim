@@ -1,12 +1,3 @@
-.sticky-header
-  = link_to root_path do
-    .left-side
-      i.fa.fa-long-arrow-left
-  .right-side
-    i.fa.fa-ellipsis-h#toggle_sidebar
-  .center-box
-    .title 我的收藏
-
 #settings_sidebar.ui.top.sidebar
   .inner-container
     .ui.center.aligned.header 查看方式
@@ -17,6 +8,24 @@
       .ui.button tab-target-type='grid'
         i.fa.fa-th.icon
         | 网格
+
+.sticky-header#query_sticker data-queryaction="query favorited user"
+  = link_to root_path do
+    .left-side
+      i.fa.fa-long-arrow-left
+  .right-side
+    i.fa.fa-search.open-query
+    | &nbsp;&nbsp;
+    i.fa.fa-ellipsis-h#toggle_sidebar
+  .center-box
+    .title 我的收藏
+  .query-container
+    i.fa.fa-times.close-query
+    i.fa.fa-search
+    .ui.search
+      .ui.input
+        input.query-input.prompt type="text" placeholder="请输入..."
+      .results.ui.divided.list
 
 #main_content.with-sticky-footer.pusher
   #contacts_list.ui.celled.very.relaxed.list
