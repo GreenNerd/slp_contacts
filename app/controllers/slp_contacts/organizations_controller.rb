@@ -8,11 +8,7 @@ module SlpContacts
     end
 
     def show
-      if params[:page]
-        @members = @organization.members.where.not(id: current_user.id).order(:name).page(params[:page])
-      else
-        @members = @organization.members.where.not(id: current_user.id).order(:name).page(1)
-      end
+      @members = paginate @organization.members.where.not(id: current_user.id).order(:name)
       respond_to do |f|
         f.html
         f.json { render layout: false }
@@ -20,7 +16,7 @@ module SlpContacts
     end
 
     def query
-      @result = @organization.members.where("name LIKE ?", "%#{params[:name]}%").order(:name)
+      @result = paginate @organization.members.where("name LIKE ?", "%#{params[:name]}%").order(:name)
       respond_to do |f|
         f.json { render layout: false }
       end
