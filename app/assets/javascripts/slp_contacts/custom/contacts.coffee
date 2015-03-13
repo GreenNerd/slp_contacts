@@ -138,13 +138,13 @@ $ ->
           page: page
         remove: false
         reset: false
-        add: false
+        add: true
         merge: false
-        success: (collection, response)=>
-          SLPContacts.Cache.Contact_page += 1
+        success: (collection, response, jqxhr)=>
+          SLPContacts.Cache.Contact_page = parseInt(jqxhr.xhr.getResponseHeader('X-Slp-Contacts-Current-Page'))
           new_data = @contactsCollection.add response
           @contactsView.append(new_data)
-          if response.length < SLPContacts.Settings.per_page
+          if SLPContacts.Cache.Contact_page is parseInt(jqxhr.xhr.getResponseHeader('X-Slp-Contacts-Total-Page'))
             SLPContacts.Cache.Contact_maymore = false
             $('#load_more').closest('.sticky-footer').remove()
           else
