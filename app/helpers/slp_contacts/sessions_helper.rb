@@ -11,7 +11,10 @@ module SlpContacts
     def paginate(objects)
       page = params[:page] || 1
       per_page = params[:per_page] || Kaminari.config.default_per_page
-      objects.page(page).per(per_page)
+      result = objects.page(page).per(per_page)
+      response.headers['X-SLP-Contacts-Current-Page'] = page
+      response.headers['X-SLP-Total-Current-Page'] = result.num_pages
+      result
     end
 
   end
