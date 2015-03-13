@@ -3,9 +3,9 @@ json.contacts do
     json.(member, :id, :name, :phone)
     json.headimg member.headimgurl
     if current_user.favorited?(member)
-      json.favorited 'true'
+      json.favorited true
     else
-      json.favorited 'false'
+      json.favorited false
     end
   end
 end
