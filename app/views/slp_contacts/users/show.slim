@@ -13,7 +13,7 @@
         .results.ui.divided.list
 - else
   .sticky-header
-    = link_to root_path do
+    = link_to request.referrer || root_path do
       .left-side
         i.fa.fa-long-arrow-left
     .center-box

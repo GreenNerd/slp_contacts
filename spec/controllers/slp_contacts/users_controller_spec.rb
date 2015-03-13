@@ -7,9 +7,14 @@ module SlpContacts
     let(:valid_session) { { current_user_id: user.id } }
 
     describe "GET #show" do
-      it "assigns the requested user to @user" do
+      it "when current_user equals @user" do
         get :show, { id: user.id }, valid_session
         expect(assigns(:user)).to eq user
+      end
+      it "when current_user doesnot equal @user" do
+        another_user = Fabricate(:user, name: "xx")
+        get :show, { id: another_user.id }, valid_session
+        expect(assigns(:user)).to eq another_user
       end
     end
 
