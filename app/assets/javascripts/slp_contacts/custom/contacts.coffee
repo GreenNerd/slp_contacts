@@ -113,8 +113,8 @@ $ ->
 
     createContactsView: (type)->
       @contactsCollection.fetch
+        reset: true
         success: (collection, response)=>
-          @contactsCollection.reset response.contacts
           @contactsView = new SLPContacts.Views.UsersView
             collection: @contactsCollection
             el: '#contacts_list'
@@ -136,11 +136,15 @@ $ ->
       @contactsCollection.fetch
         data:
           page: page
+        remove: false
+        reset: false
+        add: false
+        merge: false
         success: (collection, response)=>
           SLPContacts.Cache.Contact_page += 1
-          new_data = @contactsCollection.add(response.contacts)
+          new_data = @contactsCollection.add response
           @contactsView.append(new_data)
-          if response.contacts.length < SLPContacts.Settings.per_page
+          if response.length < SLPContacts.Settings.per_page
             SLPContacts.Cache.Contact_maymore = false
             $('#load_more').closest('.sticky-footer').remove()
           else
