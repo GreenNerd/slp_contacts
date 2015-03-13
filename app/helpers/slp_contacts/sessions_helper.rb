@@ -12,8 +12,8 @@ module SlpContacts
       page = params[:page] || 1
       per_page = params[:per_page] || Kaminari.config.default_per_page
       result = objects.page(page).per(per_page)
-      response.headers['X-SLP-Contacts-Current-Page'] = page
-      response.headers['X-SLP-Total-Current-Page'] = result.num_pages
+      response.headers['X-SLP-Contacts-Current-Page'] = page.to_s
+      response.headers['X-SLP-Contacts-Total-Page'] = result.num_pages.to_s
       result
     end
 
