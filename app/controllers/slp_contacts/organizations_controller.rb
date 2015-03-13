@@ -4,15 +4,11 @@ module SlpContacts
   class OrganizationsController < ApplicationController
     before_action :find_organization, only: [:show, :query]
     def index
-      @organizations = current_user.organizations
+      @organizations = current_user.organizations.order(:name)
     end
 
     def show
-      if params[:page]
-        @members = @organization.members.where.not(id: current_user.id).page(params[:page])
-      else
-        @members = @organization.members.where.not(id: current_user.id).page(1)
-      end
+      @members = paginate @organization.members.where.not(id: current_user.id).order(:name)
       respond_to do |f|
         f.html
         f.json { render layout: false }
@@ -20,7 +16,7 @@ module SlpContacts
     end
 
     def query
-      @result = @organization.members.where("name LIKE ?", "%#{params[:name]}%")
+      @result = paginate @organization.members.where("name LIKE ?", "%#{params[:name]}%").order(:name)
       respond_to do |f|
         f.json { render layout: false }
       end

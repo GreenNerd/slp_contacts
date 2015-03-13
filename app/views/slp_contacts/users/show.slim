@@ -13,8 +13,9 @@
         .results.ui.divided.list
 - else
   .sticky-header
-    .left-side
-      i.fa.fa-long-arrow-left
+    = link_to request.referrer || root_path do
+      .left-side
+        i.fa.fa-long-arrow-left
     .center-box
       .title 详细信息
 
@@ -53,7 +54,7 @@
             .label 短信
         .column
           div id="contact-#{@user.id}"
-            - if current_user.favorite?(@user)
+            - if current_user.favorited?(@user)
               = render partial: "unfavorite", locals: {user: @user}
             - else
               = render partial: "favorite", locals: {user: @user}

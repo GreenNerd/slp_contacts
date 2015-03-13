@@ -14,7 +14,7 @@ module SlpContacts
         Favorite.create(user: user, contact: contact2)
         get :index, { format: :json }, valid_session
         json = JSON.parse(response.body)
-        expect(json['contacts'][0]['name']).to eq contact1.name
+        expect(json[0]['name']).to eq contact1.name
       end
     end
 

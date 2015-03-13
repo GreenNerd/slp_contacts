@@ -1,5 +1,5 @@
 SlpContacts::Engine.routes.draw do
-  get '/', to: 'users#show'
+  root to: 'users#show'
   get '/favorites', to: 'contacts#index'
   get '/favorites/query', to: 'contacts#query'
   get '/query', to: 'users#query'

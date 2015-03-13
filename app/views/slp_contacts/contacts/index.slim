@@ -10,8 +10,9 @@
         | 网格
 
 .sticky-header#query_sticker data-queryaction="query favorited user"
-  .left-side
-    i.fa.fa-long-arrow-left
+  = link_to root_path do
+    .left-side
+      i.fa.fa-long-arrow-left
   .right-side
     i.fa.fa-search.open-query
     | &nbsp;&nbsp;
