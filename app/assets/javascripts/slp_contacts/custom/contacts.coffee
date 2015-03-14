@@ -99,17 +99,19 @@ $ ->
         type: 'user'
         searchDelay: 600
         templates:
-          user: (user)->
-            user.headimg ?= 'http://placehold.it/80x80'
-            return """
-              <a class="item" href="/apps/contacts/users/#{user.id}">
-                <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
-                <div class="content">
-                  <a href="##" class="header">#{user.name}</a>
-                  <div class="description">#{user.phone}</div>
-                </div>
-              </a>
-            """
+          user: (response)->
+            _templates = response.results.map (user)->
+              user.headimg ?= 'http://placehold.it/80x80'
+              return """
+                <a class="item" href="/apps/contacts/users/#{user.id}">
+                  <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
+                  <div class="content">
+                    <div class="header">#{user.name}</div>
+                    <div class="description">#{user.phone}</div>
+                  </div>
+                </a>
+              """
+            return _templates.join('')
 
     createContactsView: (type)->
       @contactsCollection.fetch
