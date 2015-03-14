@@ -3,7 +3,7 @@ $ ->
     init: ->
       @setApiSettings()
       @enableOrganizationAccordion() if $('#organization_list').length
-      @enableSettingsSidebar() if $('#settings_sidebar').length
+      @enableSettingsSidebar() if $('#settings_view').length
       @initContactsView() if $('#contacts_list').length
       @enableQueryUI() if $('#query_sticker').length
 
@@ -28,26 +28,26 @@ $ ->
       $.extend $.fn.api.settings, apiSettings
 
     enableSettingsSidebar: ->
-      $sidebar = $('#settings_sidebar')
+      $setting = $('#settings_view')
       $toggler = $('#toggle_sidebar')
-      $sidebar
-        .sidebar 'setting', 'transition', 'overlay'
-        .sidebar 'setting', 'onVisible', ->
-          $toggler.one 'click', ->
-            $sidebar.sidebar('hide')
-        .sidebar 'setting', 'onHidden', ->
-          $toggler.one 'click', ->
-            $sidebar.sidebar('show')
+      $content = $('#main_content')
 
-      $toggler.one 'click', (event)->
+      $toggler.on 'click', (event)->
         event.stopPropagation()
-        $sidebar.sidebar('show')
+        if $setting.hasClass('active')
+          $setting.removeClass('active')
+          $content.removeClass('dimmeded')
+        else
+          $setting.addClass('active')
+          $content.addClass('dimmeded')
+          $(document).one 'click', ->
+            $toggler.click()
 
     enableViewTab: ->
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
-      $('#settings_sidebar').find("[tab-target-type=#{contactViewType}]").addClass('active')
+      $('#settings_view').find("[tab-target-type=#{contactViewType}]").addClass('active')
 
-      $('#settings_sidebar').on 'click', '.ui.button', (event)=>
+      $('#settings_view').on 'click', '.ui.button', (event)=>
         $this = $(event.target).closest('.ui.button')
         target_type = $this.attr('tab-target-type')
         unless $this.hasClass('active')
@@ -56,7 +56,6 @@ $ ->
 
           @contactsView.reRender target_type
           localStorage.setItem 'SLPContactViewType', target_type
-        $('#settings_sidebar').sidebar('hide')
 
     enableOrganizationAccordion: ->
       $organization_list = $('#organization_list')

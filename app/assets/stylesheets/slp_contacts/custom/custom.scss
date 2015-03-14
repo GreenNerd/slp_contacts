@@ -170,7 +170,7 @@ p.message {
   padding: 2px 0 1px 0;
 }
 
-#settings_sidebar {
+#settings_view {
   .inner-container {
     padding: .8rem 1.2rem;
 
@@ -194,9 +194,17 @@ p.message {
       background-color: white;
       transition: all .3s ease-in-out;
 
+      i.fa {
+        color: #3C3E49;
+      }
+
       &.active {
         color: white;
         background-color: #3C3E49;
+
+        i.fa {
+          color: white;
+        }
       }
     }
   }
