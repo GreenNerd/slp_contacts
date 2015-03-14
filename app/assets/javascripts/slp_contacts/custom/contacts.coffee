@@ -2,8 +2,8 @@ $ ->
   ContactCtrl =
     init: ->
       @setApiSettings()
-      @enableOrganizationAccordion() if $('#organization_list').length
       @enableSettingsSidebar() if $('#settings_view').length
+      @enableOrganizationAccordion() if $('#organization_list').length
       @initContactsView() if $('#contacts_list').length
       @enableQueryUI() if $('#query_sticker').length
 
@@ -65,12 +65,15 @@ $ ->
       closeAccordion = ->
         $organization_list.accordion 'close', 0
 
-      $(document).on 'pullTop', ->
-        openAccordion()
-
-      $organization_list.accordion 'setting', 'onOpen', ->
-        $(document).on 'upScroll', ->
+      $title = $('#toggle_organizations')
+      $title.on 'click', (event)->
+        $icon = $title.find('i')
+        if $icon.hasClass('fa-angle-down')
+          openAccordion()
+          $icon.removeClass('fa-angle-down').addClass('fa-angle-up')
+        else
           closeAccordion()
+          $icon.addClass('fa-angle-down').removeClass('fa-angle-up')
 
     enableQueryUI: ->
       $sticker = $('#query_sticker')
