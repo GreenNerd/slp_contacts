@@ -1,4 +1,4 @@
-$sticky-footer-height: 2.5rem;
+$sticky-footer-height: 2.8rem;
 
 .sticky-footer {
   height: $sticky-footer-height;
@@ -7,11 +7,15 @@ $sticky-footer-height: 2.5rem;
   display: block;
   position: relative;
   z-index: 2;
-  background-color: #3C3E49;
   color: white;
 
   a {
     color: white;
+    margin: .3rem 1em;
+    margin-top: 0;
+    background-color: #3C3E49;
+    display: block;
+    line-height: 2.5rem;
   }
 }
 

@@ -9,7 +9,7 @@ html, body {
   background-color: white;
 
   &.with-sticky-footer {
-    $sticky-footer-height: 2.5rem;
+    $sticky-footer-height: 2.8rem;
 
     margin-bottom: -$sticky-footer-height;
 
