@@ -99,12 +99,29 @@ $sticky-height: 2.7rem;
     }
 
     .results {
+      position: fixed;
+      top: $sticky-height;
+      left: 0;
+      width: 100%;
+      bottom: 0;
+      border-radius: 0;
       margin-top: 0;
-      margin-left: .5em;
+      z-index: 9;
 
       .item {
         text-align: left;
         padding: .3rem 1rem;
+      }
+
+      .header {
+        font-size: 1.1rem;
+        margin-top: .1rem;
+      }
+
+      .description {
+        color: rgba(0, 0, 0, .54);
+        font-size: .8rem;
+        line-height: 1.2;
       }
     }
   }
