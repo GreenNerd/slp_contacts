@@ -32,16 +32,22 @@ $ ->
       $toggler = $('#toggle_sidebar')
       $content = $('#main_content')
 
+      hideSetting = ->
+        $setting.removeClass('active')
+        $content.removeClass('dimmeded')
+
+      showSetting = ->
+        $setting.addClass('active')
+        $content.addClass('dimmeded')
+
       $toggler.on 'click', (event)->
         event.stopPropagation()
         if $setting.hasClass('active')
-          $setting.removeClass('active')
-          $content.removeClass('dimmeded')
+          hideSetting()
         else
-          $setting.addClass('active')
-          $content.addClass('dimmeded')
+          showSetting()
           $(document).one 'click', ->
-            $toggler.click()
+            hideSetting()
 
     enableViewTab: ->
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
