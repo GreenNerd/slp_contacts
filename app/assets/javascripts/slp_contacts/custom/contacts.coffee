@@ -2,8 +2,8 @@ $ ->
   ContactCtrl =
     init: ->
       @setApiSettings()
+      @enableSettingsSidebar() if $('#settings_view').length
       @enableOrganizationAccordion() if $('#organization_list').length
-      @enableSettingsSidebar() if $('#settings_sidebar').length
       @initContactsView() if $('#contacts_list').length
       @enableQueryUI() if $('#query_sticker').length
 
@@ -28,26 +28,32 @@ $ ->
       $.extend $.fn.api.settings, apiSettings
 
     enableSettingsSidebar: ->
-      $sidebar = $('#settings_sidebar')
+      $setting = $('#settings_view')
       $toggler = $('#toggle_sidebar')
-      $sidebar
-        .sidebar 'setting', 'transition', 'overlay'
-        .sidebar 'setting', 'onVisible', ->
-          $toggler.one 'click', ->
-            $sidebar.sidebar('hide')
-        .sidebar 'setting', 'onHidden', ->
-          $toggler.one 'click', ->
-            $sidebar.sidebar('show')
+      $content = $('#main_content')
 
-      $toggler.one 'click', (event)->
+      hideSetting = ->
+        $setting.removeClass('active')
+        $content.removeClass('dimmeded')
+
+      showSetting = ->
+        $setting.addClass('active')
+        $content.addClass('dimmeded')
+
+      $toggler.on 'click', (event)->
         event.stopPropagation()
-        $sidebar.sidebar('show')
+        if $setting.hasClass('active')
+          hideSetting()
+        else
+          showSetting()
+          $(document).one 'click', ->
+            hideSetting()
 
     enableViewTab: ->
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
-      $('#settings_sidebar').find("[tab-target-type=#{contactViewType}]").addClass('active')
+      $('#settings_view').find("[tab-target-type=#{contactViewType}]").addClass('active')
 
-      $('#settings_sidebar').on 'click', '.ui.button', (event)=>
+      $('#settings_view').on 'click', '.ui.button', (event)=>
         $this = $(event.target).closest('.ui.button')
         target_type = $this.attr('tab-target-type')
         unless $this.hasClass('active')
@@ -56,7 +62,6 @@ $ ->
 
           @contactsView.reRender target_type
           localStorage.setItem 'SLPContactViewType', target_type
-        $('#settings_sidebar').sidebar('hide')
 
     enableOrganizationAccordion: ->
       $organization_list = $('#organization_list')
@@ -66,12 +71,15 @@ $ ->
       closeAccordion = ->
         $organization_list.accordion 'close', 0
 
-      $(document).on 'pullTop', ->
-        openAccordion()
-
-      $organization_list.accordion 'setting', 'onOpen', ->
-        $(document).on 'upScroll', ->
+      $title = $('#toggle_organizations')
+      $title.on 'click', (event)->
+        $icon = $title.find('i')
+        if $icon.hasClass('fa-angle-down')
+          openAccordion()
+          $icon.removeClass('fa-angle-down').addClass('fa-angle-up')
+        else
           closeAccordion()
+          $icon.addClass('fa-angle-down').removeClass('fa-angle-up')
 
     enableQueryUI: ->
       $sticker = $('#query_sticker')
@@ -99,17 +107,19 @@ $ ->
         type: 'user'
         searchDelay: 600
         templates:
-          user: (user)->
-            user.headimg ?= 'http://placehold.it/80x80'
-            return """
-              <a class="item" href="/apps/contacts/users/#{user.id}">
-                <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
-                <div class="content">
-                  <a href="##" class="header">#{user.name}</a>
-                  <div class="description">#{user.phone}</div>
-                </div>
-              </a>
-            """
+          user: (response)->
+            _templates = response.results.map (user)->
+              user.headimg ?= 'http://placehold.it/80x80'
+              return """
+                <a class="item" href="/apps/contacts/users/#{user.id}">
+                  <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
+                  <div class="content">
+                    <div class="header">#{user.name}</div>
+                    <div class="description">#{user.phone}</div>
+                  </div>
+                </a>
+              """
+            return _templates.join('')
 
     createContactsView: (type)->
       @contactsCollection.fetch
@@ -138,13 +148,13 @@ $ ->
           page: page
         remove: false
         reset: false
-        add: false
+        add: true
         merge: false
-        success: (collection, response)=>
-          SLPContacts.Cache.Contact_page += 1
+        success: (collection, response, jqxhr)=>
+          SLPContacts.Cache.Contact_page = parseInt(jqxhr.xhr.getResponseHeader('X-Slp-Contacts-Current-Page'))
           new_data = @contactsCollection.add response
           @contactsView.append(new_data)
-          if response.length < SLPContacts.Settings.per_page
+          if SLPContacts.Cache.Contact_page is parseInt(jqxhr.xhr.getResponseHeader('X-Slp-Contacts-Total-Page'))
             SLPContacts.Cache.Contact_maymore = false
             $('#load_more').closest('.sticky-footer').remove()
           else

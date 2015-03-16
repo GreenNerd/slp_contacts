@@ -43,12 +43,12 @@
     - else
       .contact-opreate.ui.center.aligned.three.column.padded.grid
         .column
-          = link_to '##', class: 'ui mini statistic' do
+          = link_to "tel:#{@user.phone}", class: 'ui mini statistic' do
             .value
               i.fa.fa-phone
             .label 电话
         .column
-          = link_to '##', class: 'ui mini statistic' do
+          = link_to "sms:#{@user.phone}", class: 'ui mini statistic' do
             .value
               i.fa.fa-envelope
             .label 短信

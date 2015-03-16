@@ -3,7 +3,7 @@ $sticky-height: 2.7rem;
 .sticky-header {
   position: fixed;
   background-color: white;
-  height: $sticky-height;
+  min-height: $sticky-height;
   width: 100%;
   left: 0;
   z-index: 10;
@@ -14,6 +14,12 @@ $sticky-height: 2.7rem;
 
   &> * {
     line-height: $sticky-height;
+  }
+
+  .left-side, .right-side {
+    i.fa {
+      padding: .6em 0;
+    }
   }
 
   .left-side {
@@ -30,11 +36,25 @@ $sticky-height: 2.7rem;
     right: 0;
     padding-right: 1em;
     padding-left: .5rem;
+
+    i.fa {
+      padding-left: .2em;
+    }
   }
 
   .title {
     font-weight: bold;
     letter-spacing: 1px;
+    margin-left: 2.4em;
+    margin-right: 3.6em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    i.fa {
+      color: rgba(0, 0, 0, .8);
+      margin-right: .2em;
+    }
   }
 
   .query-container {
@@ -62,16 +82,17 @@ $sticky-height: 2.7rem;
     .fa-times, .fa-search {
       position: absolute;
       z-index: 2;
-      top: .6em;
+      top: 0;
+      padding: .6em .5em;
       cursor: pointer;
     }
 
     .fa-times {
-      right: .5em;
+      right: 0;
     }
 
     .fa-search {
-      left: .5em;
+      left: 0;
     }
 
     .ui.input {
@@ -89,12 +110,29 @@ $sticky-height: 2.7rem;
     }
 
     .results {
+      position: fixed;
+      top: $sticky-height;
+      left: 0;
+      width: 100%;
+      bottom: 0;
+      border-radius: 0;
       margin-top: 0;
-      margin-left: .5em;
+      z-index: 9;
 
       .item {
         text-align: left;
         padding: .3rem 1rem;
+      }
+
+      .header {
+        font-size: 1.1rem;
+        margin-top: .1rem;
+      }
+
+      .description {
+        color: rgba(0, 0, 0, .54);
+        font-size: .8rem;
+        line-height: 1.2;
       }
     }
   }
@@ -102,10 +140,33 @@ $sticky-height: 2.7rem;
 
 .sticky-header ~ #main_content {
   padding-top: $sticky-height;
+
+  &::before {
+    height: 0;
+    position: fixed;
+    width: 100%;
+    display: block;
+    z-index: 9;
+    content: '';
+    background-color: rgba(255, 255, 255, .5);
+    transition: background-color .3s ease-in-out;
+  }
+
+  &.dimmeded {
+    &::before {
+      height: 100%;
+      background-color: rgba(0, 0, 0, .5);
+    }
+  }
 }
 
-#settings_sidebar.ui.top.sidebar {
-  padding-top: $sticky-height;
-  z-index: 9;
+#settings_view {
   background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: all .3s ease-in-out;
+
+  &.active {
+    max-height: 5.4rem;
+  }
 }

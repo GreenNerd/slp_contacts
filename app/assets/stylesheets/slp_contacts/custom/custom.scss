@@ -1,5 +1,6 @@
 #contacts_list {
   margin: 0;
+  margin-bottom: 1em;
 
   .item {
     padding: .6rem 1.1rem;
@@ -170,7 +171,7 @@ p.message {
   padding: 2px 0 1px 0;
 }
 
-#settings_sidebar {
+#settings_view {
   .inner-container {
     padding: .8rem 1.2rem;
 
@@ -194,9 +195,17 @@ p.message {
       background-color: white;
       transition: all .3s ease-in-out;
 
+      i.fa {
+        color: #3C3E49;
+      }
+
       &.active {
         color: white;
         background-color: #3C3E49;
+
+        i.fa {
+          color: white;
+        }
       }
     }
   }
@@ -210,5 +219,6 @@ p.message {
 .with-empty-item {
   padding: 1em;
   text-align: center;
-  font-size: .9rem;
+  font-size: .9rem !important;
+  color: hsla(0, 0, 0, .54);
 }
