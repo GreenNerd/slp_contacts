@@ -9,7 +9,7 @@ module SlpContacts
     describe "GET #show" do
       it "when current_user equals @user" do
         get :show, { id: user.id }, valid_session
-        expect(assigns(:user)).to eq user
+        expect(response).to redirect_to root_path
       end
       it "when current_user doesnot equal @user" do
         another_user = Fabricate(:user, name: "xx")
