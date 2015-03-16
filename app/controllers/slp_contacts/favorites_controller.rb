@@ -1,7 +1,7 @@
 require_dependency "slp_contacts/application_controller"
 
 module SlpContacts
-  class ContactsController < ApplicationController
+  class FavoritesController < ApplicationController
     def index
       @contacts = paginate current_user.favorited_contacts.order(:name)
       respond_to do |f|
