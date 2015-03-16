@@ -34,7 +34,7 @@
     .content
       .ui.celled.list
         - if @organization.children.count == 0
-          .with-empty-item.item 该组织还没有下级组织。
+          .with-empty-item.item 没有下级组织
         - else
           - @organization.children.each do |organization|
             = link_to organization_path(organization), class: 'item' do

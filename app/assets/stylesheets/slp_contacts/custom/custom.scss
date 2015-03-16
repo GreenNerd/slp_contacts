@@ -219,5 +219,6 @@ p.message {
 .with-empty-item {
   padding: 1em;
   text-align: center;
-  font-size: .9rem;
+  font-size: .9rem !important;
+  color: hsla(0, 0, 0, .54);
 }
