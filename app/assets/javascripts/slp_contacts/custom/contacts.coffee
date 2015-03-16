@@ -102,7 +102,7 @@ $ ->
           if $query_input.val().trim().length
             $query_input.trigger 'start_query'
           else
-            @hideQueryResults()
+            @hideQueryResults $results
         .on 'keydown', (event)=>
           clearTimeout @timer if @timer?
           @timer = setTimeout ->
@@ -140,7 +140,7 @@ $ ->
 
     displayQueryResults: (results, $element, query_word, concat=false)->
       if results.length
-        $element.find('.with-no-item').remove()
+        $element.find('.with-empty-item').remove()
         $element.find('.load-more').remove()
         _templates = _.map results, (user)->
           user.headimg ?= 'http://placehold.it/80x80'
@@ -159,8 +159,9 @@ $ ->
           $element.html _templates.join('')
       else
         $element.html """
-          <div class="with-no-item">
-            找不到与"#{query_word}"相关的联系人<br />
+          <div class="with-empty-item">
+            找不到与"#{query_word}"相关的联系人
+            <br>
             请重新输入...
           </div>
         """
