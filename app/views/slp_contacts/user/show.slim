@@ -16,20 +16,20 @@
       .bg-img style="background-image: url(#{ current_user.headimgurl});"
       .mask
       .user-name= current_user.name
-      .extra-links.ui.center.aligned.two.column.padded.divided.grid
-        .column
-          = link_to user_favorites_path do
-            .ui.mini.statistic
-              .value = current_user.favorited_contacts.count
-              .label
-                i.fa.fa-star &nbsp;
-                | 收藏
-        .column
-          = link_to organizations_user_path, class: 'ui mini statistic' do
-            .value= current_user.organizations.count
+    .extra-links.ui.center.aligned.two.column.padded.divided.grid
+      .column
+        = link_to user_favorites_path do
+          .ui.mini.statistic
+            .value = current_user.favorited_contacts.count
             .label
-              i.fa.fa-sitemap &nbsp;
-              | 所在组织
+              i.fa.fa-star &nbsp;
+              | 收藏
+      .column
+        = link_to organizations_user_path, class: 'ui mini statistic' do
+          .value= current_user.organizations.count
+          .label
+            i.fa.fa-sitemap &nbsp;
+            | 所在组织
     .more-detail
       table.ui.very.basic.table.unstackable
         colgroup
