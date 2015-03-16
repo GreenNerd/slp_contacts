@@ -1,6 +1,4 @@
 SlpContacts::Engine.routes.draw do
-  get 'user/show'
-
   resources :users, only: [:show] do # 某个用户详情页面
     member do
       post :favorite # 收藏一个用户
