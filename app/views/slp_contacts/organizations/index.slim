@@ -8,7 +8,7 @@
 #main_content
   #organization_index_list.ui.celled.list
     - if @organizations.count == 0
-      .with-empty-item 您当前还不属于任何一个组织。
+      .with-empty-item 您当前还不属于任何组织
     - else
       - @organizations.each do |organization|
         = link_to organization_path(organization), class: 'item' do
