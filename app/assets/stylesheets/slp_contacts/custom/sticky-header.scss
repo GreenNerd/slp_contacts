@@ -16,6 +16,12 @@ $sticky-height: 2.7rem;
     line-height: $sticky-height;
   }
 
+  .left-side, .right-side {
+    i.fa {
+      padding: .6em 0;
+    }
+  }
+
   .left-side {
     position: absolute;
     top: 0;
@@ -30,6 +36,10 @@ $sticky-height: 2.7rem;
     right: 0;
     padding-right: 1em;
     padding-left: .5rem;
+
+    i.fa {
+      padding-left: .2em;
+    }
   }
 
   .title {
@@ -72,16 +82,17 @@ $sticky-height: 2.7rem;
     .fa-times, .fa-search {
       position: absolute;
       z-index: 2;
-      top: .6em;
+      top: 0;
+      padding: .6em .5em;
       cursor: pointer;
     }
 
     .fa-times {
-      right: .5em;
+      right: 0;
     }
 
     .fa-search {
-      left: .5em;
+      left: 0;
     }
 
     .ui.input {
