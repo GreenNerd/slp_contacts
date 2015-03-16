@@ -3,10 +3,7 @@ require_dependency "slp_contacts/application_controller"
 module SlpContacts
   class OrganizationsController < ApplicationController
     before_action :find_organization, only: [:show, :query]
-    def index
-      @organizations = current_user.organizations.order(:name)
-    end
-
+    
     def show
       @members = paginate @organization.members.where.not(id: current_user.id).order(:name)
       respond_to do |f|

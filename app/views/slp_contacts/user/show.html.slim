@@ -1,0 +1,62 @@
+.sticky-header#query_sticker data-queryaction='query user'
+  .right-side
+    i.fa.fa-search.open-query
+  .center-box
+    .title 通讯录
+  .query-container
+    i.fa.fa-times.close-query
+    i.fa.fa-search
+    .ui.search
+      .ui.input
+        input.prompt.query-input type="text" placeholder="请输入..."
+      .results.ui.divided.list
+#main_content
+  #contact_detail
+    .cover-image
+      .bg-img style="background-image: url(#{ current_user.headimgurl});"
+      .mask
+      .user-name= current_user.name
+      .extra-links.ui.center.aligned.two.column.padded.divided.grid
+        .column
+          = link_to user_favorites_path do
+            .ui.mini.statistic
+              .value = current_user.favorited_contacts.count
+              .label
+                i.fa.fa-star &nbsp;
+                | 收藏
+        .column
+          = link_to organizations_user_path, class: 'ui mini statistic' do
+            .value= current_user.organizations.count
+            .label
+              i.fa.fa-sitemap &nbsp;
+              | 所在组织
+    .more-detail
+      table.ui.very.basic.table.unstackable
+        colgroup
+          col style="width: 30%;"
+          col style="width: 70%;"
+        tbody
+          tr
+            td.label 识别码
+            td.right.aligned= current_user.identifier
+          tr
+            td.label 手机号
+            td.right.aligned= current_user.phone
+          tr
+            td.label 所在组织
+            td.right.aligned
+              - if current_user.organizations.count == 0
+                span
+                    | 您不属于任何组织
+              - else
+                - current_user.organizations.each do |organization|
+                  = link_to organization.name, organization_path(organization), class: 'ui mini label'
+          tr
+            td.label 标签
+            td.right.aligned
+              - if current_user.tags.count == 0
+                span
+                    | 您还没有任何的标签
+              - else
+                - current_user.tags.each do |tag|
+                  .ui.mini.label= tag.name

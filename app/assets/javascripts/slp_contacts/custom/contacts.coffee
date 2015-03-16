@@ -10,9 +10,9 @@ $ ->
     initContactsView: ->
       @contactsCollection = new SLPContacts.Collections.UserCollection []
       if ///organizations///.test location.pathname
-        @contactsCollection.url = "#{location.pathname}/members.json"
+        @contactsCollection.url = "#{location.pathname}.json"
       else
-        @contactsCollection.url = '/apps/contacts/favorites.json'
+        @contactsCollection.url = '/apps/contacts/user/favorites.json'
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
       @createContactsView contactViewType
       @enableViewTab()
@@ -22,8 +22,8 @@ $ ->
     setApiSettings: ->
       apiSettings =
         api:
-          'query user': '/apps/contacts/query?name={query}'
-          'query favorited user': '/apps/contacts/favorites/query?name={query}'
+          'query user': '/apps/contacts/users/query?name={query}'
+          'query favorited user': '/apps/contacts/user/favorites/query?name={query}'
           'query organization member': '/apps/contacts/organizations/{id}/query?name={query}'
       $.extend $.fn.api.settings, apiSettings
 

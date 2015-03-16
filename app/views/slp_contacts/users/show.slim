@@ -1,23 +1,9 @@
-- if current_user == @user
-  .sticky-header#query_sticker data-queryaction='query user'
-    .right-side
-      i.fa.fa-search.open-query
-    .center-box
-      .title 通讯录
-    .query-container
-      i.fa.fa-times.close-query
-      i.fa.fa-search
-      .ui.search
-        .ui.input
-          input.prompt.query-input type="text" placeholder="请输入..."
-        .results.ui.divided.list
-- else
-  .sticky-header
-    = link_to request.referrer || root_path do
-      .left-side
-        i.fa.fa-long-arrow-left
-    .center-box
-      .title 详细信息
+.sticky-header
+  = link_to request.referrer || root_path do
+    .left-side
+      i.fa.fa-long-arrow-left
+  .center-box
+    .title 详细信息
 
 #main_content
   #contact_detail
@@ -25,22 +11,6 @@
       .bg-img style="background-image: url(#{ @user.headimgurl});"
       .mask
       .user-name= @user.name
-    - if current_user == @user
-      .extra-links.ui.center.aligned.two.column.padded.divided.grid
-        .column
-          = link_to favorites_path do
-            .ui.mini.statistic
-              .value = current_user.favorited_contacts.count
-              .label
-                i.fa.fa-star &nbsp;
-                | 收藏
-        .column
-          = link_to organizations_path, class: 'ui mini statistic' do
-            .value= @user.organizations.count
-            .label
-              i.fa.fa-sitemap &nbsp;
-              | 所在组织
-    - else
       .contact-opreate.ui.center.aligned.three.column.padded.grid
         .column
           = link_to "tel:#{@user.phone}", class: 'ui mini statistic' do
@@ -76,10 +46,7 @@
             td.right.aligned
               - if @user.organizations.count == 0
                 span
-                  - if current_user == @user
-                    | 您不属于任何组织
-                  - else
-                    | 他不属于任何组织
+                  | 他不属于任何组织
               - else
                 - @user.organizations.each do |organization|
                   = link_to organization.name, organization_path(organization), class: 'ui mini label'
@@ -88,10 +55,7 @@
             td.right.aligned
               - if @user.tags.count == 0
                 span
-                  - if current_user == @user
-                    | 您还没有任何的标签
-                  - else
-                    | 他还没有任何的标签
+                  | 他还没有任何的标签
               - else
                 - @user.tags.each do |tag|
                   .ui.mini.label= tag.name

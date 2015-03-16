@@ -5,6 +5,7 @@ module SlpContacts
     before_action :find_user, except: [:query]
     before_action :check_user, only: [:favorite, :unfavorite]
     def show
+      redirect_to root_path if current_user == @user
     end
 
     def favorite

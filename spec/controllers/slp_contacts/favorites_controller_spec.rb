@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module SlpContacts
-  RSpec.describe ContactsController, type: :controller do
+  RSpec.describe FavoritesController, type: :controller do
 
     let(:user) { Fabricate(:user) }
     let(:valid_session) { { current_user_id: user.id } }
