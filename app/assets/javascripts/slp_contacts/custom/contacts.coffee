@@ -20,12 +20,10 @@ $ ->
         @enableLoadMore()
 
     setApiSettings: ->
-      apiSettings =
-        api:
-          'query user': '/apps/contacts/users/query?name={query}'
-          'query favorited user': '/apps/contacts/user/favorites/query?name={query}'
-          'query organization member': '/apps/contacts/organizations/{id}/query?name={query}'
-      $.extend $.fn.api.settings, apiSettings
+      @apiSettings =
+        'query user': '/apps/contacts/users/query'
+        'query favorited user': '/apps/contacts/user/favorites/query'
+        'query organization member': '/apps/contacts/organizations/{id}/query'
 
     enableSettingsSidebar: ->
       $setting = $('#settings_view')
@@ -84,42 +82,101 @@ $ ->
     enableQueryUI: ->
       $sticker = $('#query_sticker')
       $query_trigger = $sticker.find('.ui.search')
+      $query_input = $sticker.find('input')
+      $results = $sticker.find('.results')
       query_data = $sticker.data()
+      query_url = @apiSettings[query_data.queryaction].replace ///{id}///g, query_data.urlid
 
       $sticker
         .on 'click', '.open-query', ->
           $sticker.addClass('query-view')
-          $sticker.find('.query-input').focus()
+          $query_input.focus()
         .on 'click', '.close-query', ->
           $sticker.removeClass('query-view')
+          $query_input.val('')
+        .on 'click', '.load-more', =>
+          @queryWithPage query_url, $query_input.val(), SLPContacts.Cache.CurrentQueryPage + 1, true
 
-      $query_trigger.search
-        apiSettings:
-          action: query_data.queryaction
-          urlData:
-            id: parseInt query_data.urlid
-          onError: (err_msg, element)->
-            console.log err_msg
-        onSelect: (result, response)->
-          $sticker.removeClass('query-view')
-        searchFullText: false
-        searchFields: ['name', 'title']
-        type: 'user'
-        searchDelay: 600
-        templates:
-          user: (response)->
-            _templates = response.results.map (user)->
-              user.headimg ?= 'http://placehold.it/80x80'
-              return """
-                <a class="item" href="/apps/contacts/users/#{user.id}">
-                  <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
-                  <div class="content">
-                    <div class="header">#{user.name}</div>
-                    <div class="description">#{user.phone}</div>
-                  </div>
-                </a>
+      $query_input
+        .on 'focus', =>
+          if $query_input.val().trim().length
+            $query_input.trigger 'start_query'
+          else
+            @hideQueryResults $results
+        .on 'keydown', (event)=>
+          clearTimeout @timer if @timer?
+          @timer = setTimeout ->
+            $query_input.trigger 'start_query'
+            clearTimeout @timer
+          , 600
+          if event.keyCode is 13 and $query_input.val().length
+            $query_input.trigger 'start_query'
+            clearTimeout @timer
+        .on 'start_query', =>
+          query_word = $query_input.val()
+          @queryWithPage query_url, query_word, 1, false
+
+    queryWithPage: (url, term, page, concat=false)->
+      $_results = $('#query_sticker').find('.results')
+      if term.trim().length
+        $.ajax
+          type: 'get'
+          url: url
+          data:
+            name: term
+            page: page ?= 1
+          dataType: 'json'
+          success: (response, status, jqxhr)=>
+            @displayQueryResults(response.results, $_results, term, concat)
+            SLPContacts.Cache.CurrentQueryPage = parseInt jqxhr.getResponseHeader('X-Slp-Contacts-Current-Page')
+            if SLPContacts.Cache.CurrentQueryPage < parseInt jqxhr.getResponseHeader('X-Slp-Contacts-Total-Page')
+              $_results.append """
+                <div class="load-more">查看更多</div>
               """
-            return _templates.join('')
+            else
+              $_results.find('.load-more').remove()
+      else
+        @hideQueryResults $_results
+
+    displayQueryResults: (results, $element, query_word, concat=false)->
+      if results.length
+        $element.find('.with-empty-item').remove()
+        $element.find('.load-more').remove()
+        _templates = _.map results, (user)->
+          user.headimg ?= 'http://placehold.it/80x80'
+          return """
+            <a href="/app/contacts/users/#{user.id}" class="item">
+              <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
+              <div class="content aligned">
+                <div class="header">#{user.name}</div>
+                <div class="description">#{user.phone}</div>
+              </div>
+            </a>
+          """
+        if concat
+          $element.append _templates.join('')
+        else
+          $element.html _templates.join('')
+      else
+        $element.html """
+          <div class="with-empty-item">
+            找不到与"#{query_word}"相关的联系人
+            <br>
+            请重新输入...
+          </div>
+        """
+      unless $element.hasClass('visible')
+        $element.transition
+          animation: 'fade in'
+          duration: 300
+          queue: true
+
+    hideQueryResults: ($element)->
+      if $element.hasClass('visible')
+        $element.transition
+          animation: 'fade out'
+          duration: 300
+          queue: true
 
     createContactsView: (type)->
       @contactsCollection.fetch
