@@ -11,23 +11,23 @@
       .bg-img style="background-image: url(#{ @user.headimgurl});"
       .mask
       .user-name= @user.name
-      .contact-opreate.ui.center.aligned.three.column.padded.grid
-        .column
-          = link_to "tel:#{@user.phone}", class: 'ui mini statistic' do
-            .value
-              i.fa.fa-phone
-            .label 电话
-        .column
-          = link_to "sms:#{@user.phone}", class: 'ui mini statistic' do
-            .value
-              i.fa.fa-envelope
-            .label 短信
-        .column
-          div id="contact-#{@user.id}"
-            - if current_user.favorited?(@user)
-              = render partial: "unfavorite", locals: {user: @user}
-            - else
-              = render partial: "favorite", locals: {user: @user}
+    .contact-opreate.ui.center.aligned.three.column.padded.grid
+      .column
+        = link_to "tel:#{@user.phone}", class: 'ui mini statistic' do
+          .value
+            i.fa.fa-phone
+          .label 电话
+      .column
+        = link_to "sms:#{@user.phone}", class: 'ui mini statistic' do
+          .value
+            i.fa.fa-envelope
+          .label 短信
+      .column
+        div id="contact-#{@user.id}"
+          - if current_user.favorited?(@user)
+            = render partial: "unfavorite", locals: {user: @user}
+          - else
+            = render partial: "favorite", locals: {user: @user}
 
     .more-detail
       table.ui.very.basic.table.unstackable

@@ -131,7 +131,7 @@ $ ->
             SLPContacts.Cache.CurrentQueryPage = parseInt jqxhr.getResponseHeader('X-Slp-Contacts-Current-Page')
             if SLPContacts.Cache.CurrentQueryPage < parseInt jqxhr.getResponseHeader('X-Slp-Contacts-Total-Page')
               $_results.append """
-                <div class="load-more">查看更多</div>
+                <div class="load-more">加载更多</div>
               """
             else
               $_results.find('.load-more').remove()
