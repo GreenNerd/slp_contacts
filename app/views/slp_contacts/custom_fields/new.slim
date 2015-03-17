@@ -5,7 +5,9 @@ p = @namespace.name
   | 属性名称:
   = f.text_field(:name)
   | 输入形式:
-  = f.select(:field_type, [['输入框', 'input'], ['单选框', 'radio'], ['复选框', 'check_box']])
+  = f.select(:field_type) do
+    - SlpContacts::CustomField.field_types.each do |type|
+      = content_tag(:option, type.first, value: type.first)
 
   | 是否唯一:
   = f.check_box(:is_unique)
