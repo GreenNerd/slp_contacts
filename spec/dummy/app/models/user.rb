@@ -3,4 +3,5 @@ class User < ActiveRecord::Base
   has_many :organizations, through: :user_organizations
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings
+  belongs_to :namespace
 end

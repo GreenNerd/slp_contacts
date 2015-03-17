@@ -14,18 +14,23 @@ tags = []
   tags << Tag.create(name: Faker::Address::country)
 end
 
-first_parent = Organization.create name: Faker::Company.name
-second_parent = Organization.create name: Faker::Company.name
-third_parent = Organization.create name: Faker::Company.name
+first_namespace = Namespace.create name: Faker::Name.name
+second_namespace = Namespace.create name: Faker::Name.name
+third_namespace = Namespace.create name: Faker::Name.name
+
+first_parent = Organization.create name: Faker::Company.name, namespace: first_namespace
+second_parent = Organization.create name: Faker::Company.name, namespace: second_namespace
+third_parent = Organization.create name: Faker::Company.name, namespace: third_namespace
 
 def create_child_with_members(parent, tags)
-  child = parent.children.create name: Faker::Company.name
+  child = parent.children.create name: Faker::Company.name, namespace: parent.namespace
   (rand(50) + 1).times do
     member = child.members.create name: Faker::Name.name,
                                   phone: Faker::PhoneNumber.phone_number,
                                   identifier: Faker::Number.number(10),
                                   remember_token: Faker::Number.number(20),
-                                  headimgurl: generate_avatar
+                                  headimgurl: generate_avatar,
+                                  namespace: child.namespace
     (rand(10) + 1).times do
       tag = tags.sample
       member.tags << tag unless member.tags.include?(tag)

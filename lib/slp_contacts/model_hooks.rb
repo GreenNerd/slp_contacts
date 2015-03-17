@@ -32,6 +32,13 @@ module SlpContacts
       def favorited?(contact)
         favorited_contacts.include? contact
       end
+
+      def scoped_contacts
+        namespace.users
+      end
+      def scoped_organizations
+        namespace.organizations
+      end
     end
 
     def self.included(receiver)

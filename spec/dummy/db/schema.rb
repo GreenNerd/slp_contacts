@@ -11,18 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303022108) do
+ActiveRecord::Schema.define(version: 20150316114857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "organizations", force: :cascade do |t|
+  create_table "namespaces", force: :cascade do |t|
     t.string   "name"
-    t.integer  "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "parent_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "namespace_id"
+  end
+
+  add_index "organizations", ["namespace_id"], name: "index_organizations_on_namespace_id", using: :btree
   add_index "organizations", ["parent_id"], name: "index_organizations_on_parent_id", using: :btree
 
   create_table "slp_contacts_favorites", force: :cascade do |t|
@@ -70,12 +78,17 @@ ActiveRecord::Schema.define(version: 20150303022108) do
     t.datetime "updated_at",     null: false
     t.string   "remember_token"
     t.string   "headimgurl"
+    t.integer  "namespace_id"
   end
 
+  add_index "users", ["namespace_id"], name: "index_users_on_namespace_id", using: :btree
+
+  add_foreign_key "organizations", "namespaces"
   add_foreign_key "slp_contacts_favorites", "users"
   add_foreign_key "slp_contacts_favorites", "users", column: "contact_id"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users", column: "taggable_id"
   add_foreign_key "user_organizations", "organizations"
   add_foreign_key "user_organizations", "users"
+  add_foreign_key "users", "namespaces"
 end

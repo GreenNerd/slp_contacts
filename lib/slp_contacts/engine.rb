@@ -24,5 +24,12 @@ module SlpContacts
     initializer 'slp_contacts.model' do |app|
       SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
     end
+
+    initializer 'SlpContacts precompile hook', group: :all do |app|
+      app.config.assets.precompile += %w(
+        slp_contacts/application.css
+        slp_contacts/application.js
+      )
+    end
   end
 end
