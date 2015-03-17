@@ -4,6 +4,10 @@ module SlpContacts
   class CustomFieldsController < ApplicationController
     before_action :find_namespace
 
+    def index
+      @custom_fields = paginate CustomField.where(namespace: @namespace)
+    end
+
     def new
       @custom_field = CustomField.new
     end

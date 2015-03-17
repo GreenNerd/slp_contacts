@@ -1,0 +1,10 @@
+h1 自定义属性展示
+h2 = @namespace.name
+table
+  - @custom_fields.each do |custom_field|
+    <tr>
+      <td>名称: #{custom_field.name}</td>
+      <td>输入形式: #{custom_field.field_type}</td>
+      <td>是否唯一: #{custom_field.is_unique}</td>
+      <td>是否必须: #{custom_field.is_required}</td>
+    </tr>

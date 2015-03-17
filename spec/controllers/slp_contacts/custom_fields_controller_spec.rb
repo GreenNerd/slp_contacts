@@ -7,7 +7,7 @@ module SlpContacts
     let(:valid_session) { { current_user_id: user.id } }
 
     before :each do
-      namespace = Fabricate(:namespace)
+      @namespace = Fabricate(:namespace)
     end
 
     describe "GET #new" do
@@ -28,6 +28,15 @@ module SlpContacts
         expect{
           post :create, { custom_field: Fabricate.attributes_for(:custom_field, name: "") }, valid_session
         }.to change(CustomField, :count).by(0)
+      end
+    end
+
+    describe "GET #index" do
+      it "assigns the request custom_fields to @custom_fields" do
+        custom_field1 = Fabricate(:custom_field, namespace: @namespace)
+        custom_field2 = Fabricate(:custom_field, namespace: @namespace)
+        get :index, {}, valid_session
+        expect(assigns(:custom_fields)).to match_array([custom_field1, custom_field2])
       end
     end
 
