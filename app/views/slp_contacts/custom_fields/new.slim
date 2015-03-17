@@ -1,0 +1,15 @@
+h1 User属性自定义
+p = @namespace.name
+
+= form_for @custom_field do |f|
+  | 属性名称:
+  = f.text_field(:name)
+  | 输入形式:
+  = f.select(:field_type, [['输入框', 'input'], ['单选框', 'radio'], ['复选框', 'check_box']])
+
+  | 是否唯一:
+  = f.check_box(:is_unique)
+  |是否必须:
+  = f.check_box(:is_required)
+  = f.submit '创建'
+
