@@ -16,8 +16,6 @@ $ ->
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
       @createContactsView contactViewType
       @enableViewTab()
-      @contactsCollection.listenToOnce @contactsCollection, 'reset', =>
-        @enableLoadMore()
 
     setApiSettings: ->
       @apiSettings =
@@ -181,16 +179,21 @@ $ ->
     createContactsView: (type)->
       @contactsCollection.fetch
         reset: true
-        success: (collection, response)=>
+        data:
+          page: 1
+          per_page: SLPContacts.Settings.per_page
+        success: (collection, response, jqxhr)=>
           @contactsView = new SLPContacts.Views.UsersView
             collection: @contactsCollection
             el: '#contacts_list'
             type: type
+          SLPContacts.Cache.Contact_total_page = parseInt jqxhr.xhr.getResponseHeader('X-Slp-Contacts-Total-Page')
+          @enableLoadMore()
 
     enableLoadMore: ->
       $loadMoreCtrl = $('#load_more')
       SLPContacts.Cache.Contact_page ?= 1
-      SLPContacts.Cache.Contact_maymore = if @contactsCollection.length >= SLPContacts.Settings.per_page then true else false
+      SLPContacts.Cache.Contact_maymore = SLPContacts.Cache.Contact_total_page > 1
       if SLPContacts.Cache.Contact_maymore
         $loadMoreCtrl.text('加载更多')
       else
@@ -203,6 +206,7 @@ $ ->
       @contactsCollection.fetch
         data:
           page: page
+          per_page: SLPContacts.Settings.per_page
         remove: false
         reset: false
         add: true
