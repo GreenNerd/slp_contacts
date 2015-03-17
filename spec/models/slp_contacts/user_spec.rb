@@ -2,7 +2,8 @@ require 'rails_helper'
 
 module SlpContacts
   RSpec.describe 'User', type: :model do
-    let(:user) { Fabricate :user }
+    let(:namespace) { Fabricate :namespace }
+    let(:user) { Fabricate :user, namespace: namespace }
     subject { user }
 
     describe 'Associations' do
@@ -76,6 +77,16 @@ module SlpContacts
       end
       it 'returns falsey when favorited' do
         expect(user.favorited?(contact)).to be_falsey
+      end
+    end
+
+    describe '#scoped_contacts' do
+      before :each do
+        3.times { Fabricate :user }
+      end
+
+      it 'returns users belongs to the same namespace' do
+        expect(user.scoped_contacts).to eq [user]
       end
     end
   end
