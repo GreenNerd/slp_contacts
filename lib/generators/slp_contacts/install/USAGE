@@ -1,0 +1,9 @@
+Description:
+    Generate config and migration files for slp_contacts.
+
+Example:
+    rails generate slp_contacts:install
+
+    This will create:
+        config/slp_contacts.rb
+        db/migrate/create_slp_contacts_favorites.rb
