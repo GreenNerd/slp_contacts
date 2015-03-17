@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317022924) do
+ActiveRecord::Schema.define(version: 20150317031447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20150317022924) do
   create_table "slp_contacts_custom_fields", force: :cascade do |t|
     t.integer  "namespace_id"
     t.string   "name"
-    t.string   "type"
     t.string   "field_type"
     t.string   "possible_values"
     t.boolean  "is_required"
