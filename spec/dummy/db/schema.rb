@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317031447) do
+ActiveRecord::Schema.define(version: 20150317035311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20150317031447) do
   add_index "users", ["namespace_id"], name: "index_users_on_namespace_id", using: :btree
 
   add_foreign_key "organizations", "namespaces"
+  add_foreign_key "slp_contacts_custom_fields", "namespaces"
   add_foreign_key "slp_contacts_favorites", "users"
   add_foreign_key "slp_contacts_favorites", "users", column: "contact_id"
   add_foreign_key "taggings", "tags"
