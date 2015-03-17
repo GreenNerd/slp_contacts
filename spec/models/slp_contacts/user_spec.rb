@@ -89,5 +89,16 @@ module SlpContacts
         expect(user.scoped_contacts).to eq [user]
       end
     end
+
+    describe '#scoped_organizations' do
+      let!(:organization) { Fabricate :organization, namespace: namespace}
+      before :each do
+        3.times { Fabricate :organization }
+      end
+
+      it 'returns users belongs to the same namespace' do
+        expect(user.scoped_organizations).to eq [organization]
+      end
+    end
   end
 end
