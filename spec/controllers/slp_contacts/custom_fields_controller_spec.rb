@@ -52,7 +52,19 @@ module SlpContacts
         put :update, { id: custom_field, custom_field: Fabricate.attributes_for(:custom_field, name: "") }, valid_session
         expect(response).to have_http_status(422)
       end
+    end
 
+    describe "DELETE #destroy" do
+      it "returns code 200 and a json" do
+        custom_field = Fabricate(:custom_field)
+        delete :destroy, { id: custom_field }, valid_session
+        expect(response).to have_http_status(200)
+      end
+
+      it "returns code 404 when id isnot found" do
+        delete :destroy, { id: -1 }, valid_session
+        expect(response).to have_http_status(404)
+      end
     end
 
   end

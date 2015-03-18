@@ -3,7 +3,7 @@ require_dependency "slp_contacts/application_controller"
 module SlpContacts
   class CustomFieldsController < ApplicationController
     before_action :find_namespace
-    before_action :find_custom_field, only: [:update]
+    before_action :find_custom_field, only: [:update, :destroy]
 
     def index
       @custom_fields = paginate CustomField.where(namespace: @namespace)
@@ -33,6 +33,11 @@ module SlpContacts
         @result[:error] = 'fail to validate'
         render json: @result, status: 422
       end
+    end
+
+    def destroy
+      @custom_field.destroy
+      render json: { status: "success" }
     end
 
     private
