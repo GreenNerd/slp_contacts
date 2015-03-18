@@ -34,12 +34,8 @@ module SlpContacts
     private
 
     def find_user
-      if params[:id]
-        @user = current_user.scoped_contacts.find_by(id: params[:id])
-        raise UserNotFound unless @user
-      else
-        @user = current_user
-      end
+      @user = current_user.scoped_contacts.find_by(id: params[:id])
+      raise UserNotFound unless @user
     end
   end
 end
