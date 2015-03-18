@@ -1,0 +1,61 @@
+.sticky-header
+  = link_to request.referrer || root_path do
+    .left-side
+      i.fa.fa-long-arrow-left
+  .center-box
+    .title 详细信息
+
+#main_content
+  #contact_detail
+    .cover-image
+      .bg-img style="background-image: url(#{ @user.headimgurl});"
+      .mask
+      .user-name= @user.name
+    .contact-opreate.ui.center.aligned.three.column.padded.grid
+      .column
+        = link_to "tel:#{@user.phone}", class: 'ui mini statistic' do
+          .value
+            i.fa.fa-phone
+          .label 电话
+      .column
+        = link_to "sms:#{@user.phone}", class: 'ui mini statistic' do
+          .value
+            i.fa.fa-envelope
+          .label 短信
+      .column
+        div id="contact-#{@user.id}"
+          - if current_user.favorited?(@user)
+            = render partial: "unfavorite", locals: {user: @user}
+          - else
+            = render partial: "favorite", locals: {user: @user}
+
+    .more-detail
+      table.ui.very.basic.table.unstackable
+        colgroup
+          col style="width: 30%;"
+          col style="width: 70%;"
+        tbody
+          tr
+            td.label 识别码
+            td.right.aligned= @user.identifier
+          tr
+            td.label 手机号
+            td.right.aligned= @user.phone
+          tr
+            td.label 所在组织
+            td.right.aligned
+              - if @user.organizations.count == 0
+                span
+                  | 他不属于任何组织
+              - else
+                - @user.organizations.each do |organization|
+                  = link_to organization.name, organization_path(organization), class: 'ui mini label'
+          tr
+            td.label 标签
+            td.right.aligned
+              - if @user.tags.count == 0
+                span
+                  | 他还没有任何的标签
+              - else
+                - @user.tags.each do |tag|
+                  .ui.mini.label= tag.name

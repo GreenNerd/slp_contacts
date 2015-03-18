@@ -1,0 +1,3 @@
+$("#members").append("<%= escape_javascript(render partial: 'member', collection: @members) %>")
+$("#addmore").remove()
+$("body").append('<%= link_to_next_page @members, "加载更多", remote: true, id: "addmore" %>')

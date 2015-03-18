@@ -1,0 +1,7 @@
+<%= link_to unfavorite_user_path(user, from: 'users'), method: :delete, remote: true do %>
+  <div class="ui mini statistic active">
+    <div class="value"> <i class="fa fa-star"></i>
+    </div>
+      <div class="label">取消</div>
+  </div>
+<% end %> 
