@@ -26,7 +26,7 @@ module SlpContacts
     end
 
     def query
-      @result = paginate SlpContacts.contact_class.where("name LIKE ?", "%#{params[:name]}%").order(:name)
+      @result = paginate current_user.scoped_contacts.where("name LIKE ?", "%#{params[:name]}%").order(:name)
       respond_to do |f|
         f.json { render layout: false}
       end
@@ -36,7 +36,7 @@ module SlpContacts
 
     def find_user
       if params[:id]
-        @user = SlpContacts.contact_class.find_by(id: params[:id])
+        @user = current_user.scoped_contacts.find_by(id: params[:id])
         raise UserNotFound unless @user
       else
         @user = current_user

@@ -22,8 +22,25 @@ module SlpContacts
     end
 
     initializer 'slp_contacts.model' do |app|
-      SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
-      SlpContacts.namespace_class.send :include, SlpContacts::NamespaceHooks
+      if SlpContacts.contact_class || Rails.env.production?
+        SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
+      else
+        puts 'Need to set the contact_class for SlpContacts(config/initializer/slp_contacts.rb).'
+      end
+
+      if SlpContacts.namespace_class || Rails.env.production?
+        SlpContacts.namespace_class.send :include, SlpContacts::NamespaceHooks
+      else
+        puts 'Need to set the namespace_class for SlpContacts(config/initializer/slp_contacts.rb).'
+      end
+    end
+
+    initializer 'SlpContacts precompile hook', group: :all do |app|
+      app.config.assets.precompile += %w(
+        slp_contacts/application.css
+        slp_contacts/application.js
+      )
+
     end
   end
 end

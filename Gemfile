@@ -6,10 +6,10 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'fabrication', '~> 2.12'
   gem 'database_cleaner', '~> 1.4'
+  gem 'faker'
 
   gem 'pry'
   gem 'pry-byebug'
-  gem 'faker'
 end
 
 # http://stackoverflow.com/a/25148960/3639260

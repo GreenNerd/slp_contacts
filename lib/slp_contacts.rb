@@ -7,7 +7,7 @@ module SlpContacts
   mattr_accessor :namespace_class
 
   def self.contact_class
-    @@contact_class.constantize
+    @@contact_class.constantize if @@contact_class
   end
 
   def self.namespace_class

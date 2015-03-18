@@ -38,6 +38,14 @@ module SlpContacts
         custom_field = SlpContacts::CustomField.find_by(name: field_name)
         custom_values.find_by(custom_field_id: custom_field).try(:value)
       end
+
+      def scoped_contacts
+        namespace.users
+      end
+
+      def scoped_organizations
+        namespace.organizations
+      end
     end
 
     def self.included(receiver)
