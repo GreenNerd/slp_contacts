@@ -6,6 +6,7 @@ module SlpContacts
       has_many :favorites, class_name: 'SlpContacts::Favorite', foreign_key: :user_id, dependent: :destroy
       has_many :favoriteds, class_name: 'SlpContacts::Favorite', foreign_key: :contact_id, dependent: :destroy
       has_many :favorited_contacts, through: :favorites, source: :contact
+      has_many :custom_values, class_name: 'SlpContacts::CustomValue', foreign_key: :user_id, dependent: :destroy
     end
 
     module ClassMethods
@@ -31,6 +32,11 @@ module SlpContacts
 
       def favorited?(contact)
         favorited_contacts.include? contact
+      end
+
+      def find_value(field_name)
+        custom_field = SlpContacts::CustomField.find_by(name: field_name)
+        custom_values.find_by(custom_field_id: custom_field).try(:value)
       end
     end
 

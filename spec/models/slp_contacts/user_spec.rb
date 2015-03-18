@@ -78,5 +78,16 @@ module SlpContacts
         expect(user.favorited?(contact)).to be_falsey
       end
     end
+
+    describe '#find_value' do
+      let(:custom_value) { Fabricate :custom_value }
+      it 'returns the value when field name exists' do
+        expect(custom_value.user.find_value(custom_value.custom_field.name)).to eq custom_value.value
+      end
+
+      it 'returns nil when field name doesnot exist' do
+        expect(user.find_value(custom_value.custom_field.name)).to be_falsey
+      end
+    end
   end
 end
