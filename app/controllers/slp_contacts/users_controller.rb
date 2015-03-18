@@ -25,10 +25,8 @@ module SlpContacts
     end
 
     def query
-      @result = paginate current_user.scoped_contacts.where("name LIKE ?", "%#{params[:name]}%").order(:name)
-      respond_to do |f|
-        f.json { render layout: false}
-      end
+      @users = paginate current_user.scoped_contacts.where("name LIKE ?", "%#{params[:name]}%").order(:name)
+      render layout: false
     end
 
     private

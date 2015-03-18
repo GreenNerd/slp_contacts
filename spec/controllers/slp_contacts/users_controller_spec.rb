@@ -71,12 +71,19 @@ module SlpContacts
     end
 
     describe "GET #query" do
-      let!(:contact) { Fabricate :user, name: 'xx1', namespace: namespace }
+      let(:name) { 'abcd' }
+      let!(:contact) { Fabricate :user, name: name, namespace: namespace }
 
-      it "returns a json when user exists " do
-        xhr :get, :query, { name: "xx1", format: :json }, valid_session
-        json = JSON.parse(response.body)
-        expect(json['results'][0]['name']).to eq contact.name
+      it "returns contacts when user exists " do
+        xhr :get, :query, { name: name, format: :json }, valid_session
+        expect(assigns(:users)).to eq [contact]
+      end
+
+      it 'retuns contact belongs_to the same namespace' do
+        Fabricate :user, name: name
+
+        xhr :get, :query, { name: name, format: :json }, valid_session
+        expect(assigns(:users)).to eq [contact]
       end
     end
   end
