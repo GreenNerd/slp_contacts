@@ -6,7 +6,7 @@ module SlpContacts
     end
 
     def organizations
-      @organizations = paginate current_user.organizations.order(:name)
+      @organizations = current_user.organizations.order(:name)
     end
   end
 end
