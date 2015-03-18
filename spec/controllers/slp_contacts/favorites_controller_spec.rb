@@ -22,12 +22,19 @@ module SlpContacts
     end
 
     describe "GET #query" do
-      it "returns a json when contact exists " do
-        contact1 = Fabricate(:user, name: 'xx1')
-        Favorite.create(user: user, contact: contact1)
-        get :query, { name: "xx1", format: :json }, valid_session
-        json = JSON.parse(response.body)
-        expect(json['results'][0]['name']).to eq contact1.name
+      let(:name) { 'abcdefg' }
+      let(:favorited_contact) { Fabricate(:user, name: name, namespace: namespace).tap { |contact| user.favorite contact } }
+      let!(:contacts) do
+        [
+          favorited_contact,
+          Fabricate(:user, namespace: namespace).tap { |contact| user.favorite contact },
+          Fabricate(:user, namespace: namespace).tap { |contact| user.favorite contact }
+        ]
+      end
+
+      it "returns the contact that matches " do
+        get :query, { name: name, format: :json }, valid_session
+        expect(assigns(:contacts)).to match_array [favorited_contact]
       end
     end
 
