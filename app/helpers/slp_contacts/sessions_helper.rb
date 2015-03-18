@@ -4,7 +4,7 @@ module SlpContacts
       unless signed_in?
         store_location
 
-        redirect_to main_app.login_path
+        redirect_to main_app.root_path
       end
     end
 
