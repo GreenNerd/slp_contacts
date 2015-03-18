@@ -23,6 +23,7 @@ module SlpContacts
 
     initializer 'slp_contacts.model' do |app|
       SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
+      SlpContacts.namespace_class.send :include, SlpContacts::NamespaceHooks
     end
   end
 end

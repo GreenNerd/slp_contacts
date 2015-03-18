@@ -1,5 +1,6 @@
 require "slp_contacts/engine"
 require "slp_contacts/model_hooks"
+require "slp_contacts/namespace_hooks"
 
 module SlpContacts
   mattr_accessor :contact_class
