@@ -5,6 +5,6 @@ module SlpContacts
   mattr_accessor :contact_class
 
   def self.contact_class
-    @@contact_class.constantize
+    @@contact_class.constantize if @@contact_class
   end
 end

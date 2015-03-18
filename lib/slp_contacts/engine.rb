@@ -22,7 +22,11 @@ module SlpContacts
     end
 
     initializer 'slp_contacts.model' do |app|
-      SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
+      if SlpContacts.contact_class || Rails.env.production?
+        SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
+      else
+        puts 'Need to set the contact_class for SlpContacts(confi/initializer/slp_contacts.rb).'
+      end
     end
 
     initializer 'SlpContacts precompile hook', group: :all do |app|
