@@ -9,13 +9,21 @@ module SlpContacts
     describe "GET #show" do
       let(:another_user) { Fabricate(:user, namespace: namespace) }
 
-      it "when current_user equals @user" do
+      it "redirect to root_path when the user is current_user" do
         get :show, { id: user.id }, valid_session
         expect(response).to redirect_to root_path
       end
-      it "when current_user doesnot equal @user" do
+
+      it "assigns the user" do
         get :show, { id: another_user.id }, valid_session
         expect(assigns(:user)).to eq another_user
+      end
+
+      it "returns 404 when the user isnt in the same namespace" do
+        another_contact = Fabricate :user
+
+        get :show, { id: another_contact.id }, valid_session
+        expect(response).to have_http_status(404)
       end
     end
 
