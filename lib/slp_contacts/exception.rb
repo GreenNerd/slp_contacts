@@ -1,6 +1,4 @@
 module SlpContacts
-  class UserNotFound < Exception 
-  end
-  class OrganizationNotFound < Exception
+  class NotFound < Exception
   end
 end

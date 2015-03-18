@@ -33,7 +33,7 @@ module SlpContacts
 
     def find_user
       @user = current_user.scoped_contacts.find_by(id: params[:id])
-      raise UserNotFound unless @user
+			raise NotFound.new('用户不存在') unless @user
     end
   end
 end
