@@ -3,6 +3,7 @@ require_dependency "slp_contacts/application_controller"
 module SlpContacts
   class CustomFieldsController < ApplicationController
     before_action :find_namespace
+    before_action :find_custom_field, only: [:update]
 
     def index
       @custom_fields = paginate CustomField.where(namespace: @namespace)
@@ -22,7 +23,24 @@ module SlpContacts
       end
     end
 
+    def update
+      @result = {}
+      if @custom_field.update(custom_field_params)
+        @result[:status] = 'success'
+        render json: @result
+      else
+        @result[:status] = 'failure'
+        @result[:error] = 'fail to validate'
+        render json: @result, status: 422
+      end
+    end
+
     private
+
+    def find_custom_field
+      @custom_field = CustomField.find_by(id: params[:id])
+      raise CustomFieldNotFound unless @custom_field
+    end
 
     def find_namespace
       @namespace = SlpContacts.namespace_class.first

@@ -40,5 +40,20 @@ module SlpContacts
       end
     end
 
+    describe "PUT #update" do
+      it "returns code 200 when succeeding" do
+        custom_field = Fabricate(:custom_field)
+        put :update, { id: custom_field, custom_field: Fabricate.attributes_for(:custom_field) }, valid_session
+        expect(response).to have_http_status(200)
+      end
+
+      it "returns code 422 when failing to validate" do
+        custom_field = Fabricate(:custom_field)
+        put :update, { id: custom_field, custom_field: Fabricate.attributes_for(:custom_field, name: "") }, valid_session
+        expect(response).to have_http_status(422)
+      end
+
+    end
+
   end
 end
