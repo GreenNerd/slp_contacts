@@ -3,7 +3,6 @@ require_dependency "slp_contacts/application_controller"
 module SlpContacts
   class UsersController < ApplicationController
     before_action :find_user, except: [:query]
-    before_action :check_user, only: [:unfavorite]
 
     def show
       redirect_to root_path if current_user == @user
@@ -18,12 +17,10 @@ module SlpContacts
     end
 
     def unfavorite
-      unless current_user.unfavorite(@user)
-        render js: "alert('没有收藏该联系人！');"
-        return
-      end
-      respond_to do |f|
-        f.js { render layout: false }
+      if current_user.unfavorite(@user)
+        render :show, layout: false
+      else
+        render_json_error
       end
     end
 
@@ -44,12 +41,5 @@ module SlpContacts
         @user = current_user
       end
     end
-
-    def check_user
-      if current_user == @user
-        render js: "alert('不能收藏自己！');", status: 403
-      end
-    end
-
   end
 end

@@ -49,9 +49,24 @@ module SlpContacts
         }.to change { user.favorited_contacts.count }.by(-1)
       end
 
-      it "fails when the user unfavorites himself" do
-        xhr :delete, :unfavorite, { id: user.id, format: :js }, valid_session
-        expect(response).to have_http_status(403)
+      it "does nothing when the user unfavorites himself" do
+        expect {
+          xhr :delete, :unfavorite, { id: user.id, format: :js }, valid_session
+        }.not_to change { user.favorited_contacts.count }
+      end
+
+      it "does nothing when the user unfavorites a unfavorited contact" do
+        unfavorited_contact = Fabricate :user, namespace: namespace
+
+        expect {
+          xhr :delete, :unfavorite, { id: unfavorited_contact.id, format: :js }, valid_session
+        }.not_to change { user.favorited_contacts.count }
+      end
+
+      it 'returns not_found when the contact not in the same namespace' do
+        another_contact = Fabricate :user
+        xhr :delete, :unfavorite, { id: another_contact.id, format: :json }, valid_session
+        expect(response).to have_http_status(404)
       end
     end
 
