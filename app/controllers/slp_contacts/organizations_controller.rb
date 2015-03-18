@@ -5,10 +5,13 @@ module SlpContacts
     before_action :find_organization, only: [:show, :query]
 
     def show
-      @members = paginate @organization.members.where.not(id: current_user.id).order(:name)
-      respond_to do |f|
-        f.html
-        f.json { render layout: false }
+      respond_to do |format|
+        format.html
+
+        format.json do
+          @members = paginate @organization.members.where.not(id: current_user.id).order(:name)
+          render layout: false
+        end
       end
     end
 

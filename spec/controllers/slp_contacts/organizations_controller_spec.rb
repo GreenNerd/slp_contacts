@@ -11,14 +11,13 @@ module SlpContacts
     describe "GET #show" do
 
       it "assigns the requested organization to @organization" do
-        get :show, { id: organization }, valid_session
+        get :show, { id: organization.id }, valid_session
         expect(assigns(:organization)).to eq organization
       end
 
-      it "returns a json when format is json" do
-        xhr :get, :show, { id: organization, format: :json }, valid_session
-        parsed_body = JSON.parse(response.body)
-        expect(parsed_body[0]['name']).to eq contact.name
+      it "returns members" do
+        xhr :get, :show, { id: organization.id, format: :json }, valid_session
+        expect(assigns(:members)).to match_array([contact])
       end
     end
 
