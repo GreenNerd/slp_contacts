@@ -10,7 +10,7 @@ module SlpContacts
 
     def favorite
       if current_user.favorite(@user)
-        render :show, layout: false
+        render layout: false
       else
         render_json_error('不能收藏自己')
       end
@@ -18,7 +18,7 @@ module SlpContacts
 
     def unfavorite
       if current_user.unfavorite(@user)
-        render :show, layout: false
+        render layout: false
       else
         render_json_error
       end

@@ -32,18 +32,18 @@ module SlpContacts
 
       it "adds the contact to favorited_contacts" do
         expect{
-          xhr :post, :favorite, { id: contact.id, format: :json }, valid_session
+          xhr :post, :favorite, { id: contact.id, format: :js }, valid_session
         }.to change { user.favorited_contacts.count }.by(1)
       end
 
       it "fails when the user favorites himself" do
-        xhr :post, :favorite, { id: user.id, format: :json }, valid_session
+        xhr :post, :favorite, { id: user.id, format: :js }, valid_session
         expect(response).to have_http_status(422)
       end
 
       it 'returns not_found when the contact not in the same namespace' do
         another_contact = Fabricate :user
-        xhr :post, :favorite, { id: another_contact.id, format: :json }, valid_session
+        xhr :post, :favorite, { id: another_contact.id, format: :js }, valid_session
         expect(response).to have_http_status(404)
       end
     end
@@ -73,7 +73,7 @@ module SlpContacts
 
       it 'returns not_found when the contact not in the same namespace' do
         another_contact = Fabricate :user
-        xhr :delete, :unfavorite, { id: another_contact.id, format: :json }, valid_session
+        xhr :delete, :unfavorite, { id: another_contact.id, format: :js }, valid_session
         expect(response).to have_http_status(404)
       end
     end
