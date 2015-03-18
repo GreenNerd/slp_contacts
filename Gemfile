@@ -9,6 +9,7 @@ group :development, :test do
 
   gem 'pry'
   gem 'pry-byebug'
+  gem 'faker'
 end
 
 # http://stackoverflow.com/a/25148960/3639260
