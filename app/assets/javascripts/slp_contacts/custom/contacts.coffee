@@ -101,7 +101,7 @@ $ ->
             $query_input.trigger 'start_query'
           else
             @hideQueryResults $results
-        .on 'keydown', (event)=>
+        .on 'input propertychange keyup', (event)=>
           clearTimeout @timer if @timer?
           @timer = setTimeout ->
             $query_input.trigger 'start_query'
@@ -125,7 +125,7 @@ $ ->
             page: page ?= 1
           dataType: 'json'
           success: (response, status, jqxhr)=>
-            @displayQueryResults(response.results, $_results, term, concat)
+            @displayQueryResults(response, $_results, term, concat)
             SLPContacts.Cache.CurrentQueryPage = parseInt jqxhr.getResponseHeader('X-Slp-Contacts-Current-Page')
             if SLPContacts.Cache.CurrentQueryPage < parseInt jqxhr.getResponseHeader('X-Slp-Contacts-Total-Page')
               $_results.append """
@@ -141,10 +141,10 @@ $ ->
         $element.find('.with-empty-item').remove()
         $element.find('.load-more').remove()
         _templates = _.map results, (user)->
-          user.headimg ?= 'http://placehold.it/80x80'
+          user.headimgurl ?= 'http://placehold.it/80x80'
           return """
             <a href="/apps/contacts/users/#{user.id}" class="item">
-              <img src="#{user.headimg}" alt="user_pic" class="ui avatar image">
+              <img src="#{user.headimgurl}" alt="user_pic" class="ui avatar image">
               <div class="content aligned">
                 <div class="header">#{user.name}</div>
                 <div class="description">#{user.phone}</div>
