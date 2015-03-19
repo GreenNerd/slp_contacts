@@ -19,7 +19,7 @@ module SlpContacts
       if @custom_field.save
         render text: "success"
       else
-        render text: "no success"
+        render text: "no success", status: 422
       end
     end
 
