@@ -44,7 +44,7 @@ module SlpContacts
 
     def find_custom_field
       @custom_field = CustomField.find_by(id: params[:id])
-      raise CustomFieldNotFound unless @custom_field
+      raise NotFound.new('自定义属性不存在') unless @custom_field
     end
 
     def find_namespace

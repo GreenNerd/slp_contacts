@@ -2,8 +2,8 @@ require 'rails_helper'
 
 module SlpContacts
   RSpec.describe UserController, type: :controller do
-
-    let(:user) { Fabricate(:user) }
+    let(:namespace) { Fabricate :namespace }
+    let(:user) { Fabricate :user, namespace: namespace }
     let(:valid_session) { { current_user_id: user.id } }
 
     describe "GET #show" do
@@ -14,16 +14,13 @@ module SlpContacts
     end
 
     describe "GET #organizations" do
-      it "populates an array of all organizations" do
-        orga1 = Fabricate(:organization)
-        orga2 = Fabricate(:organization)
-        UserOrganization.create(user_id: user.id, organization_id: orga1.id)
-        UserOrganization.create(user_id: user.id, organization_id: orga2.id)
+      let!(:first_organization) { Fabricate(:organization, namespace: namespace).tap { |org| org.members << user } }
+      let!(:second_organization) { Fabricate(:organization, namespace: namespace).tap { |org| org.members << user } }
+
+      it "returns organizations that current_user belongs_to" do
         get :organizations, {}, valid_session
-        expect(assigns(:organizations)).to match_array([orga1,orga2])
+        expect(assigns(:organizations)).to match_array([first_organization, second_organization])
       end
     end
-
-
   end
 end

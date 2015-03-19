@@ -6,17 +6,24 @@ module SlpContacts
 
     before_action :signed_in_required
 
-    rescue_from UserNotFound do
-      render js: "alert('没有找到该联系人!');", status: 404
+    rescue_from NotFound do |ex|
+      respond_to do |format|
+        format.html { render text: ex.message, status: :not_found }
+        format.js { render text: ex.message, status: :not_found }
+        format.json { render json: MultiJson.dump(errors: ex.message), status: :not_found }
+      end
     end
 
-    rescue_from OrganizationNotFound do
-      render js: "alert('没有找到该组织!');", status: 404
+    def render_json_error(obj = nil)
+      if obj.present?
+        if obj.respond_to? :errors
+          render json: obj.errors, status: :unprocessable_entity
+        else
+          render json: MultiJson.dump(errors: obj.to_s), status: :unprocessable_entity
+        end
+      else
+        render json: MultiJson.dump(errors: ['参数错误']), status: :unprocessable_entity
+      end
     end
-
-    rescue_from CustomFieldNotFound do
-      render json: { error: '没有找到该联系人!' }, status: 404
-    end
-
   end
 end
