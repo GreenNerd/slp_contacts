@@ -18,25 +18,21 @@ class SLPContacts.Models.UserModel extends Backbone.Model
       @favorite(success)
 
   unFavorite: (success)->
-    @url = @baseurl + "/unfavorite"
-    _success = ()=>
-      @set 'favorited', not @get('favorited')
-      success()
-    $.ajax
-      url: @url
-      type: 'delete'
-      success: _success
+    @url = @baseurl + "/unfavorite.json"
+    @sync('delete', @, {
+      success: =>
+        @set 'favorited', not @get('favorited')
+        success()
       error: ->
-        console.log 'fail to unfavorite!'
+        console.log 'fail to unfavorite'
+    })
 
   favorite: (success)->
-    @url = @baseurl + "/favorite"
-    _success = ()=>
-      @set 'favorited', not @get('favorited')
-      success()
-    $.ajax
-      url: @url
-      type: 'post'
-      success: _success
+    @url = @baseurl + "/favorite.json"
+    @sync('create', @, {
+      success: =>
+        @set 'favorited', not @get('favorited')
+        success()
       error: ->
-        console.log 'fail to favorite!'
+        console.log 'fail to unfavorite'
+    })
