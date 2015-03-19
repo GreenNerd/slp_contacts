@@ -4,7 +4,15 @@ table
   - @custom_fields.each do |custom_field|
     <tr>
       <td>名称: #{custom_field.name}</td>
-      <td>输入形式: #{custom_field.field_type}</td>
+      <td>输入形式:
+      select
+        - SlpContacts::CustomField.field_types.each do |type|
+          - if custom_field.field_type == type.first
+            = content_tag(:option, type.first, value: type.first, selected: true)
+          - else
+            = content_tag(:option, type.first, value: type.first)
+
+      </td>
       <td>是否唯一: #{custom_field.is_unique}</td>
       <td>是否必须: #{custom_field.is_required}</td>
     </tr>
