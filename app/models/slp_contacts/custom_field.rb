@@ -7,5 +7,6 @@ module SlpContacts
 
     validates :name, presence: true
     validates :name, uniqueness: true
+    validates :namespace_id, presence: true
   end
 end
