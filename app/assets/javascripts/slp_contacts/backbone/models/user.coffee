@@ -30,7 +30,7 @@ class SLPContacts.Models.UserModel extends Backbone.Model
         console.log 'fail to unfavorite!'
 
   favorite: (success)->
-    @url = @baseurl + "/favorite"
+    @url = @baseurl + "/favorite.json"
     _success = ()=>
       @set 'favorited', not @get('favorited')
       success()
