@@ -36,34 +36,26 @@ def create_child_with_members(parent, tags)
       member.tags << tag unless member.tags.include?(tag)
     end
   end
-  create_child_with_members(child, tags, namespace) if rand(10) % 2 == 0
+  create_child_with_members(child, tags) if rand(10) % 2 == 0
 end
 
 #first_parent
 (rand(10) + 1).times do
-  create_child_with_members(first_parent, tags, namespace)
+  create_child_with_members(first_parent, tags)
 end
 
 #serond_parent
 (rand(5) + 1).times do
-  create_child_with_members(second_parent, tags, namespace)
+  create_child_with_members(second_parent, tags)
 end
 
 #third_parent
-create_child_with_members(third_parent, tags, namespace)
+create_child_with_members(third_parent, tags)
 
 #custom_field
-first_namespace.custom_fields.create(name: "年龄", field_type: 0)
+first_namespace.custom_fields.create(name: "年龄", field_type: 0, is_unique: true, is_required: true)
 first_namespace.custom_fields.create(name: "性别", field_type: 1, possible_values: "男,女")
 first_namespace.custom_fields.create(name: "爱好", field_type: 2, possible_values: "吃,睡,玩")
-
-second_namespace.custom_fields.create(name: "年龄", field_type: 0)
-second_namespace.custom_fields.create(name: "性别", field_type: 1, possible_values: "男,女")
-second_namespace.custom_fields.create(name: "爱好", field_type: 2, possible_values: "吃,睡,玩")
-
-third_namespace.custom_fields.create(name: "年龄", field_type: 0)
-third_namespace.custom_fields.create(name: "性别", field_type: 1, possible_values: "男,女")
-third_namespace.custom_fields.create(name: "爱好", field_type: 2, possible_values: "吃,睡,玩")
 
 #custom_value
 User.all.each do |user|
