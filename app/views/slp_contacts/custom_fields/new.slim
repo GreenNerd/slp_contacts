@@ -8,7 +8,8 @@ p = @namespace.name
   = f.select(:field_type) do
     - SlpContacts::CustomField.field_types.each do |type|
       = content_tag(:option, type.first, value: type.first)
-
+  | 可能值:
+  = f.text_field(:possible_values)
   | 是否唯一:
   = f.check_box(:is_unique)
   |是否必须:
