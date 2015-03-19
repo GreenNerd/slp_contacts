@@ -6,7 +6,7 @@ class SLPContacts.Models.UserModel extends Backbone.Model
     organizations: []
     tags: []
     favorited: false
-    headimg: 'http://placehold.it/80x80'
+    headimgurl: 'http://placehold.it/80x80'
 
   initialize: ->
     @baseurl = "/apps/contacts/users/#{@id}"
