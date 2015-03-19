@@ -101,7 +101,7 @@ $ ->
             $query_input.trigger 'start_query'
           else
             @hideQueryResults $results
-        .on 'keydown', (event)=>
+        .on 'input propertychange keyup', (event)=>
           clearTimeout @timer if @timer?
           @timer = setTimeout ->
             $query_input.trigger 'start_query'
