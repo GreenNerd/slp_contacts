@@ -125,7 +125,7 @@ $ ->
             page: page ?= 1
           dataType: 'json'
           success: (response, status, jqxhr)=>
-            @displayQueryResults(response.results, $_results, term, concat)
+            @displayQueryResults(response, $_results, term, concat)
             SLPContacts.Cache.CurrentQueryPage = parseInt jqxhr.getResponseHeader('X-Slp-Contacts-Current-Page')
             if SLPContacts.Cache.CurrentQueryPage < parseInt jqxhr.getResponseHeader('X-Slp-Contacts-Total-Page')
               $_results.append """
