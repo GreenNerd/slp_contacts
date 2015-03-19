@@ -8,7 +8,7 @@
 #main_content
   #contact_detail
     .cover-image
-      .bg-img style="background-image: url(#{ @user.headimgurl});"
+      .bg-img style="background-image: url(#{@user.headimgurl_with_size(:small)});"
       .mask
       .user-name= @user.name
     .contact-opreate.ui.center.aligned.three.column.padded.grid
