@@ -4,13 +4,18 @@ p = @namespace.name
 = form_for @custom_field do |f|
   | 属性名称:
   = f.text_field(:name)
+  br
   | 输入形式:
   = f.select :field_type, options_from_collection_for_select(SlpContacts::CustomField.field_types.to_a, 'first', 'first')
+  br
   | 可能值:
   = f.text_field(:possible_values)
+  br
   | 是否唯一:
   = f.check_box(:is_unique)
+  br
   |是否必须:
   = f.check_box(:is_required)
+  br
   = f.submit '创建'
 

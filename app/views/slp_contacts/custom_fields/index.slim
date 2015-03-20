@@ -1,22 +1,28 @@
 h1 自定义属性展示
 h2 = @namespace.name
-table
+table border="1" width="500"
+  tr
+    td
+      | 名称
+    td
+      | 输入形式
+    td
+      | 可能值
+    td
+      | 是否唯一
+    td
+      | 是否必须
   - @custom_fields.each do |custom_field|
     tr
       td
-        | 名称:
         = custom_field.name
       td
-        | 输入形式:
         = select_tag :field_type, options_from_collection_for_select(SlpContacts::CustomField.field_types.to_a, 'first', 'first', custom_field.field_type)
       td
         - if custom_field.field_type == "单选框" || custom_field.field_type == "复选框"
-          | 可能值:
           - custom_field.possible_values.split(',').each do |value|
             = value
       td
-        | 是否唯一:
         = custom_field.is_unique
       td
-        | 是否必须:
         = custom_field.is_required

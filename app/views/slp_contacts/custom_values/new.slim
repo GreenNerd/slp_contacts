@@ -13,4 +13,5 @@ h1 填写自定义属性值
       - field.possible_values.split(',').each do |value|
         = check_box_tag "#{field.name}[]", value
         = value
+    br
   = submit_tag '提交'
