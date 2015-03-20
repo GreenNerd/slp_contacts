@@ -53,13 +53,13 @@ end
 create_child_with_members(third_parent, tags)
 
 #custom_field
-first_namespace.custom_fields.create(name: "年龄", field_type: 0, is_unique: true, is_required: true)
-first_namespace.custom_fields.create(name: "性别", field_type: 1, possible_values: "男,女")
-first_namespace.custom_fields.create(name: "爱好", field_type: 2, possible_values: "吃,睡,玩")
+custom_field1 = first_namespace.custom_fields.create(name: "年龄", field_type: 0, is_unique: true, is_required: true)
+custom_field2 = first_namespace.custom_fields.create(name: "性别", field_type: 1, possible_values: "男,女")
+custom_field3 = first_namespace.custom_fields.create(name: "爱好", field_type: 2, possible_values: "吃,睡,玩")
 
 #custom_value
 User.all.each do |user|
-  user.custom_values.create(value: rand(50), custom_field_id: 1)
-  user.custom_values.create(value: "男", custom_field_id: 2)
-  user.custom_values.create(value: "玩,吃", custom_field_id: 3)
+  user.custom_values.create(value: rand(50), custom_field: custom_field1)
+  user.custom_values.create(value: "男", custom_field: custom_field2)
+  user.custom_values.create(value: "玩,吃", custom_field: custom_field3)
 end
