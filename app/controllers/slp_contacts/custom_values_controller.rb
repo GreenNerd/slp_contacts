@@ -17,7 +17,7 @@ module SlpContacts
         if @custom_value.valid?
           values_collection << @custom_value
         else
-          render text: 'no success', status: 422
+          render text: @custom_value.errors.full_messages, status: 422
           return
         end
       end
@@ -43,7 +43,7 @@ module SlpContacts
         if @custom_value.valid?
           values_collection << @custom_value
         else
-          render text: 'no success', status: 422
+          render text: @custom_value.errors.full_messages, status: 422
           return
         end
       end

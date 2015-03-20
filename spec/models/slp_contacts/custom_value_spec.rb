@@ -15,7 +15,7 @@ module SlpContacts
         it 'is invaild without value' do
           custom_value = Fabricate.build(:custom_value, value: nil, custom_field: custom_field, user: user)
           custom_value.valid?
-          expect(custom_value.errors[:value]).to include("custom field's value must be present")
+          expect(custom_value.errors[:value]).to include("can't be blank")
         end
       end
 
@@ -24,7 +24,7 @@ module SlpContacts
           custom_value1 = Fabricate :custom_value, custom_field: custom_field, user: user
           custom_value = Fabricate.build(:custom_value, value: custom_value1.value, custom_field: custom_field, user: user)
           custom_value.valid?
-          expect(custom_value.errors[:value]).to include("custom field's value must_be_unique")
+          expect(custom_value.errors[:value]).to include("has already been taken")
         end
       end
 
