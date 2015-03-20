@@ -9,18 +9,26 @@ module SlpContacts
     end
 
     def favorite
-      if current_user.favorite(@user)
-        render layout: false
-      else
-        render_json_error('不能收藏自己')
+      respond_to do |format|
+        if current_user.favorite(@user)
+          format.json { render :show, layout: false  }
+          format.js { render layout: false  }
+        else
+          format.json { render_json_error('不能收藏自己') }
+          format.js { render js: "alert('不能收藏自己');", status: 422 }
+        end
       end
     end
 
     def unfavorite
-      if current_user.unfavorite(@user)
-        render layout: false
-      else
-        render_json_error
+      respond_to do |format|
+        if current_user.unfavorite(@user)
+          format.json { render :show, layout: false  }
+          format.js { render layout: false  }
+        else
+          format.json { render_json_error }
+          format.js { render js: "alert('取消失败');", status: 422 }
+        end
       end
     end
 
@@ -33,7 +41,7 @@ module SlpContacts
 
     def find_user
       @user = current_user.scoped_contacts.find_by(id: params[:id])
-			raise NotFound.new('用户不存在') unless @user
+      raise NotFound.new('用户不存在') unless @user
     end
   end
 end
