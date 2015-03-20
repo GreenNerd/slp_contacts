@@ -5,17 +5,12 @@ table
     <tr>
       <td>名称: #{custom_field.name}</td>
       <td>输入形式:
-      select
-        - SlpContacts::CustomField.field_types.each do |type|
-          - if custom_field.field_type == type.first
-            = content_tag(:option, type.first, value: type.first, selected: true)
-          - else
-            = content_tag(:option, type.first, value: type.first)
-      - if custom_field.field_type == "单选框" || custom_field.field_type == "复选框"
-        <td>可能值:
+      = select_tag :field_type, options_from_collection_for_select(SlpContacts::CustomField.field_types.to_a, 'first', 'first', custom_field.field_type)
+      td
+        - if custom_field.field_type == "单选框" || custom_field.field_type == "复选框"
+          | 可能值:
           - custom_field.possible_values.split(',').each do |value|
             = value
-      </td>
       <td>是否唯一: #{custom_field.is_unique}</td>
       <td>是否必须: #{custom_field.is_required}</td>
     </tr>

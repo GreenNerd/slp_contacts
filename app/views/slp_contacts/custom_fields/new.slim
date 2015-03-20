@@ -1,18 +1,16 @@
 h1 User属性自定义
 p = @namespace.name
 
-= form_for @custom_field do |f|
+= form_tag '/apps/contacts/custom_fields' do
   | 属性名称:
-  = f.text_field(:name)
+  = text_field_tag :name
   | 输入形式:
-  = f.select(:field_type) do
-    - SlpContacts::CustomField.field_types.each do |type|
-      = content_tag(:option, type.first, value: type.first)
+  = select_tag :field_type, options_from_collection_for_select(SlpContacts::CustomField.field_types.to_a, 'first', 'first')
   | 可能值:
-  = f.text_field(:possible_values)
+  = text_field_tag(:possible_values)
   | 是否唯一:
-  = f.check_box(:is_unique)
+  = check_box_tag(:is_unique)
   |是否必须:
-  = f.check_box(:is_required)
-  = f.submit '创建'
+  = check_box_tag(:is_required)
+  = submit_tag '创建'
 
