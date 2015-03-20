@@ -87,7 +87,7 @@ module SlpContacts
       end
 
       it 'returns nil when field name doesnot exist' do
-        expect(user.find_value(custom_value.custom_field.name)).to be_falsey
+        expect(user.find_value(custom_value.custom_field.name)).to be_nil
       end
     end
 
