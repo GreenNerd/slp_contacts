@@ -3,12 +3,14 @@ table
     - case custom_field.field_type
     - when SlpContacts::CustomField.field_types.to_a[2].first
       tr
-        td = custom_field.name
+        td
+          = custom_field.name
         td
           - user.find_value(custom_field.name).split(',').each do |value|
             = value
     - else
-      <tr>
-        <td>#{custom_field.name}</td>
-        <td>#{user.find_value(custom_field.name)}</td>
-      </tr>
+      tr
+        td
+          = custom_field.name
+        td
+          = user.find_value(custom_field.name)
