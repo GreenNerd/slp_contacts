@@ -6,7 +6,7 @@ module SlpContacts
     before_action :find_custom_field, only: [:update, :destroy]
 
     def index
-      @custom_fields = paginate CustomField.where(namespace: @namespace)
+      @custom_fields = @namespace.custom_fields
     end
 
     def new
