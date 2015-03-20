@@ -24,7 +24,7 @@ module SlpContacts
 
     def find_organization
       @organization = current_user.scoped_organizations.find_by(id: params[:id])
-			raise NotFound.new('组织不存在') unless @organization
+      raise NotFound.new('组织不存在') unless @organization
     end
 
   end
