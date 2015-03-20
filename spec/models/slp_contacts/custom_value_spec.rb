@@ -10,6 +10,7 @@ module SlpContacts
     describe 'Validation' do
       let(:user) { Fabricate :user }
       let(:custom_field) { Fabricate :custom_field }
+      let!(:custom_value1) { custom_value1 = Fabricate :custom_value, custom_field: custom_field, user: user }
 
       context 'when is_required is true' do
         it 'is invaild without value' do
@@ -21,7 +22,6 @@ module SlpContacts
 
       context 'when is_unique is true' do
         it 'is invaild with repeated value' do
-          custom_value1 = Fabricate :custom_value, custom_field: custom_field, user: user
           custom_value = Fabricate.build(:custom_value, value: custom_value1.value, custom_field: custom_field, user: user)
           custom_value.valid?
           expect(custom_value.errors[:value]).to include("has already been taken")
@@ -29,7 +29,6 @@ module SlpContacts
       end
 
       it 'is invaild to create value that has been created' do
-        custom_value1 = Fabricate :custom_value, custom_field: custom_field, user: user
         custom_value = Fabricate.build :custom_value, value: 'test', custom_field: custom_field, user: user
         custom_value.valid?
         expect(custom_value).to be_invalid
