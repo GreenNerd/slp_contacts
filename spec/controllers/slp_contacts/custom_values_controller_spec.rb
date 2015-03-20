@@ -28,5 +28,12 @@ module SlpContacts
       end
     end
 
+    describe 'GET #edit' do
+      it 'renders the edit template' do
+        get :edit, { id: 1 }, valid_session
+        expect(response).to render_template :edit
+      end
+    end
+
   end
 end

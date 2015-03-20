@@ -27,5 +27,8 @@ module SlpContacts
       render text: 'success'
     end
 
+    def edit
+    end
+
   end
 end
