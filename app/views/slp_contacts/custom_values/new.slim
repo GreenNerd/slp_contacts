@@ -1,0 +1,16 @@
+h1 填写自定义属性值
+= form_tag '/custom_values' do
+  - current_user.namespace.custom_fields.each do |field|
+    = field.name
+    - case field.field_type
+    - when SlpContacts::CustomField.field_types.to_a[0].first
+      = text_field_tag 'value[]'
+    - when SlpContacts::CustomField.field_types.to_a[1].first
+      - field.possible_values.split(',').each do |value|
+        = radio_button_tag 'value[]', value
+        = value
+    - when SlpContacts::CustomField.field_types.to_a[2].first
+      - field.possible_values.split(',').each do |value|
+        = check_box_tag 'value[]', value
+        = value
+  = submit_tag '提交'
