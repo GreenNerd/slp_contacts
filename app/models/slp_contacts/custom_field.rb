@@ -3,10 +3,11 @@ module SlpContacts
     belongs_to :namespace, class_name: SlpContacts.namespace_class.to_s
     has_many :custom_values
 
-    enum field_type: ["输入框", "单选框", "复选框"]
+    enum field_type: ["input", "radio", "checkbox"]
 
     validates :name, presence: true
     validates :name, uniqueness: true
     validates :namespace_id, presence: true
+
   end
 end

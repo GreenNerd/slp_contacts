@@ -17,9 +17,9 @@ table border="1" width="500"
       td
         = custom_field.name
       td
-        = select_tag :field_type, options_from_collection_for_select(SlpContacts::CustomField.field_types.to_a, 'first', 'first', custom_field.field_type)
+        = select_tag :field_type, options_from_collection_for_select(i18n_field_type, 'first', 'last', custom_field.field_type)
       td
-        - if custom_field.field_type == "单选框" || custom_field.field_type == "复选框"
+        - if custom_field.field_type == "radio" || custom_field.field_type == "checkbox"
           - custom_field.possible_values.split(',').each do |value|
             = value
       td

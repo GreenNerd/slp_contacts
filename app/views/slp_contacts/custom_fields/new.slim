@@ -6,7 +6,7 @@ p = @namespace.name
   = f.text_field(:name)
   br
   | 输入形式:
-  = f.select :field_type, options_from_collection_for_select(SlpContacts::CustomField.field_types.to_a, 'first', 'first')
+  = f.select :field_type, options_from_collection_for_select(i18n_field_type, 'first', 'last')
   br
   | 可能值:
   = f.text_field(:possible_values)
