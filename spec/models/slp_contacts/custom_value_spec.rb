@@ -22,6 +22,12 @@ module SlpContacts
           custom_value = Fabricate.build :custom_value, user: user, custom_field: custom_field
           expect(custom_value).to be_valid
         end
+
+        it 'is invalid with an empty value' do
+          custom_value = Fabricate.build(:custom_value, value: ' ', custom_field: custom_field, user: user)
+          custom_value.valid?
+          expect(custom_value.errors[:value]).to include("can't be blank")
+        end
       end
 
       context 'when is_required is false' do
