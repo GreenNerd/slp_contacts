@@ -14,7 +14,7 @@ h1 自定义属性编辑
         = value
     - when SlpContacts::CustomField.field_types.to_a[2].first
       - field.possible_values.split(',').each do |value|
-        - if current_user.find_value(field.name).split(',').include? value
+        - if current_user.find_value(field.name) && current_user.find_value(field.name).split(',').include?(value)
           = check_box_tag "#{field.name}[]", value, true
         - else
           = check_box_tag "#{field.name}[]", value
