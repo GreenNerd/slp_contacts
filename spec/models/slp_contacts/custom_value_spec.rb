@@ -82,5 +82,21 @@ module SlpContacts
         expect(custom_value).to be_invalid
       end
     end
+
+    describe '#check_validation' do
+      let(:namespace) { Fabricate :namespace }
+      let(:user) { Fabricate :user, namespace: namespace }
+      let(:custom_field) { Fabricate :custom_field, namespace: namespace }
+      let(:custom_field1) { Fabricate :custom_field, namespace: namespace }
+
+      it 'returns custom_value array by 2 when two valid' do
+        expect(CustomValue.check_validation(user, { custom_field.name => 'value1', custom_field1.name => 'value2' }).length).to eq 2
+      end
+
+      it 'returns false when one is invalid' do
+        expect(CustomValue.check_validation(user, { custom_field.name => 'value1', custom_field1.name => nil })).to be_falsey
+      end
+    end
+
   end
 end
