@@ -1,7 +1,7 @@
 h1 自定义属性编辑
-= form_tag '/apps/contacts/custom_values/1', method: :put
+= form_tag '/apps/contacts/custom_values', method: :put
   - current_user.namespace.custom_fields.each do |field|
     = field.name
-    = render partial: "field_type_#{field.field_type}", locals: { action: :edit, field: field }
+    = render partial: "field_type_#{field.field_type}", locals: { field: field }
     br
   = submit_tag '提交'

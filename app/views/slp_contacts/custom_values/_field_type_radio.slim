@@ -1,11 +1,6 @@
-- if action == :edit
-  - field.possible_values.split(',').each do |value|
-    - if current_user.find_value(field.name) == value
-      = radio_button_tag field.name, value, true
-    - else
-      = radio_button_tag field.name, value
-    = value
-- else
-  - field.possible_values.split(',').each do |value|
+- field.possible_values.split(',').each do |value|
+  - if current_user.find_value(field.name) == value
+    = radio_button_tag field.name, value, true
+  - else
     = radio_button_tag field.name, value
-    = value
+  = value

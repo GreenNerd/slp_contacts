@@ -1,7 +1,0 @@
-h1 填写自定义属性值
-= form_tag '/apps/contacts/custom_values' do
-  - current_user.namespace.custom_fields.each do |field|
-    = field.name
-    = render partial: "field_type_#{field.field_type}", locals: { action: :new, field: field }
-    br
-  = submit_tag '提交'
