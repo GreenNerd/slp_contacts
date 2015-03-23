@@ -2,16 +2,6 @@ h1 填写自定义属性值
 = form_tag '/apps/contacts/custom_values' do
   - current_user.namespace.custom_fields.each do |field|
     = field.name
-    - case field.field_type
-    - when SlpContacts::CustomField.field_types.to_a[0].first
-      = text_field_tag field.name
-    - when SlpContacts::CustomField.field_types.to_a[1].first
-      - field.possible_values.split(',').each do |value|
-        = radio_button_tag field.name, value
-        = value
-    - when SlpContacts::CustomField.field_types.to_a[2].first
-      - field.possible_values.split(',').each do |value|
-        = check_box_tag "#{field.name}[]", value
-        = value
+    = render partial: "field_type_#{field.field_type}", locals: { action: :new, field: field }
     br
   = submit_tag '提交'

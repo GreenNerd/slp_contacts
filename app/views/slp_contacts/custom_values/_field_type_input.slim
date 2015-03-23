@@ -1,0 +1,4 @@
+- if action == :edit
+  = text_field_tag field.name, current_user.find_value(field.name)
+- else
+  = text_field_tag field.name

@@ -1,0 +1,11 @@
+- if action == :edit
+  - field.possible_values.split(',').each do |value|
+    - if current_user.find_value(field.name) && current_user.find_value(field.name).split(',').include?(value)
+      = check_box_tag "#{field.name}[]", value, true
+    - else
+      = check_box_tag "#{field.name}[]", value
+    = value
+- else
+  - field.possible_values.split(',').each do |value|
+    = check_box_tag "#{field.name}[]", value
+    = value
