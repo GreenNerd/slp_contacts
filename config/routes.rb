@@ -31,7 +31,4 @@ SlpContacts::Engine.routes.draw do
   scope '/admin' do
     resources :custom_fields, except: :show
   end
-  get '/user/custom_values/edit', to: 'custom_values#edit'
-  put '/user/custom_values', to: 'custom_values#update'
-
 end
