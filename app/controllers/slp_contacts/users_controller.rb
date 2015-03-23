@@ -3,13 +3,21 @@ require_dependency "slp_contacts/application_controller"
 module SlpContacts
   class UsersController < ApplicationController
     before_action :find_user, except: [:query]
-    before_action :check_user, only: [:edit]
+    before_action :check_user, only: [:edit, :update]
 
     def show
       redirect_to root_path if current_user == @user
     end
 
     def edit
+    end
+
+    def update
+      if current_user.update_with_custom_values(params)
+        render text: 'success'
+      else
+        render text: 'failure', status: 422
+      end
     end
 
     def favorite
