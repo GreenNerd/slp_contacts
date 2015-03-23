@@ -27,6 +27,20 @@ module SlpContacts
       end
     end
 
+    describe "GET #edit" do
+      let(:another_user) { Fabricate(:user, namespace: namespace) }
+
+      it "renders a edit template" do
+        get :edit, { id: user.id }, valid_session
+        expect(response).to render_template :edit
+      end
+
+      it "redirects when the edited user isnot current_user" do
+        get :edit, { id: another_user.id }, valid_session
+        expect(response).to redirect_to root_path
+      end
+    end
+
     describe "POST #favorite" do
       let(:contact) { Fabricate :user, namespace: namespace }
 

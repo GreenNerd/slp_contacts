@@ -3,9 +3,13 @@ require_dependency "slp_contacts/application_controller"
 module SlpContacts
   class UsersController < ApplicationController
     before_action :find_user, except: [:query]
+    before_action :check_user, only: [:edit]
 
     def show
       redirect_to root_path if current_user == @user
+    end
+
+    def edit
     end
 
     def favorite
@@ -42,6 +46,10 @@ module SlpContacts
     def find_user
       @user = current_user.scoped_contacts.find_by(id: params[:id])
       raise NotFound.new('用户不存在') unless @user
+    end
+
+    def check_user
+      redirect_to root_path unless current_user == @user
     end
   end
 end

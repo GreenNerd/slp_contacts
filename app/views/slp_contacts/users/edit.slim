@@ -1,0 +1,12 @@
+= form_tag user_path(current_user), method: :put do
+  | 名称:
+  = text_field_tag :name, current_user.name
+  br
+  | 手机:
+  = text_field_tag :phone, current_user.phone
+  br
+  - current_user.namespace.custom_fields.each do |field|
+    = field.name
+    = render partial: "slp_contacts/custom_values/field_type_#{field.field_type}", locals: { field: field }
+    br
+  = submit_tag '提交'
