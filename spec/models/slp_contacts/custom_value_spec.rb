@@ -8,8 +8,9 @@ module SlpContacts
     end
 
     describe 'Validation' do
-      let(:user) { Fabricate :user }
-      let(:custom_field) { Fabricate :custom_field }
+      let(:namespace) { Fabricate :namespace }
+      let(:user) { Fabricate :user, namespace: namespace }
+      let(:custom_field) { Fabricate :custom_field, namespace: namespace }
 
       context 'when is_required is true' do
         it 'is invaild without value' do
@@ -39,9 +40,14 @@ module SlpContacts
       end
 
       context 'when is_unique is true' do
-        let(:custom_value1) { Fabricate :custom_value, custom_field: custom_field, user: user }
+        let(:namespace1) { Fabricate :namespace }
+        let(:user1) { Fabricate :user, namespace: namespace }
+        let(:user2) { Fabricate :user, namespace: namespace1 }
+        let(:custom_field1) { Fabricate :custom_field, namespace: namespace1 }
+        let(:custom_value1) { Fabricate :custom_value, custom_field: custom_field, user: user1 }
+        let(:custom_value2) { Fabricate :custom_value, custom_field: custom_field1, user: user2 }
 
-        it 'is invaild with repeated value' do
+        it 'is invaild with repeated value in the same namespace' do
           custom_value = Fabricate.build(:custom_value, value: custom_value1.value, custom_field: custom_field, user: user)
           custom_value.valid?
           expect(custom_value.errors[:value]).to include("has already been taken")
@@ -49,6 +55,11 @@ module SlpContacts
 
         it 'is valid with a new value' do
           custom_value = Fabricate.build(:custom_value, custom_field: custom_field, user: user)
+          expect(custom_value).to be_valid
+        end
+
+        it 'is valid with the same value to another belong to other namespace' do
+          custom_value = Fabricate.build(:custom_value, value: custom_value2.value, custom_field: custom_field, user: user)
           expect(custom_value).to be_valid
         end
       end

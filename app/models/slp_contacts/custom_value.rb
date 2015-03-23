@@ -8,7 +8,7 @@ module SlpContacts
     validates :custom_field_id, uniqueness: { scope: :user_id }
 
     validates :value, presence: true, if: 'custom_field.is_required'
-    validates :value, uniqueness: true, if: 'custom_field.is_unique'
+    validates :value, uniqueness: { scope: :custom_field_id }, if: 'custom_field.is_unique'
 
   end
 end
