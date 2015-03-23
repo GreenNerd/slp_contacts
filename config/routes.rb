@@ -28,6 +28,10 @@ SlpContacts::Engine.routes.draw do
 
   root to: 'user#show' # 首页，当前用户详情页面
 
-  resources :custom_fields, except: :show
-  resources :custom_values, except: [:show, :index, :destroy]
+  scope '/admin' do
+    resources :custom_fields, except: :show
+  end
+  get '/user/custom_values/edit', to: 'custom_values#edit'
+  put '/user/custom_values', to: 'custom_values#update'
+
 end
