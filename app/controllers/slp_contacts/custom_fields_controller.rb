@@ -48,7 +48,7 @@ module SlpContacts
     end
 
     def find_namespace
-      @namespace = SlpContacts.namespace_class.first
+      @namespace = current_user.namespace
     end
 
     def custom_field_params
