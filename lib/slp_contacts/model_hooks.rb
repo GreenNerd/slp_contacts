@@ -7,6 +7,8 @@ module SlpContacts
       has_many :favoriteds, class_name: 'SlpContacts::Favorite', foreign_key: :contact_id, dependent: :destroy
       has_many :favorited_contacts, through: :favorites, source: :contact
       has_many :custom_values, class_name: 'SlpContacts::CustomValue', foreign_key: :user_id, dependent: :destroy
+
+      accepts_nested_attributes_for :custom_values
     end
 
     module ClassMethods

@@ -13,7 +13,7 @@ module SlpContacts
     end
 
     def update
-      if current_user.update_with_custom_values(params)
+      if current_user.update(current_user.refactor_params params)
         render text: 'success'
       else
         render text: 'failure', status: 422
