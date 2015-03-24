@@ -75,6 +75,34 @@ module SlpContacts
         end
       end
 
+      context 'when field_type is radio' do
+        let(:custom_field1) { Fabricate :custom_field, field_type: 'radio', possible_values: '1,2', namespace: namespace }
+        let(:custom_value) { Fabricate.build :custom_value, custom_field: custom_field1, value: '1', user: user }
+        let(:custom_value1) { Fabricate.build :custom_value, custom_field: custom_field1, value: '3', user: user }
+
+        it 'is valid with value belong to possible_values' do
+          expect(custom_value).to be_valid
+        end
+
+        it 'is invalid with value not belong_to possible_values' do
+          expect(custom_value1).to be_invalid
+        end
+      end
+
+      context 'when field_type is checkbox' do
+        let(:custom_field1) { Fabricate :custom_field, field_type: 'checkbox', possible_values: '1,2', namespace: namespace }
+        let(:custom_value) { Fabricate.build :custom_value, custom_field: custom_field1, value: '1', user: user }
+        let(:custom_value1) { Fabricate.build :custom_value, custom_field: custom_field1, value: '3', user: user }
+
+        it 'is valid with value belong to possible_values' do
+          expect(custom_value).to be_valid
+        end
+
+        it 'is invalid with value not belong_to possible_values' do
+          expect(custom_value1).to be_invalid
+        end
+      end
+
       it 'is invaild to create value that has been created' do
         exist_custom_value = Fabricate :custom_value, custom_field: custom_field, user: user
         custom_value = Fabricate.build :custom_value, value: 'test', custom_field: custom_field, user: user

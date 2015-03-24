@@ -18,8 +18,6 @@ module SlpContacts
 
         it 'is invalid without possible_values' do
           custom_field = Fabricate.build :custom_field, field_type: 'radio', possible_values: nil, namespace: namespace
-          custom_field.valid?
-          p custom_field.errors
           expect(custom_field).to have(1).error_on(:value)
         end
 
