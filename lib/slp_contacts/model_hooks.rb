@@ -64,21 +64,6 @@ module SlpContacts
         result[:custom_values_attributes] = custom_values_attributes
         result
       end
-
-      def update_with_custom_values(params)
-        self.name = params[:name]
-        self.phone = params[:phone]
-        value_collection = CustomValue.check_validation(self, params)
-        if self.valid? && value_collection
-          self.save
-          value_collection.each do |value|
-            value.save
-          end
-          true
-        else
-          false
-        end
-      end
     end
 
     def self.included(receiver)

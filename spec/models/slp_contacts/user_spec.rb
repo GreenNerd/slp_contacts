@@ -112,28 +112,6 @@ module SlpContacts
       end
     end
 
-    describe '#update_with_custom_values' do
-      let(:custom_field) { Fabricate :custom_field, namespace: namespace }
-
-      it 'returns true when all params are valid' do
-        params = {
-          name: 'name1',
-          phone: 12345,
-          custom_field.name => 'value'
-        }
-        expect(user.update_with_custom_values(params)).to be_truthy
-      end
-
-      it 'returns false when failing to validate custom_value' do
-        params = {
-          name: 'name1',
-          phone: 12345,
-          custom_field.name => nil
-        }
-        expect(user.update_with_custom_values(params)).to be_falsey
-      end
-    end
-
     describe '#refactor_params' do
       let(:custom_field) { Fabricate :custom_field, namespace: namespace }
 
