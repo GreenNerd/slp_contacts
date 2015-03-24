@@ -134,5 +134,28 @@ module SlpContacts
       end
     end
 
+    describe '#refactor_params' do
+      let(:custom_field) { Fabricate :custom_field, namespace: namespace }
+
+      it 'returns a hash that array includes id if value exists' do
+        params = {
+          name: 'name1',
+          phone: 12345,
+          custom_field.name => 'value'
+        }
+        custom_value = Fabricate :custom_value, user: user, custom_field: custom_field
+        expect(user.refactor_params(params)[:custom_values_attributes].first[:id]).to eq custom_value.id
+      end
+      it 'returns a hash that array doesnot include id if value exists' do
+        params = {
+          name: 'name1',
+          phone: 12345,
+          custom_field.name => 'value'
+        }
+        expect(user.refactor_params(params)[:custom_values_attributes].first[:id]).to be_nil
+      end
+
+    end
+
   end
 end

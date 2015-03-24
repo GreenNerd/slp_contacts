@@ -47,6 +47,24 @@ module SlpContacts
         namespace.organizations
       end
 
+      def refactor_params(params)
+        result = {}
+        result[:name] = params[:name]
+        result[:phone] = params[:phone]
+        custom_values_attributes = []
+        namespace.custom_fields.each do |field|
+          value = params[field.name].class == Array ? params[field.name].join(',') : params[field.name]
+          @custom_value = custom_values.find_by(custom_field: field)
+          if @custom_value
+            custom_values_attributes << { id: @custom_value.id, value: value, custom_field_id: field.id }
+          else
+            custom_values_attributes << { value: value, custom_field_id: field.id }
+          end
+        end
+        result[:custom_values_attributes] = custom_values_attributes
+        result
+      end
+
       def update_with_custom_values(params)
         self.name = params[:name]
         self.phone = params[:phone]
