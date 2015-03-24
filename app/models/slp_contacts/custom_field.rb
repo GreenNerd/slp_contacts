@@ -14,10 +14,8 @@ module SlpContacts
     private
 
     def possible_values_must_be_present
-      if field_type == 'radio' || field_type == 'checkbox'
-        if possible_values == nil || possible_values.strip == ""
-          errors.add(:value, 'possible values must be present')
-        end
+      if %w(radio checkbox).include?(field_type) && possible_values.blank?
+        errors.add(:value, 'possible values must be present')
       end
     end
 
