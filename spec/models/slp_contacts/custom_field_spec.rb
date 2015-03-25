@@ -43,6 +43,23 @@ module SlpContacts
           expect(custom_field).to have(1).error_on(:value)
         end
       end
+
+      context 'when field_type is option' do
+        it 'is valid with possible_values' do
+          custom_field = Fabricate.build :custom_field, field_type: 'option', namespace: namespace
+          expect(custom_field).to be_valid
+        end
+
+        it 'is invalid without possible_values' do
+          custom_field = Fabricate.build :custom_field, field_type: 'option', possible_values: nil, namespace: namespace
+          expect(custom_field).to have(1).error_on(:value)
+        end
+
+        it 'is invalid when possible_values is empty string' do
+          custom_field = Fabricate.build :custom_field, field_type: 'option', possible_values: '  ', namespace: namespace
+          expect(custom_field).to have(1).error_on(:value)
+        end
+      end
     end
   end
 end
