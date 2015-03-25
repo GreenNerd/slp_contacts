@@ -14,8 +14,7 @@ module SlpContacts
     end
 
     def create
-      @custom_field = CustomField.new(custom_field_params)
-      @custom_field.namespace = @namespace
+      @custom_field = @namespace.custom_fields.build(custom_field_params)
       if @custom_field.save
         render text: "success"
       else
