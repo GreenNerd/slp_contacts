@@ -91,7 +91,7 @@ module SlpContacts
 
       context 'when field_type is checkbox' do
         let(:custom_field1) { Fabricate :custom_field, field_type: 'checkbox', possible_values: '1,2', namespace: namespace }
-        let(:custom_value) { Fabricate.build :custom_value, custom_field: custom_field1, value: '1', user: user }
+        let(:custom_value) { Fabricate.build :custom_value, custom_field: custom_field1, value: '1,2', user: user }
         let(:custom_value1) { Fabricate.build :custom_value, custom_field: custom_field1, value: '3', user: user }
 
         it 'is valid with value belong to possible_values' do

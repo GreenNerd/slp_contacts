@@ -13,8 +13,11 @@ module SlpContacts
     validate :must_be_in_possible_values
 
     def must_be_in_possible_values
-      if %w(radio checkbox option).include? custom_field.field_type
+      if %w(radio option).include? custom_field.field_type
         errors.add(:value, 'must be in possible values') unless custom_field.possible_values.split(',').include?(self.value)
+      end
+      if %w(checkbox).include? custom_field.field_type
+        errors.add(:value, 'must be in possible values') unless (custom_field.possible_values.split(',') & value.split(',')) == value.split(',')
       end
     end
   end
