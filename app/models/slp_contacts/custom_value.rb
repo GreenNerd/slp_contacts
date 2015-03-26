@@ -12,6 +12,8 @@ module SlpContacts
 
     validate :must_be_in_possible_values
 
+    private
+
     def must_be_in_possible_values
       if %w(radio option).include? custom_field.field_type
         errors.add(:value, 'must be in possible values') unless custom_field.possible_values.split(',').include?(self.value)
