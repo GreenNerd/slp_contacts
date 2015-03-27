@@ -3,7 +3,7 @@ module SlpContacts
     belongs_to :namespace, class_name: SlpContacts.namespace_class.to_s
     has_many :custom_values, dependent: :destroy
 
-    enum field_type: ["input", "radio", "checkbox", "option"]
+    enum field_type: ["input", "radio", "checkbox", "option", "date"]
 
     validates :name, presence: true
     validates :name, uniqueness: true

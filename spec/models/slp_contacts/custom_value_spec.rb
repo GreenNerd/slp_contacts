@@ -117,6 +117,20 @@ module SlpContacts
         end
       end
 
+      context 'when field_type is date' do
+        let(:custom_field1) { Fabricate :custom_field, field_type: 'date', namespace: namespace }
+        let(:custom_value) { Fabricate.build :custom_value, value: '2015-03-27', custom_field: custom_field1, user: user }
+        let(:invalid_custom_value) { Fabricate.build :custom_value, value: '2015-02-39', custom_field: custom_field1, user: user }
+
+        it 'is valid with correct format date' do
+          expect(custom_value).to be_valid
+        end
+
+        it 'is invalid with incorrect format date' do
+          expect(invalid_custom_value).to be_invalid
+        end
+      end
+
       it 'is invaild to create value that has been created' do
         exist_custom_value = Fabricate :custom_value, custom_field: custom_field, user: user
         custom_value = Fabricate.build :custom_value, value: 'test', custom_field: custom_field, user: user
