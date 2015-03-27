@@ -16,7 +16,7 @@ module Dummy
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    if Rails.env.development?
+    if Rails.env.development? || Rails.env.test?
       Dir[Dummy::Application.root.join("app/models/*.rb")].each { |f| require f }
     end
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
