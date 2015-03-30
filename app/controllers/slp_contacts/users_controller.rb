@@ -3,9 +3,21 @@ require_dependency "slp_contacts/application_controller"
 module SlpContacts
   class UsersController < ApplicationController
     before_action :find_user, except: [:query]
+    before_action :check_user, only: [:edit, :update]
 
     def show
       redirect_to root_path if current_user == @user
+    end
+
+    def edit
+    end
+
+    def update
+      if current_user.update(current_user.refactor_params params)
+        render text: 'success'
+      else
+        render text: 'failure', status: 422
+      end
     end
 
     def favorite
@@ -14,7 +26,8 @@ module SlpContacts
           format.json { render :show, layout: false  }
           format.js { render layout: false  }
         else
-          render_json_error('不能收藏自己')
+          format.json { render_json_error('不能收藏自己') }
+          format.js { render js: "alert('不能收藏自己');", status: 422 }
         end
       end
     end
@@ -25,7 +38,8 @@ module SlpContacts
           format.json { render :show, layout: false  }
           format.js { render layout: false  }
         else
-          render_json_error
+          format.json { render_json_error }
+          format.js { render js: "alert('取消失败');", status: 422 }
         end
       end
     end
@@ -40,6 +54,10 @@ module SlpContacts
     def find_user
       @user = current_user.scoped_contacts.find_by(id: params[:id])
       raise NotFound.new('用户不存在') unless @user
+    end
+
+    def check_user
+      redirect_to root_path unless current_user == @user
     end
   end
 end

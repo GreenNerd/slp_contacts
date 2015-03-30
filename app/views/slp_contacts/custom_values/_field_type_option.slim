@@ -1,0 +1,1 @@
+= select_tag field.name, options_from_collection_for_select(field.possible_values.split(','), 'to_s', 'to_s', current_user.find_value(field.name))

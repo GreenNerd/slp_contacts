@@ -25,7 +25,13 @@ module SlpContacts
       if SlpContacts.contact_class || Rails.env.production?
         SlpContacts.contact_class.send :include, SlpContacts::ModelHooks
       else
-        puts 'Need to set the contact_class for SlpContacts(confi/initializer/slp_contacts.rb).'
+        puts 'Need to set the contact_class for SlpContacts(config/initializer/slp_contacts.rb).'
+      end
+
+      if SlpContacts.namespace_class || Rails.env.production?
+        SlpContacts.namespace_class.send :include, SlpContacts::NamespaceHooks
+      else
+        puts 'Need to set the namespace_class for SlpContacts(config/initializer/slp_contacts.rb).'
       end
     end
 
@@ -34,6 +40,7 @@ module SlpContacts
         slp_contacts/application.css
         slp_contacts/application.js
       )
+
     end
   end
 end

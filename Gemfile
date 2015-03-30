@@ -10,6 +10,8 @@ group :development, :test do
 
   gem 'pry'
   gem 'pry-byebug'
+  gem 'guard-rspec', '~> 4.5'
+  gem 'spring-commands-rspec'
 end
 
 # http://stackoverflow.com/a/25148960/3639260

@@ -1,0 +1,57 @@
+require_dependency "slp_contacts/application_controller"
+
+module SlpContacts
+  class CustomFieldsController < ApplicationController
+    before_action :find_namespace
+    before_action :find_custom_field, only: [:update, :destroy]
+
+    def index
+      @custom_fields = @namespace.custom_fields
+    end
+
+    def new
+      @custom_field = CustomField.new
+    end
+
+    def create
+      @custom_field = @namespace.custom_fields.build(custom_field_params)
+      if @custom_field.save
+        render text: "success"
+      else
+        render text: "no success", status: 422
+      end
+    end
+
+    def update
+      @result = {}
+      if @custom_field.update(custom_field_params)
+        @result[:status] = 'success'
+        render json: @result
+      else
+        @result[:status] = 'failure'
+        @result[:error] = 'fail to validate'
+        render json: @result, status: 422
+      end
+    end
+
+    def destroy
+      @custom_field.destroy
+      render json: { status: "success" }
+    end
+
+    private
+
+    def find_custom_field
+      @custom_field = CustomField.find_by(id: params[:id])
+      raise NotFound.new('自定义属性不存在') unless @custom_field
+    end
+
+    def find_namespace
+      @namespace = current_user.namespace
+    end
+
+    def custom_field_params
+      params.require(:custom_field).permit(:name, :field_type, :is_required, :is_unique, :possible_values)
+    end
+  end
+end

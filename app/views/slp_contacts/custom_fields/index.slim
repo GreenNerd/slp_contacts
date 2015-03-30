@@ -1,0 +1,28 @@
+h1 自定义属性展示
+h2 = @namespace.name
+table border="1" width="500"
+  tr
+    td
+      | 名称
+    td
+      | 输入形式
+    td
+      | 可能值
+    td
+      | 是否唯一
+    td
+      | 是否必须
+  - @custom_fields.each do |custom_field|
+    tr
+      td
+        = custom_field.name
+      td
+        = select_tag :field_type, options_from_collection_for_select(i18n_field_type, 'first', 'last', custom_field.field_type)
+      td
+        - if %(radio checkbox option).include? custom_field.field_type
+          - custom_field.possible_values.split(',').each do |value|
+            = value
+      td
+        = custom_field.is_unique
+      td
+        = custom_field.is_required

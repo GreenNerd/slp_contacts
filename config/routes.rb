@@ -1,5 +1,5 @@
 SlpContacts::Engine.routes.draw do
-  resources :users, only: [:show] do # 某个用户详情页面
+  resources :users, only: [:show, :edit, :update] do # 某个用户详情页面
     member do
       post :favorite # 收藏一个用户
       delete :unfavorite # 取消收藏一个用户
@@ -28,4 +28,7 @@ SlpContacts::Engine.routes.draw do
 
   root to: 'user#show' # 首页，当前用户详情页面
 
+  scope '/admin' do
+    resources :custom_fields, except: :show
+  end
 end

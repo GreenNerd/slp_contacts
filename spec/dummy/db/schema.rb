@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316114857) do
+ActiveRecord::Schema.define(version: 20150317083222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,27 @@ ActiveRecord::Schema.define(version: 20150316114857) do
 
   add_index "organizations", ["namespace_id"], name: "index_organizations_on_namespace_id", using: :btree
   add_index "organizations", ["parent_id"], name: "index_organizations_on_parent_id", using: :btree
+
+  create_table "slp_contacts_custom_fields", force: :cascade do |t|
+    t.integer  "namespace_id"
+    t.string   "name"
+    t.string   "possible_values"
+    t.boolean  "is_required"
+    t.boolean  "is_unique"
+    t.boolean  "editable"
+    t.boolean  "visible"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "field_type",      default: 0
+  end
+
+  create_table "slp_contacts_custom_values", force: :cascade do |t|
+    t.integer  "custom_field_id"
+    t.string   "value"
+    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "slp_contacts_favorites", force: :cascade do |t|
     t.integer  "user_id"
@@ -84,6 +105,9 @@ ActiveRecord::Schema.define(version: 20150316114857) do
   add_index "users", ["namespace_id"], name: "index_users_on_namespace_id", using: :btree
 
   add_foreign_key "organizations", "namespaces"
+  add_foreign_key "slp_contacts_custom_fields", "namespaces"
+  add_foreign_key "slp_contacts_custom_values", "slp_contacts_custom_fields", column: "custom_field_id"
+  add_foreign_key "slp_contacts_custom_values", "users"
   add_foreign_key "slp_contacts_favorites", "users"
   add_foreign_key "slp_contacts_favorites", "users", column: "contact_id"
   add_foreign_key "taggings", "tags"

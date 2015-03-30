@@ -80,6 +80,17 @@ module SlpContacts
       end
     end
 
+    describe '#find_value' do
+      let(:custom_value) { Fabricate :custom_value }
+      it 'returns the value when field name exists' do
+        expect(custom_value.user.find_value(custom_value.custom_field.name)).to eq custom_value.value
+      end
+
+      it 'returns nil when field name doesnot exist' do
+        expect(user.find_value(custom_value.custom_field.name)).to be_nil
+      end
+    end
+
     describe '#scoped_contacts' do
       before :each do
         3.times { Fabricate :user }
@@ -100,5 +111,29 @@ module SlpContacts
         expect(user.scoped_organizations).to eq [organization]
       end
     end
+
+    describe '#refactor_params' do
+      let(:custom_field) { Fabricate :custom_field, namespace: namespace }
+
+      it 'returns a hash that array includes id if value exists' do
+        params = {
+          name: 'name1',
+          phone: 12345,
+          custom_field.name => 'value'
+        }
+        custom_value = Fabricate :custom_value, user: user, custom_field: custom_field
+        expect(user.refactor_params(params)[:custom_values_attributes].first[:id]).to eq custom_value.id
+      end
+      it 'returns a hash that array doesnot include id if value exists' do
+        params = {
+          name: 'name1',
+          phone: 12345,
+          custom_field.name => 'value'
+        }
+        expect(user.refactor_params(params)[:custom_values_attributes].first[:id]).to be_nil
+      end
+
+    end
+
   end
 end

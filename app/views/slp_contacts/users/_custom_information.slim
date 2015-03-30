@@ -1,0 +1,16 @@
+- user.namespace.custom_fields.each do |custom_field|
+  - case custom_field.field_type
+  - when SlpContacts::CustomField.field_types.to_a[2].first
+    tr
+      td.label
+        = custom_field.name
+      td.right.aligned
+        - if user.find_value(custom_field.name)
+          - user.find_value(custom_field.name).split(',').each do |value|
+            .ui.mini.label = value
+  - else
+    tr
+      td.label
+        = custom_field.name
+      td.right.aligned
+        = user.find_value(custom_field.name)

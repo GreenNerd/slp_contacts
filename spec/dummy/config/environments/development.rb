@@ -5,7 +5,7 @@ Rails.application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
-
+  ActiveSupport::Dependencies.autoload_paths -= ["/home/huangwei/my_project/slp_contacts/spec/dummy/app/models"]
   # Do not eager load code on boot.
   config.eager_load = false
 
