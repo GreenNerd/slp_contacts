@@ -4,7 +4,7 @@ module SlpContacts
       unless signed_in?
         store_location
 
-        redirect_to main_app.root_path
+        redirect_to failure_route
       end
     end
 
@@ -15,6 +15,10 @@ module SlpContacts
       response.headers['X-SLP-Contacts-Current-Page'] = page.to_s
       response.headers['X-SLP-Contacts-Total-Page'] = result.num_pages.to_s
       result
+    end
+
+    def failure_route
+      super || main_app.root_path
     end
 
   end

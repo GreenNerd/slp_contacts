@@ -9,13 +9,13 @@ module SlpContacts
     end
 
     def favorite
-      respond_to do |format|
-        if current_user.favorite(@user)
+      if current_user.favorite(@user)
+        respond_to do |format|
           format.json { render :show, layout: false  }
           format.js { render layout: false  }
-        else
-          render_json_error('不能收藏自己')
         end
+      else
+        render_json_error('不能收藏自己')
       end
     end
 
