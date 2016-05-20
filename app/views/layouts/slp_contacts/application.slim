@@ -6,6 +6,15 @@ html
     = stylesheet_link_tag 'slp_contacts/application', media: 'all'
     = javascript_include_tag 'slp_contacts/application'
     = csrf_meta_tags
+    - cache [:global_variables, current_namespace]
+      javascript:
+        var _global = {
+          namespace_id: '#{current_namespace.id}',
+          appid: '#{current_namespace.appid}',
+          logo: '#{crop_image current_namespace.logo}',
+          menu_payload: #{raw current_namespace.category_menu_payload.to_json},
+          comment_enable: #{current_namespace.comment_enable},
+        }
 
   body
     = yield

@@ -12,16 +12,16 @@ $ ->
       if ///organizations///.test location.pathname
         @contactsCollection.url = "#{location.pathname}.json"
       else
-        @contactsCollection.url = '/apps/contacts/user/favorites.json'
+        @contactsCollection.url = "#{SLPContacts.Settings.prefix_link}/user/favorites.json"
       contactViewType = localStorage.getItem('SLPContactViewType') or 'list'
       @createContactsView contactViewType
       @enableViewTab()
 
     setApiSettings: ->
       @apiSettings =
-        'query user': '/apps/contacts/users/query'
-        'query favorited user': '/apps/contacts/user/favorites/query'
-        'query organization member': '/apps/contacts/organizations/{id}/query'
+        'query user': "#{SLPContacts.Settings.prefix_link}/users/query"
+        'query favorited user': "#{SLPContacts.Settings.prefix_link}/user/favorites/query"
+        'query organization member': "#{SLPContacts.Settings.prefix_link}/organizations/{id}/query"
 
     enableSettingsSidebar: ->
       $setting = $('#settings_view')
@@ -143,7 +143,7 @@ $ ->
         _templates = _.map results, (user)->
           user.headimgurl ?= 'http://placehold.it/80x80'
           return """
-            <a href="/apps/contacts/users/#{user.id}" class="item">
+            <a href="#{SLPContacts.Settings.prefix_link}/users/#{user.id}" class="item">
               <img src="#{user.headimgurl}" alt="user_pic" class="ui avatar image">
               <div class="content aligned">
                 <div class="header">#{user.name}</div>

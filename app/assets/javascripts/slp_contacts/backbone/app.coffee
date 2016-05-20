@@ -12,3 +12,4 @@
   Cache: {}
   Settings:
     per_page: 12
+    prefix_link: "/namespaces/#{_global['namespace_id']}/apps/contacts"

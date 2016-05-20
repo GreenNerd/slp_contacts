@@ -9,7 +9,7 @@ class SLPContacts.Models.UserModel extends Backbone.Model
     headimgurl: 'http://placehold.it/80x80'
 
   initialize: ->
-    @baseurl = "/apps/contacts/users/#{@id}"
+    @baseurl = "#{SLPContacts.Settings.prefix_link}/users/#{@id}"
 
   toggleFavorite: (success)->
     if @get('favorited')
