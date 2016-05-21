@@ -4,7 +4,7 @@ html
     meta name='viewport' content='width=device-width,maximum-scale=1,minimum-scale=1, minimal-ui'
     title 通讯录
     = stylesheet_link_tag 'slp_contacts/application', media: 'all'
-    - cache [:global_variables, current_namespace]
+    - cache [:slp_contacts, :global_variables, current_namespace]
       javascript:
         var _global = {
           namespace_id: '#{current_namespace.id}',
