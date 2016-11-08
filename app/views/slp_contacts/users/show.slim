@@ -59,3 +59,5 @@
                 - else
                   - @user.tags.each do |tag|
                     .ui.mini.label= tag.name
+
+            = render partial: 'slp_contacts/users/custom_attributes', locals: { user: @user }
