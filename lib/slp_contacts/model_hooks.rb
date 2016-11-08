@@ -34,10 +34,7 @@ module SlpContacts
       end
 
       def scoped_contacts
-        namespace.users
-      end
-      def scoped_organizations
-        namespace.organizations
+        scoped_users
       end
     end
 
