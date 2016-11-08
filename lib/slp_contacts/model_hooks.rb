@@ -33,8 +33,8 @@ module SlpContacts
         favorited_contacts.include? contact
       end
 
-      def scoped_contacts
-        scoped_users
+      def can_detail_contact? contact
+        contact.contact_public || contact.administrable_by?(self)
       end
     end
 

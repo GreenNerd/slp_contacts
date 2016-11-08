@@ -142,6 +142,7 @@ $ ->
         $element.find('.load-more').remove()
         _templates = _.map results, (user)->
           user.headimgurl ?= 'http://placehold.it/80x80'
+          user.phone ?= ''
           return """
             <a href="#{SLPContacts.Settings.prefix_link}/users/#{user.id}" class="item">
               <img src="#{user.headimgurl}" alt="user_pic" class="ui avatar image">

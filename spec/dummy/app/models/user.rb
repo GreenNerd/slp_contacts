@@ -16,4 +16,8 @@ class User < ActiveRecord::Base
   def scoped_organizations
     Organization.all
   end
+
+  def can_detail_contact? contact
+    true
+  end
 end
