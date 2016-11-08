@@ -6,6 +6,7 @@ $ ->
       @enableOrganizationAccordion() if $('#organization_list').length
       @initContactsView() if $('#contacts_list').length
       @enableQueryUI() if $('#query_sticker').length
+      @taggleContactPublic() if $('#contact_public')
 
     initContactsView: ->
       @contactsCollection = new SLPContacts.Collections.UserCollection []
@@ -221,5 +222,17 @@ $ ->
             $('#load_more').closest('.sticky-footer').remove()
           else
             SLPContacts.Cache.Contact_maymore = true
+
+    taggleContactPublic: ()->
+      $('#contact_public').change ()->
+        contact_public = $(this).is(':checked')
+        url = $(this).data('url')
+
+        $.ajax
+          type: 'patch'
+          url: url
+          data:
+            contact_public: contact_public
+          dataType: 'json'
 
   ContactCtrl.init()
