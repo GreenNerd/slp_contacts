@@ -10,6 +10,8 @@ SlpContacts::Engine.routes.draw do
     end
   end
 
+  patch '/user' => 'user#update', as: :update_user
+
   resource :user, controller: :user, only: [:show] do # 当前用户详情页面
     resources :favorites, only: [:index] do # 当前用户收藏的联系人页面
       collection do

@@ -8,5 +8,16 @@ module SlpContacts
     def organizations
       @organizations = current_user.organizations.order(:name)
     end
+
+    def update
+      current_user.update update_params
+      head :no_content
+    end
+
+    private
+
+    def update_params
+      params.permit(:contact_public)
+    end
   end
 end
