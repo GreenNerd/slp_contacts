@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
     Organization.all
   end
 
-  def can_detail_contact? contact
+  def can_detail_detail? contact
     true
   end
 end

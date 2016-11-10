@@ -1,5 +1,5 @@
 json.(user, :id, :name)
-if current_user.can_detail_contact?(user)
+if current_user.can_access_detail?(user)
   json.phone user.phone
 end
 

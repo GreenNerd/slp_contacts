@@ -11,7 +11,7 @@
       .bg-img style="background-image: url(#{@user.headimgurl_with_size(:huge)});"
       .mask
       .user-name= @user.name
-    - if !current_user.can_detail_contact?(@user)
+    - if !current_user.can_access_detail?(@user)
       p 已被隐藏
     - else
       .contact-opreate.ui.center.aligned.three.column.padded.grid
