@@ -63,6 +63,7 @@
 
           = render partial: 'slp_contacts/users/custom_attributes', locals: { user: current_user }
 
-      label
+    .user-settings
+      .ui.checkbox
         = check_box_tag :contact_public, '1', current_user.contact_public, data: { url: update_user_path }
-        | 是否允许同组织的成员查看自己信息
+        label 允许同组织成员查看自己信息？
