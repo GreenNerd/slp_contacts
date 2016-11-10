@@ -22,7 +22,8 @@ module SlpContacts
       end
 
       def copy_migration_files
-        migration_template 'migrate.rb', 'db/migrate/create_slp_contacts_favorites.rb'
+        migration_template 'create_slp_contacts_favorites.rb', 'db/migrate/create_slp_contacts_favorites.rb'
+        migration_template 'add_contact_public_to_users.rb', 'db/migrate/add_contact_public_to_users.rb'
       end
 
       def copy_config_files

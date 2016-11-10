@@ -8,4 +8,16 @@ class User < ActiveRecord::Base
   def headimgurl_with_size(size = :tiny)
     headimgurl
   end
+
+  def scoped_users
+    User.all
+  end
+
+  def scoped_organizations
+    Organization.all
+  end
+
+  def can_detail_contact? contact
+    true
+  end
 end
