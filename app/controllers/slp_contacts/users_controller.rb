@@ -31,14 +31,14 @@ module SlpContacts
     end
 
     def query
-      @users = paginate current_user.scoped_contacts.where("name LIKE ?", "%#{params[:name]}%").order(:name)
+      @users = paginate current_user.scoped_users.where("name LIKE ?", "%#{params[:name]}%").order(:name)
       render layout: false
     end
 
     private
 
     def find_user
-      @user = current_user.scoped_contacts.find_by(id: params[:id])
+      @user = current_user.scoped_users.find_by(id: params[:id])
       raise NotFound.new('用户不存在') unless @user
     end
   end

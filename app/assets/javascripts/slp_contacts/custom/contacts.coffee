@@ -6,6 +6,7 @@ $ ->
       @enableOrganizationAccordion() if $('#organization_list').length
       @initContactsView() if $('#contacts_list').length
       @enableQueryUI() if $('#query_sticker').length
+      @taggleContactPublic() if $('#contact_public')
 
     initContactsView: ->
       @contactsCollection = new SLPContacts.Collections.UserCollection []
@@ -142,6 +143,7 @@ $ ->
         $element.find('.load-more').remove()
         _templates = _.map results, (user)->
           user.headimgurl ?= 'http://placehold.it/80x80'
+          user.phone ?= ''
           return """
             <a href="#{SLPContacts.Settings.prefix_link}/users/#{user.id}" class="item">
               <img src="#{user.headimgurl}" alt="user_pic" class="ui avatar image">
@@ -220,5 +222,17 @@ $ ->
             $('#load_more').closest('.sticky-footer').remove()
           else
             SLPContacts.Cache.Contact_maymore = true
+
+    taggleContactPublic: ()->
+      $('#contact_public').change ()->
+        contact_public = $(this).is(':checked')
+        url = $(this).data('url')
+
+        $.ajax
+          type: 'patch'
+          url: url
+          data:
+            contact_public: contact_public
+          dataType: 'json'
 
   ContactCtrl.init()
