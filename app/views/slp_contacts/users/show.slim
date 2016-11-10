@@ -3,7 +3,7 @@
     .left-side
       i.fa.fa-long-arrow-left
   .center-box
-    .title 详细信息
+    .title 详细资料
 
 #main_content
   #contact_detail
@@ -12,7 +12,11 @@
       .mask
       .user-name= @user.name
     - if !current_user.can_access_detail?(@user)
-      p 已被隐藏
+      .more-detail
+        .blankslate
+          i.fa.fa-lock
+          p 该用户没有开启同组织成员查看自己资料的功能
+
     - else
       .contact-opreate.ui.center.aligned.three.column.padded.grid
         .column
