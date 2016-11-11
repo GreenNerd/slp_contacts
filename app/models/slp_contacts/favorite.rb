@@ -1,5 +1,5 @@
 module SlpContacts
-  class Favorite < ActiveRecord::Base
+  class Favorite < ::ApplicationRecord
     validates :user, presence: true
     validates :contact, presence: true, uniqueness: { scope: [:user] }
 
