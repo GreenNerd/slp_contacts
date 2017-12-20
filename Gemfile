@@ -13,9 +13,9 @@ group :development, :test do
 end
 
 # http://stackoverflow.com/a/25148960/3639260
-gem 'coffee-rails', '~> 4.0'
-gem 'sass-rails', '~> 5.0'
-gem 'slim-rails', '~> 3.0'
+gem 'coffee-rails'
+gem 'sass-rails'
+gem 'slim-rails'
 gem 'jbuilder'
 
 gem 'font-awesome-rails'
