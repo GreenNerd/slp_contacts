@@ -8,8 +8,8 @@ module SlpContacts
 
     rescue_from NotFound do |ex|
       respond_to do |format|
-        format.html { render text: ex.message, status: :not_found }
-        format.js { render text: ex.message, status: :not_found }
+        format.html { render html: ex.message, status: :not_found }
+        format.js { render plain: ex.message, status: :not_found }
         format.json { render json: MultiJson.dump(errors: ex.message), status: :not_found }
       end
     end
